@@ -2,7 +2,6 @@
 <html lang="pt-br">
 <head>
 	
-	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-TKSTYCWF4B"></script>
 	<script>
 	  window.dataLayer = window.dataLayer || [];
@@ -14,7 +13,10 @@
 	
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HigTech Hub | O Ecossistema do Futebol Amador</title>
+    <title>FutSumula Pro | O Ecossistema do Futebol Amador</title>
+    
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -41,7 +43,6 @@
             overflow-x: hidden;
         }
 
-        /* Camada base: gradiente que simula iluminação de estádio */
         body::before {
             content: '';
             position: fixed;
@@ -56,7 +57,6 @@
             pointer-events: none;
         }
 
-        /* Camada de textura: linhas de campo de futebol (muito sutis) */
         body::after {
             content: '';
             position: fixed;
@@ -80,7 +80,7 @@
             pointer-events: none;
         }
 
-        /* Camada de partículas/estrelas */
+        /* Camada de partículas */
         .particles {
             position: fixed;
             top: 0;
@@ -102,7 +102,6 @@
             box-shadow: 0 0 10px currentColor;
         }
 
-        /* Cores neon para algumas partículas */
         .particle:nth-child(3n) { background: var(--racha-color); box-shadow: 0 0 8px var(--racha-color); }
         .particle:nth-child(5n) { background: var(--torneio-color); box-shadow: 0 0 8px var(--torneio-color); }
 
@@ -113,7 +112,7 @@
             100% { transform: translateY(-10vh) scale(0.5); opacity: 0; }
         }
 
-        /* Overlay de grade tecnológica (opcional, pode ser removido se preferir) */
+        /* Overlay de grade tecnológica */
         .tech-grid {
             position: fixed;
             top: 0;
@@ -165,8 +164,6 @@
         .card-racha { border-top: 4px solid var(--racha-color); }
         .card-racha:hover { transform: translateY(-10px); box-shadow: 0 10px 40px rgba(0, 243, 255, 0.15); border-color: rgba(0, 243, 255, 0.3); }
         .card-racha .app-title { color: var(--racha-color); }
-        
-        /* Botões Racha */
         .card-racha .btn-app { background: var(--racha-color); color: #000; box-shadow: 0 0 15px rgba(0, 243, 255, 0.3); border: 1px solid var(--racha-color); }
         .card-racha .btn-app:hover { box-shadow: 0 0 25px rgba(0, 243, 255, 0.6); transform: scale(1.02); }
         .card-racha .btn-site { background: transparent; color: var(--racha-color); border: 1px solid var(--racha-color); }
@@ -176,8 +173,6 @@
         .card-torneio { border-top: 4px solid var(--torneio-color); }
         .card-torneio:hover { transform: translateY(-10px); box-shadow: 0 10px 40px rgba(188, 19, 254, 0.15); border-color: rgba(188, 19, 254, 0.3); }
         .card-torneio .app-title { color: var(--torneio-color); }
-        
-        /* Botões Torneio */
         .card-torneio .btn-app { background: var(--torneio-color); color: #fff; box-shadow: 0 0 15px rgba(188, 19, 254, 0.3); border: 1px solid var(--torneio-color); }
         .card-torneio .btn-app:hover { box-shadow: 0 0 25px rgba(188, 19, 254, 0.6); transform: scale(1.02); }
         .card-torneio .btn-site { background: transparent; color: var(--torneio-color); border: 1px solid var(--torneio-color); }
@@ -196,7 +191,6 @@
         .card-racha li i { color: var(--racha-color); }
         .card-torneio li i { color: var(--torneio-color); }
 
-        /* Grupo de Botões */
         .app-footer { padding: 20px 30px 40px; display: flex; flex-direction: column; gap: 15px; }
         
         .btn-action {
@@ -205,89 +199,223 @@
             border-radius: 8px; transition: 0.3s; font-size: 1rem;
         }
 
-        /* --- ADS / SPONSORS SECTION (REFORMULADA) --- */
-        .ads-section {
-            padding: 80px 20px;
-            text-align: center;
-            background: linear-gradient(180deg, #080a0e 0%, #0b0f14 100%);
-            border-top: 1px solid rgba(255,255,255,0.05);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+        /* --- PERSONALIZATION SECTION (ABA CRIATIVA) --- */
+        .personaliza-section {
             position: relative;
-            overflow: hidden;
-        }
-
-        /* Efeito de brilho sutil no fundo */
-        .ads-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0,243,255,0.03) 0%, transparent 70%);
-            animation: rotateGlow 30s linear infinite;
-            z-index: 0;
-        }
-
-        @keyframes rotateGlow {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .ads-title {
-            font-size: 2rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
-            background: linear-gradient(135deg, #fff 0%, #aaa 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .ads-subtitle {
-            font-size: 1.1rem;
-            color: #888;
-            margin-bottom: 50px;
-            position: relative;
-            z-index: 1;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .ad-banner-container {
-            max-width: 1100px;
-            margin: 0 auto;
+            min-height: 500px;
             display: flex;
-            gap: 30px;
-            justify-content: center;
+            align-items: center;
+            justify-content: space-between;
             flex-wrap: wrap;
+            gap: 40px;
+            padding: 80px 5%; /* Ajustado para abraçar as duas colunas */
+            background: linear-gradient(to right, rgba(5, 5, 5, 0.95) 40%, rgba(5, 5, 5, 0.6)),
+                        url('https://images.unsplash.com/photo-1550684253-1136b2a5b314?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+            z-index: 2; 
+        }
+
+        .personaliza-content {
+            flex: 1 1 500px;
+            max-width: 600px;
+            z-index: 2;
+        }
+
+        .personaliza-content h2 { font-size: 3.5rem; text-transform: uppercase; font-weight: 800; margin-bottom: 10px; line-height: 0.9; color: #fff; }
+        .personaliza-tagline { font-size: 1.4rem; color: var(--racha-color); font-weight: 700; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 0 10px rgba(0, 243, 255, 0.3); }
+        .personaliza-description { color: #ccc; font-size: 1.1rem; line-height: 1.6; margin-bottom: 35px; border-left: 4px solid var(--torneio-color); padding-left: 20px; }
+        
+        .personaliza-list { list-style: none; }
+        .personaliza-list li { margin-bottom: 20px; font-size: 1.2rem; display: flex; align-items: center; gap: 15px; color: #ddd; font-weight: 600; }
+        .personaliza-list li i { font-size: 1.5rem; color: var(--torneio-color); text-shadow: 0 0 10px var(--torneio-color); }
+
+        /* Coluna da Imagem (Lado Direito) */
+        .personaliza-visual {
+            flex: 1 1 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             position: relative;
             z-index: 2;
         }
 
-        /* Card base para todos os patrocinadores */
-        .ad-card {
-            width: 260px;
-            height: 200px; /* um pouco mais alto para dar mais destaque */
-            border-radius: 20px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* O Efeito do Card 3D */
+        .custom-card-mockup {
             position: relative;
-            background: #ffffff;
-            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.1);
+            width: 100%;
+            max-width: 350px;
+            border-radius: 20px;
+            border: 2px solid var(--torneio-color);
+            /* Sombra roxa brilhante pra combinar com o Torneio */
+            box-shadow: 0 0 50px rgba(188, 19, 254, 0.4), inset 0 0 20px rgba(0,0,0,0.5);
+            /* Efeito 3D inclinado para a esquerda */
+            transform: perspective(1000px) rotateY(-15deg) rotateX(5deg);
+            transition: transform 0.5s ease;
+            overflow: hidden;
+            background: #000;
         }
 
-        /* Cards de patrocinadores ativos */
-        .ad-active {
-            transform: translateY(0);
+        .custom-card-mockup:hover {
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.05);
+        }
+
+        .custom-card-mockup img {
+            width: 100%;
+            height: 400px; /* Altura fixa pra ficar formato de card/celular */
+            object-fit: cover;
+            display: block;
+            opacity: 0.85;
+            transition: 0.3s;
+        }
+        
+        .custom-card-mockup:hover img {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        /* O "selinho" de faça você mesmo */
+        .mockup-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(5, 5, 5, 0.8);
+            border: 1px dashed var(--torneio-color);
+            color: var(--text-main);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .mockup-badge i { color: var(--torneio-color); font-size: 1.2rem; }
+
+        .mockup-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px 20px 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 20%, transparent);
+            text-align: center;
+        }
+
+        .mockup-overlay h4 { color: #fff; margin: 0; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .mockup-overlay p { color: var(--racha-color); margin: 5px 0 0; font-size: 0.9rem; font-weight: 600; }
+
+        /* --- CLOUD BANNER (100% NUVEM) --- */
+        .cloud-banner {
+            background: linear-gradient(135deg, rgba(10, 15, 20, 0.95), rgba(5, 5, 5, 1));
+            border-bottom: 1px solid rgba(0, 243, 255, 0.15);
+            padding: 70px 20px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .cloud-banner::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 400px;
+            background: var(--racha-color);
+            filter: blur(200px);
+            opacity: 0.15;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .cloud-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            max-width: 1100px;
+            z-index: 1;
+        }
+
+        .cloud-icon i {
+            font-size: 7rem;
+            color: var(--racha-color);
+            filter: drop-shadow(0 0 20px rgba(0, 243, 255, 0.4));
+        }
+
+        .cloud-text h2 {
+            font-size: 3rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            margin-bottom: 15px;
+            line-height: 1;
+        }
+
+        .cloud-text .highlight { color: var(--racha-color); }
+
+        .cloud-text p {
+            font-size: 1.2rem;
+            color: #bbb;
+            margin-bottom: 25px;
+            max-width: 600px;
+            line-height: 1.5;
+        }
+
+        .cloud-benefits {
+            display: flex;
+            gap: 15px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .cloud-benefits li {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .cloud-benefits li i { color: var(--racha-color); font-size: 1.2rem; }
+
+        /* --- ADS / SPONSORS SECTION --- */
+        .ads-section {
+            padding: 80px 20px; text-align: center;
+            background: linear-gradient(180deg, #080a0e 0%, #0b0f14 100%);
+            border-bottom: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden; z-index: 2;
+        }
+
+        .ads-title {
+            font-size: 2rem; font-weight: 800; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 10px;
+            position: relative; z-index: 1; background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .ads-subtitle { font-size: 1.1rem; color: #888; margin-bottom: 50px; position: relative; z-index: 1; }
+
+        .ad-banner-container {
+            max-width: 1100px; margin: 0 auto; display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 2;
+        }
+
+        .ad-card {
+            width: 260px; height: 200px; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column;
+            cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative;
+            background: #ffffff; box-shadow: 0 15px 30px -10px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);
         }
 
         .ad-active:hover {
@@ -296,147 +424,76 @@
             border-color: var(--racha-color);
         }
 
-        /* Wrapper da imagem: ocupa a maior parte do card */
-        .ad-img-wrapper {
-            width: 100%;
-            height: 140px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 15px;
-            background: #ffffff; /* fundo branco para destacar a logo */
-            transition: 0.3s;
-        }
+        .ad-img-wrapper { width: 100%; height: 140px; display: flex; align-items: center; justify-content: center; padding: 15px; background: #ffffff; transition: 0.3s; }
+        .ad-image { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1)); transition: 0.3s; }
+        .ad-active:hover .ad-image { transform: scale(1.05); }
 
-        .ad-image {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));
-            transition: 0.3s;
-        }
-
-        .ad-active:hover .ad-image {
-            transform: scale(1.05);
-        }
-
-        /* Legenda moderna */
         .ad-caption {
-            width: 100%;
-            background: #f8fafc;
-            color: #0f172a;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-align: center;
-            padding: 12px 5px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            border-top: 1px solid rgba(0,0,0,0.05);
-            transition: 0.3s;
-            line-height: 1.3;
+            width: 100%; background: #f8fafc; color: #0f172a; font-size: 0.85rem; font-weight: 700; text-align: center;
+            padding: 12px 5px; text-transform: uppercase; letter-spacing: 1.5px; border-top: 1px solid rgba(0,0,0,0.05); transition: 0.3s; line-height: 1.3;
         }
+        .ad-active:hover .ad-caption { background: var(--racha-color); color: #000; }
 
-        .ad-active:hover .ad-caption {
-            background: var(--racha-color);
-            color: #000;
-        }
-
-        /* Card de espaço disponível (mais chamativo) */
         .ad-empty {
-            background: rgba(10, 15, 20, 0.8);
-            backdrop-filter: blur(5px);
-            border: 2px dashed rgba(0, 243, 255, 0.3);
-            box-shadow: 0 0 30px rgba(0,243,255,0.1);
-            justify-content: center;
-            align-items: center;
-            transition: 0.4s;
+            background: rgba(10, 15, 20, 0.8); backdrop-filter: blur(5px); border: 2px dashed rgba(0, 243, 255, 0.3);
+            box-shadow: 0 0 30px rgba(0,243,255,0.1); justify-content: center; align-items: center; transition: 0.4s;
         }
+        .ad-empty:hover { border-color: var(--racha-color); background: rgba(0, 243, 255, 0.05); transform: scale(1.02); box-shadow: 0 0 50px rgba(0,243,255,0.3); }
 
-        .ad-empty:hover {
-            border-color: var(--racha-color);
-            background: rgba(0, 243, 255, 0.05);
-            transform: scale(1.02);
-            box-shadow: 0 0 50px rgba(0,243,255,0.3);
-        }
-
-        .ad-empty-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            color: var(--racha-color);
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 1rem;
-            letter-spacing: 2px;
-        }
-
-        .ad-empty-content i {
-            font-size: 3rem;
-            color: var(--racha-color);
-            filter: drop-shadow(0 0 10px currentColor);
-        }
-
-        .ad-empty-content span {
-            background: rgba(0,243,255,0.1);
-            padding: 8px 16px;
-            border-radius: 40px;
-            border: 1px solid rgba(0,243,255,0.3);
-        }
-
-        .ad-empty:hover .ad-empty-content span {
-            background: var(--racha-color);
-            color: #000;
-            border-color: var(--racha-color);
-        }
+        .ad-empty-content { display: flex; flex-direction: column; align-items: center; gap: 15px; color: var(--racha-color); font-weight: 700; text-transform: uppercase; font-size: 1rem; letter-spacing: 2px; }
+        .ad-empty-content i { font-size: 3rem; color: var(--racha-color); filter: drop-shadow(0 0 10px currentColor); }
+        .ad-empty-content span { background: rgba(0,243,255,0.1); padding: 8px 16px; border-radius: 40px; border: 1px solid rgba(0,243,255,0.3); }
+        .ad-empty:hover .ad-empty-content span { background: var(--racha-color); color: #000; border-color: var(--racha-color); }
 
         /* --- FOOTER --- */
         footer { 
-            padding: 60px 20px 40px; 
-            text-align: center; 
-            background: var(--dark); 
-            color: #666; 
-            font-size: 0.9rem; 
-            border-top: 1px solid rgba(255,255,255,0.02);
+            padding: 60px 20px 40px; text-align: center; background: var(--dark); color: #666; font-size: 0.9rem; 
+            border-top: 1px solid rgba(255,255,255,0.02); position: relative; z-index: 2;
         }
 
-        footer .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            font-size: 2rem;
-            margin-bottom: 30px;
-        }
+        footer .social-icons { display: flex; justify-content: center; gap: 30px; font-size: 2rem; margin-bottom: 30px; }
+        footer .social-icons i { cursor: pointer; color: #aaa; transition: 0.3s; }
+        footer .social-icons i:hover { transform: translateY(-3px); }
 
-        footer .social-icons i {
-            cursor: pointer;
-            color: #aaa;
-            transition: 0.3s;
-        }
-
-        footer .social-icons i:hover {
-            color: var(--racha-color);
-            transform: translateY(-3px);
-        }
-
+        /* Mobile adjustments */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.8rem; }
             .app-card { width: 100%; max-width: 400px; }
             .ad-card { width: 220px; height: 180px; }
             .ad-img-wrapper { height: 120px; }
+            
+            .personaliza-section {
+                /* No celular a imagem fica embaixo e o texto em cima */
+                background: linear-gradient(to bottom, rgba(5, 5, 5, 0.98) 50%, rgba(5, 5, 5, 0.5)),
+                        url('https://images.unsplash.com/photo-1550684253-1136b2a5b314?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+                padding: 60px 5%;
+                text-align: center;
+            }
+            .personaliza-description {
+                border-left: none;
+                border-top: 4px solid var(--torneio-color);
+                padding-left: 0;
+                padding-top: 20px;
+                text-align: justify;
+            }
+            .personaliza-list { text-align: left; }
+            
+            .custom-card-mockup { transform: perspective(1000px) rotateY(0deg) rotateX(0deg); }
+
+            .cloud-content { flex-direction: column; text-align: center; gap: 20px; }
+            .cloud-benefits { justify-content: center; }
+            .cloud-text h2 { font-size: 2.2rem; }
+            .cloud-icon i { font-size: 5rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Partículas de fundo -->
     <div class="particles" id="particles"></div>
-
-    <!-- (Opcional) Grade tecnológica -->
     <div class="tech-grid"></div>
 
     <nav>
-        <div class="logo">HIGTECH <span>HUB</span></div>
+        <div class="logo">FUT SUMULA <span>PRO</span></div>
         <a href="#contato" style="color: #fff; font-weight: 600;">Seja um Parceiro</a>
     </nav>
 
@@ -497,83 +554,129 @@
 
     </section>
 
-    <!-- SEÇÃO DE PATROCINADORES REFORMULADA -->
-	<section class="ads-section">
+    <section class="personaliza-section">
+        
+        <div class="personaliza-content">
+            <h2>Personalize seu <span style="color: var(--torneio-color);">Torneio</span></h2>
+            <p class="personaliza-tagline">O sistema é digital, mas a cara é do seu racha!</p>
+            
+            <p class="personaliza-description">
+                Chega de campeonatos genéricos. Aqui a tecnologia se adapta à sua realidade. Coloque o escudo do time da rua, as cores da sua quebrada e os apelidos que só a galera conhece. Profissionalismo na gestão, identidade de várzea na alma.
+            </p>
+            
+            <ul class="personaliza-list">
+                <li><i class="bi bi-shield-shaded"></i> Upload do Escudo e Logo do seu Time</li>
+                <li><i class="bi bi-palette-fill"></i> Cores Personalizadas nas Tabelas e Súmulas</li>
+                <li><i class="bi bi-ticket-perforated-fill"></i> Cards de Jogadores com Identidade Visual Própria</li>
+            </ul>
+
+            <a href="Ptorneio.html" class="btn-action btn-site" style="width: fit-content; margin-top: 30px; border-color: var(--torneio-color); color: var(--torneio-color); padding: 15px 30px;">
+                <i class="bi bi-pencil-square"></i> Ver Opções de Personalização
+            </a>
+        </div>
+
+        <div class="personaliza-visual">
+            <div class="custom-card-mockup">
+                <div class="mockup-badge">
+                    <i class="bi bi-image"></i> Sua Logo Aqui
+                </div>
+                <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=800&auto=format&fit=crop" alt="Jogador Amador em Destaque">
+                <div class="mockup-overlay">
+                    <h4>Seu Time F.C</h4>
+                    <p>O Craque da Rodada</p>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+
+    <section class="cloud-banner">
+        <div class="cloud-content">
+            <div class="cloud-icon">
+                <i class="bi bi-cloud-check-fill"></i>
+            </div>
+            <div class="cloud-text">
+                <h2>100% NA <span class="highlight">NUVEM</span></h2>
+                <p>Esqueça a falta de memória no celular. Não precisa baixar nada! O Fut-Súmula roda direto no seu navegador com a fluidez de um aplicativo.</p>
+                <ul class="cloud-benefits">
+                    <li><i class="bi bi-phone-fill"></i> Economiza Espaço</li>
+                    <li><i class="bi bi-cloud-arrow-down-fill"></i> Zero Downloads</li>
+                    <li><i class="bi bi-lightning-charge-fill"></i> Acesso Imediato</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="ads-section">
 	    <h3 class="ads-title">Patrocinadores Oficiais</h3>
 	    <p class="ads-subtitle">Marcas que vestem a camisa do futebol amador e da inovação</p>
 	    
 	    <div class="ad-banner-container">
-	        
-	        <!-- Patrocinador Ativo: ABI Kids -->
 	        <div class="ad-card ad-active" onclick="window.open('https://instagram.com/teacherjaianemelo', '_blank')">
 	            <div class="ad-img-wrapper">
 	                <img src="/img/logo_abi_kids.png" alt="ABI Kids - Inglês para Crianças" class="ad-image">
 	            </div>
-	            <div class="ad-caption">
-	                ABI Kids • Inglês para Crianças
-	            </div>
+	            <div class="ad-caption">ABI Kids • Inglês para Crianças</div>
 	        </div>
 
-	        <!-- Patrocinador Ativo: JH Saúde e Estética -->
 			<div class="ad-card ad-active" onclick="window.open('https://instagram.com/jamillealves18', '_blank')">
 	            <div class="ad-img-wrapper">
 	                <img src="/img/PropagandaJamilla.jpeg" alt="JH Saúde e Estética" class="ad-image">
 	            </div>
-	            <div class="ad-caption">
-	                JH Saúde e Estética • Agende sua consulta
-	            </div>
+	            <div class="ad-caption">JH Saúde e Estética • Agende sua consulta</div>
 	        </div>
 			
-			<!-- Patrocinador Ativo: Vibe Fitness Academia -->
-			<div class="ad-card ad-active" onclick="window.open('https://instagram.com/Studio Vibe Fitness', '_blank')">
+			<div class="ad-card ad-active" onclick="window.open('https://instagram.com/StudioVibeFitness', '_blank')">
 	            <div class="ad-img-wrapper">
 	                <img src="/img/vibeFitnes.jpeg" alt="Vibe Fitness Academia Feminina" class="ad-image">
 	            </div>
-	            <div class="ad-caption">
-	                Vibe Fitness • Academia Feminina
-	            </div>
+	            <div class="ad-caption">Vibe Fitness • Academia Feminina</div>
 	        </div>
-
-	        <!-- Espaço disponível para novo patrocinador (mais atraente) -->
-	        <div class="ad-card ad-empty" onclick="window.location.href='https://wa.me/5588996312358?text=Quero%20anunciar%20no%20Hub'">
+			
+            <div class="ad-card ad-active" onclick="window.location.href='https://wa.me/5588999386379?text=olá! vim pela página futsumula%20'">
+                <div class="ad-img-wrapper">
+                    <img src="/img/lulupinho.jpeg" alt="Lulu Pinho Artes" class="ad-image">
+                </div>
+                <div class="ad-caption">Lulu Pinho Artes • Estampas e Impressões</div>
+            </div>
+				           			
+			<div class="ad-card ad-empty" onclick="window.location.href='https://wa.me/5588996312358?text=Quero%20anunciar%20no%20Hub'">
 	            <div class="ad-empty-content">
 	                <i class="bi bi-megaphone"></i>
 	                <span>Seja Patrocinador</span>
 	                <small style="font-size:0.7rem; color:#aaa; text-transform:none;">clique e garanta seu espaço</small>
 	            </div>
 	        </div>
-
 	    </div>
 	</section>
 
-    <footer id="contato">
-		<div class="social-icons">
-		    <i class="bi bi-instagram" onclick="window.open('https://instagram.com/fut_sumula_pro', '_blank')" title="@fut_sumula_pro"></i>
-		    <i class="bi bi-tiktok" onclick="window.open('https://www.tiktok.com/@futsumula', '_blank')" title="Fut Súmula no TikTok"></i>
-		    <i class="bi bi-whatsapp" onclick="window.open('https://wa.me/5588996312358', '_blank')" title="Fale no WhatsApp"></i>
-		</div>
-		
-        Desenvolvido pela HIGTECH SOLUÇÕES &copy; 2026<br>
-        Tecnologia e Paixão pelo Futebol.
-    </footer>
+	<footer id="contato">
+	        <div class="social-icons">
+	            <i class="bi bi-instagram" onclick="window.open('https://instagram.com/fut_sumula_pro', '_blank')" onmouseover="this.style.color='#bc13fe'" onmouseout="this.style.color='#aaa'" title="@fut_sumula_pro"></i>
+	            
+	            <i class="bi bi-tiktok" onclick="window.open('https://www.tiktok.com/@fut_sumula_pro', '_blank')" onmouseover="this.style.color='#00f3ff'" onmouseout="this.style.color='#aaa'" title="Fut Súmula no TikTok"></i>
+	            
+	            <i class="bi bi-whatsapp" onclick="window.open('https://wa.me/5588996312358', '_blank')" onmouseover="this.style.color='#25D366'" onmouseout="this.style.color='#aaa'" title="Fale no WhatsApp"></i>
+	            
+	            <i class="bi bi-envelope-fill" onclick="window.location.href='mailto:fut_sumula_pro@hotmail.com'" onmouseover="this.style.color='#ea4335'" onmouseout="this.style.color='#aaa'" title="Envie um E-mail"></i>
+	        </div>
+	        
+	        Desenvolvido pela HIGTECH SOLUÇÕES &copy; 2026<br>
+	        Tecnologia e Paixão pelo Futebol.
+	    </footer>
 
-    <!-- Script para gerar partículas -->
     <script>
         (function() {
             const particlesContainer = document.getElementById('particles');
-            const numberOfParticles = 40; // um pouco mais para preencher melhor
+            const numberOfParticles = 40; 
             
             for (let i = 0; i < numberOfParticles; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 
-                // Posição horizontal aleatória
                 particle.style.left = Math.random() * 100 + '%';
-                
-                // Atraso aleatório para não ficarem todas sincronizadas
                 particle.style.animationDelay = Math.random() * 15 + 's';
                 
-                // Tamanho variável
                 const size = Math.random() * 3 + 1;
                 particle.style.width = size + 'px';
                 particle.style.height = size + 'px';
