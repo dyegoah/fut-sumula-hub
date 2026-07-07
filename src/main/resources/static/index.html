@@ -1,732 +1,5305 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DigiSúmula | Gestão Esportiva Digital</title>
+<link href="/img/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="/css/hub-style.css">
+
+<style>
+    :root {
+      --bg-main: #060816;
+      --bg-soft: rgba(255,255,255,0.05);
+      --bg-card: rgba(255,255,255,0.07);
+      --bg-card-strong: rgba(255,255,255,0.10);
+      --text-main: #f8fafc;
+      --text-muted: #a8b3cf;
+      --border-soft: rgba(255,255,255,0.12);
+
+      --verde: #19e58c;
+      --azul: #00d4ff;
+      --laranja: #ff7a1a;
+      --roxo: #8b5cf6;
+      --amarelo: #ffd166;
+
+      --container: 1220px;
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+
+      /* TROQUE PELO MESMO FUNDO QUE VOCÊ JÁ USA NO DIGISUMULA */
+      --futsumula-bg: url('/img/fundoTela.png');
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text-main);
+      background:
+        linear-gradient(rgba(5, 8, 22, 0.84), rgba(5, 8, 22, 0.94)),
+        var(--futsumula-bg);
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--container));
+      margin: 0 auto;
+    }
+
+    /* =========================
+       TOPBAR
+    ========================= */
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      background: rgba(5, 8, 22, 0.82);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+	.brand {
+	  display: inline-flex;
+	  align-items: center;
+	  gap: 12px;
+	  white-space: nowrap;
+	  flex-shrink: 0;
+	  min-width: 0;
+	}
+
+    .brand-logo {
+      display: block;
+      width: auto;
+      height: 64px;
+      max-height: 64px;
+      object-fit: contain;
+      object-position: left center;
+      filter:
+        drop-shadow(0 0 1px rgba(255,255,255,0.95))
+        drop-shadow(0 0 8px rgba(255,255,255,0.16))
+        drop-shadow(0 0 16px rgba(0,212,255,0.22))
+        drop-shadow(0 8px 18px rgba(0,0,0,0.32));
+      transition: filter 0.25s ease, transform 0.25s ease;
+    }
+
+	.brand-text {
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: center;
+	  line-height: 1;
+	}
+
+	.brand-title {
+	  font-size: 1.25rem;
+	  font-weight: 950;
+	  letter-spacing: -0.5px;
+	  color: var(--text-main);
+	  text-shadow: 0 3px 12px rgba(0,0,0,0.38);
+	}
+
+	.brand-title strong {
+	  color: var(--amarelo);
+	  text-shadow:
+	    0 0 10px rgba(255,209,102,0.20),
+	    0 3px 12px rgba(0,0,0,0.38);
+	}
+
+	.brand-subtitle {
+	  margin-top: 5px;
+	  font-size: 0.62rem;
+	  font-weight: 850;
+	  letter-spacing: 0.8px;
+	  text-transform: uppercase;
+	  color: #c7d2fe;
+	  text-shadow: 0 2px 10px rgba(0,0,0,0.45);
+	}
 	
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-TKSTYCWF4B"></script>
-	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
-
-	  gtag('config', 'G-TKSTYCWF4B');
-	</script>
 	
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FutSumula Pro | O Ecossistema do Futebol Amador</title>
+    .brand:hover .brand-logo {
+      transform: translateY(-1px);
+      filter:
+        drop-shadow(0 0 1px rgba(255,255,255,1))
+        drop-shadow(0 0 11px rgba(255,255,255,0.22))
+        drop-shadow(0 0 22px rgba(0,212,255,0.30))
+        drop-shadow(0 10px 22px rgba(0,0,0,0.38));
+    }
+
+    .brand strong {
+      color: var(--amarelo);
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      list-style: none;
+    }
+
+    .nav-menu > li {
+      position: relative;
+    }
+
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 13px;
+      border-radius: 999px;
+      color: var(--text-muted);
+      font-size: 0.93rem;
+      font-weight: 800;
+      transition: 0.25s ease;
+    }
+
+    .nav-link:hover {
+      background: rgba(255,255,255,0.08);
+      color: var(--text-main);
+    }
+
+    .dropdown {
+      position: absolute;
+      top: 46px;
+      left: 0;
+      min-width: 240px;
+      padding: 10px;
+      background: rgba(8, 12, 28, 0.98);
+      border: 1px solid var(--border-soft);
+      border-radius: 18px;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.35);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: 0.25s ease;
+    }
+
+    .nav-menu li:hover .dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown a {
+      display: block;
+      padding: 11px 12px;
+      border-radius: 12px;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      font-weight: 800;
+    }
+
+    .dropdown a:hover {
+      background: rgba(255,255,255,0.08);
+      color: var(--text-main);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: none;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-weight: 900;
+      transition: 0.25s ease;
+      font-size: 0.94rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--verde), var(--azul));
+      color: #02121c;
+      box-shadow: 0 12px 35px rgba(0, 212, 255, 0.22);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid var(--border-soft);
+      color: var(--text-main);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.12);
+      transform: translateY(-2px);
+    }
+
+    .mobile-toggle {
+      display: none;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border-soft);
+      color: var(--text-main);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 140px 0 70px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(25,229,140,0.16), transparent 20%),
+        radial-gradient(circle at 80% 20%, rgba(0,212,255,0.16), transparent 22%),
+        radial-gradient(circle at 85% 75%, rgba(139,92,246,0.18), transparent 24%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 34px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      border: 1px solid rgba(0,212,255,0.25);
+      background: rgba(0,212,255,0.08);
+      color: #c7f6ff;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.7rem, 6vw, 5.6rem);
+      line-height: 0.97;
+      letter-spacing: -3px;
+      margin-bottom: 22px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--verde), var(--azul), var(--roxo), var(--amarelo));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      line-height: 1.8;
+      max-width: 680px;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 26px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      max-width: 700px;
+    }
+
+    .stat {
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid var(--border-soft);
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(12px);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.35rem;
+      margin-bottom: 4px;
+    }
+
+    .stat span {
+      color: var(--text-muted);
+      font-size: 0.87rem;
+      font-weight: 700;
+    }
+
+    .hero-visual {
+      border-radius: 30px;
+      padding: 18px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-visual-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      padding: 6px 6px 10px;
+    }
+
+    .hero-visual-header h3 {
+      font-size: 1rem;
+    }
+
+    .status-pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 900;
+      background: rgba(25,229,140,0.13);
+      border: 1px solid rgba(25,229,140,0.28);
+      color: #a8ffd6;
+    }
+
+    .hero-sports-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .hero-sport-item {
+      min-height: 150px;
+      padding: 18px;
+      border-radius: 22px;
+      border: 1px solid var(--border-soft);
+      background: rgba(255,255,255,0.06);
+      transition: 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-sport-item:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.09);
+    }
+
+    .hero-sport-item::before {
+      content: "";
+      position: absolute;
+      right: -20px;
+      bottom: -20px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      opacity: 0.15;
+    }
+
+    .sport-fut::before { background: var(--verde); }
+    .sport-vol::before { background: var(--azul); }
+    .sport-bas::before { background: var(--laranja); }
+    .sport-xad::before { background: var(--roxo); }
+
+    .hero-sport-item .icon {
+      font-size: 2rem;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .hero-sport-item h4 {
+      margin-bottom: 8px;
+      font-size: 1.04rem;
+    }
+
+    .hero-sport-item p {
+      font-size: 0.86rem;
+      line-height: 1.55;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* =========================
+       GERAL DE SEÇÕES
+    ========================= */
+    section {
+      padding: 88px 0;
+      position: relative;
+    }
+
+    .section-header {
+      max-width: 850px;
+      margin: 0 auto 46px;
+      text-align: center;
+    }
+
+    .section-kicker {
+      display: inline-block;
+      color: var(--azul);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.82rem;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      line-height: 1.05;
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      color: var(--text-muted);
+      line-height: 1.8;
+      font-size: 1.04rem;
+    }
+
+    /* =========================
+       CARDS GERAIS
+    ========================= */
+    .mini-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .mini-card {
+      border-radius: 22px;
+      padding: 24px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border-soft);
+      transition: 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mini-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.09);
+    }
+
+    .mini-card .icon {
+      font-size: 2rem;
+      margin-bottom: 14px;
+      display: inline-block;
+    }
+
+    .mini-card h3 {
+      margin-bottom: 10px;
+      font-size: 1.18rem;
+    }
+
+    .mini-card p {
+      color: var(--text-muted);
+      line-height: 1.65;
+      font-size: 0.95rem;
+    }
+
+    /* =========================
+       BLOCOS GRANDES / PÁGINAS DENTRO DA PÁGINA
+    ========================= */
+    .module-section {
+      padding-top: 34px;
+    }
+
+    .module-block {
+      position: relative;
+      border-radius: 32px;
+      overflow: hidden;
+      border: 1px solid var(--border-soft);
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 22px 70px rgba(0,0,0,0.28);
+      margin-bottom: 28px;
+    }
+
+    .module-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 1;
+    }
+
+    .module-bg::before,
+    .module-bg::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(0.5px);
+      opacity: 0.22;
+    }
+
+    .module-bg::before {
+      width: 260px;
+      height: 260px;
+      top: -80px;
+      right: -70px;
+    }
+
+    .module-bg::after {
+      width: 220px;
+      height: 220px;
+      bottom: -80px;
+      left: -70px;
+    }
+
+    .module-fut .module-bg::before,
+    .module-fut .module-bg::after {
+      background: radial-gradient(circle, rgba(25,229,140,0.8), transparent 68%);
+    }
+
+    /* =========================
+       FUNDO EXCLUSIVO DO BLOCO FUTEBOL
+       Imagem em: /img/futebol/bg3.png
+    ========================= */
+    .module-block.module-fut {
+      background:
+        linear-gradient(rgba(3, 8, 14, 0.78), rgba(3, 8, 14, 0.90)),
+        url('/img/futebol/bg3.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .module-vol .module-bg::before,
+    .module-vol .module-bg::after {
+      background: radial-gradient(circle, rgba(0,212,255,0.85), transparent 68%);
+    }
+
+    .module-bas .module-bg::before,
+    .module-bas .module-bg::after {
+      background: radial-gradient(circle, rgba(255,122,26,0.85), transparent 68%);
+    }
+
+    .module-xad .module-bg::before,
+    .module-xad .module-bg::after {
+      background: radial-gradient(circle, rgba(139,92,246,0.85), transparent 68%);
+    }
+
+    .module-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+      padding: 34px;
+      align-items: center;
+    }
+
+    .module-text h3 {
+      font-size: clamp(1.8rem, 3vw, 2.7rem);
+      line-height: 1.05;
+      letter-spacing: -1px;
+      margin-bottom: 14px;
+    }
+
+    .module-text p {
+      color: var(--text-muted);
+      line-height: 1.82;
+      margin-bottom: 18px;
+      font-size: 1rem;
+    }
+
+    .module-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .badge {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      background: rgba(255,255,255,0.08);
+      color: #dce7ff;
+      font-size: 0.84rem;
+      font-weight: 800;
+    }
+
+    .module-list {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .module-list li {
+      color: #dce7ff;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      font-weight: 700;
+    }
+
+    .module-list li::before {
+      content: "✓";
+      color: var(--verde);
+      font-weight: 900;
+      margin-right: 9px;
+    }
+
+    .module-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .module-gallery {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .gallery-main,
+    .gallery-row .gallery-item,
+    .system-shot {
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid var(--border-soft);
+      background: rgba(255,255,255,0.05);
+      min-height: 230px;
+      position: relative;
+    }
+
+    .gallery-main {
+      min-height: 290px;
+    }
+
+    .gallery-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .system-shot {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 18px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+    }
+
+    .system-shot::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.06) 25%, transparent 25%) -12px 0/24px 24px,
+        linear-gradient(225deg, rgba(255,255,255,0.04) 25%, transparent 25%) -12px 0/24px 24px;
+      opacity: 0.2;
+      pointer-events: none;
+    }
+
+    .system-shot-content {
+      position: relative;
+      z-index: 1;
+      max-width: 85%;
+    }
+
+    .system-shot strong {
+      display: block;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .system-shot span {
+      display: block;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .photo-placeholder {
+      width: 100%;
+      height: 100%;
+      min-height: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 18px;
+      position: relative;
+    }
+
+    .photo-placeholder .label {
+      position: relative;
+      z-index: 1;
+      max-width: 80%;
+    }
+
+    .photo-placeholder strong {
+      display: block;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .photo-placeholder span {
+      color: var(--text-muted);
+      line-height: 1.55;
+      font-size: 0.9rem;
+    }
+
+    /* ÁREAS TEMÁTICAS COM FUNDO */
+    .photo-fut {
+      background:
+        linear-gradient(rgba(6,10,22,0.55), rgba(6,10,22,0.82)),
+        url('/img/bg-futebol.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .photo-vol {
+      background:
+        linear-gradient(rgba(6,10,22,0.55), rgba(6,10,22,0.82)),
+        url('/img/bg-volei.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .photo-bas {
+      background:
+        linear-gradient(rgba(6,10,22,0.55), rgba(6,10,22,0.82)),
+        url('/img/bg-basquete.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .photo-xad {
+      background:
+        linear-gradient(rgba(6,10,22,0.55), rgba(6,10,22,0.82)),
+        url('/img/bg-xadrez.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* =========================
+       IMAGENS DO SISTEMA / PASTA STATIC IMG
+    ========================= */
+    .photo-placeholder.has-print,
+    .system-shot.has-print {
+      padding: 0;
+      overflow: hidden;
+      background: rgba(0,0,0,0.35);
+    }
+
+    .print-sistema {
+      width: 100%;
+      height: 100%;
+      min-height: inherit;
+      object-fit: cover;
+      display: block;
+      border-radius: inherit;
+    }
+
+    .print-sistema.contain {
+      object-fit: contain;
+      padding: 10px;
+      background: rgba(0,0,0,0.35);
+    }
+
+    .logo-card {
+      overflow: hidden;
+    }
+
+    .logo-card img {
+      width: 100%;
+      height: 100%;
+      max-height: 90px;
+      object-fit: contain;
+      display: block;
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,0.28));
+    }
+
+    .logo-card span {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* =========================
+       BLOCO FUTEBOL: FUNDO EXCLUSIVO + CARROSSEL
+    ========================= */
+    .module-block.module-fut {
+      background:
+        linear-gradient(135deg, rgba(4, 12, 10, 0.92), rgba(3, 7, 18, 0.88)),
+        url('/img/futebol/fundo-futebol.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-color: rgba(25, 229, 140, 0.30);
+      box-shadow:
+        0 22px 70px rgba(0,0,0,0.34),
+        0 0 55px rgba(25,229,140,0.08);
+    }
+
+    .module-block.module-fut::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 16% 12%, rgba(25,229,140,0.16), transparent 26%),
+        radial-gradient(circle at 86% 74%, rgba(0,212,255,0.13), transparent 28%),
+        linear-gradient(90deg, rgba(0,0,0,0.22), rgba(0,0,0,0.10));
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .module-block.module-fut .module-bg,
+    .module-block.module-fut .module-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .futebol-content {
+      align-items: stretch;
+    }
+
+    .futebol-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .futebol-programs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .futebol-program-card {
+      padding: 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.28);
+      backdrop-filter: blur(10px);
+      transition: 0.25s ease;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .futebol-program-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      opacity: 0.9;
+    }
+
+    .futebol-racha-card::before {
+      background: linear-gradient(90deg, var(--verde), var(--azul));
+    }
+
+    .futebol-torneio-card::before {
+      background: linear-gradient(90deg, var(--azul), var(--roxo));
+    }
+
+    .futebol-program-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.075);
+      border-color: rgba(25,229,140,0.26);
+    }
+
+    .program-label {
+      display: inline-flex;
+      margin-bottom: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .futebol-program-card h4 {
+      font-size: 1.08rem;
+      margin-bottom: 8px;
+    }
+
+    .futebol-program-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+      margin-bottom: 12px;
+    }
+
+    .futebol-program-card ul {
+      list-style: none;
+      display: grid;
+      gap: 7px;
+      margin-bottom: 15px;
+    }
+
+    .futebol-program-card li {
+      color: #dce7ff;
+      font-size: 0.84rem;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    .futebol-program-card li::before {
+      content: "✓";
+      color: var(--verde);
+      font-weight: 900;
+      margin-right: 7px;
+    }
+
+    .program-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .btn-mini {
+      padding: 10px 12px;
+      font-size: 0.78rem;
+      width: 100%;
+      border-radius: 12px;
+    }
+
+    .futebol-gallery {
+      align-self: stretch;
+    }
+
+    .futebol-carousel-box {
+      height: 420px;
+      min-height: 420px;
+      background: rgba(0,0,0,0.32);
+      border-color: rgba(25,229,140,0.24);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.28);
+    }
+
+    .futebol-carousel {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+      border-radius: inherit;
+      background: #030712;
+    }
+
+    .futebol-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.55s ease, visibility 0.55s ease;
+      background:
+        radial-gradient(circle at center, rgba(25,229,140,0.08), transparent 48%),
+        #030712;
+    }
+
+    .futebol-slide.active {
+      opacity: 1;
+      visibility: visible;
+      position: absolute;
+    }
+
+    .futebol-slide img {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      width: calc(100% - 24px);
+      height: calc(100% - 132px);
+      min-height: 0;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      border-radius: 16px;
+      background: rgba(0,0,0,0.32);
+      filter: saturate(1.08) contrast(1.04);
+      z-index: 1;
+    }
+
+    .futebol-slide::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.12) 48%, rgba(0,0,0,0.78) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .futebol-slide-caption {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 34px;
+      z-index: 2;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(0,0,0,0.58);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+    }
+
+    .futebol-slide-caption strong {
+      display: block;
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+
+    .futebol-slide-caption span {
+      display: block;
+      color: var(--text-muted);
+      line-height: 1.35;
+      font-size: 0.84rem;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.20);
+      background: rgba(0,0,0,0.45);
+      color: #fff;
+      font-size: 2rem;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 3;
+      transition: 0.25s ease;
+      display: grid;
+      place-items: center;
+      padding-bottom: 4px;
+    }
+
+    .carousel-btn:hover {
+      background: rgba(25,229,140,0.72);
+      color: #02121c;
+      border-color: rgba(25,229,140,0.95);
+    }
+
+    .carousel-prev {
+      left: 16px;
+    }
+
+    .carousel-next {
+      right: 16px;
+    }
+
+    .carousel-dots {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 10px;
+      z-index: 4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: rgba(255,255,255,0.38);
+      transition: 0.25s ease;
+    }
+
+    .carousel-dot.active {
+      width: 22px;
+      background: linear-gradient(90deg, var(--verde), var(--azul));
+    }
+
+    .futebol-mini-shot {
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.24), rgba(0,0,0,0.36)),
+        rgba(255,255,255,0.055);
+      border-color: rgba(25,229,140,0.18);
+    }
+
+    .futebol-mini-shot img {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      max-height: 230px;
+      object-fit: contain;
+      border-radius: 18px;
+    }
+
+    .futebol-mini-shot code {
+      color: var(--azul);
+      font-weight: 900;
+    }
+
+	@media (max-width: 760px) {
+	  .brand {
+	    gap: 9px;
+	  }
+
+	  .brand-logo {
+	    height: 54px;
+	    max-height: 54px;
+	  }
+
+	  .brand-title {
+	    font-size: 1.05rem;
+	  }
+
+	  .brand-subtitle {
+	    font-size: 0.52rem;
+	    letter-spacing: 0.55px;
+	  }
+	}
+
+	@media (max-width: 430px) {
+	  .brand-logo {
+	    height: 48px;
+	    max-height: 48px;
+	  }
+
+	  .brand-title {
+	    font-size: 0.95rem;
+	  }
+
+	  .brand-subtitle {
+	    display: none;
+	  }
+	}
+
+    @media (max-width: 1080px) {
+      .futebol-programs {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .futebol-carousel-box {
+        height: 330px;
+        min-height: 330px;
+      }
+
+      .futebol-slide img {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        width: calc(100% - 20px);
+        height: calc(100% - 118px);
+      }
+
+      .futebol-slide-caption {
+        left: 12px;
+        right: 12px;
+        bottom: 32px;
+        padding: 10px 12px;
+      }
+
+      .futebol-slide-caption strong {
+        font-size: 0.96rem;
+      }
+
+      .futebol-slide-caption span {
+        font-size: 0.78rem;
+      }
+
+      .carousel-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1.65rem;
+      }
+    }
+
+    /* =========================
+       BLOCO BASQUETE COM CARROSSEL
+    ========================= */
+    .module-block.module-bas {
+      background:
+        linear-gradient(rgba(12, 7, 3, 0.80), rgba(5, 8, 18, 0.92)),
+        url('/img/basquete/bg-basquete.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-color: rgba(255, 122, 26, 0.30);
+      box-shadow:
+        0 22px 70px rgba(0,0,0,0.34),
+        0 0 55px rgba(255,122,26,0.10);
+    }
+
+    .module-block.module-bas .module-bg,
+    .module-block.module-bas .module-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .basquete-content {
+      align-items: stretch;
+    }
+
+    .basquete-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .basquete-gallery {
+      display: grid;
+      gap: 16px;
+    }
+
+    .basquete-carousel-box {
+      min-height: 430px;
+      height: 430px;
+      background: rgba(0,0,0,0.36);
+      border-color: rgba(255, 122, 26, 0.24);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.28);
+    }
+
+    .basquete-carousel {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 430px;
+      overflow: hidden;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 122, 26, 0.28);
+      background:
+        radial-gradient(circle at center, rgba(255,122,26,0.10), transparent 48%),
+        #050816;
+      box-shadow: 0 22px 55px rgba(255, 122, 26, 0.12);
+    }
+
+    .basquete-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.55s ease, visibility 0.55s ease, transform 0.55s ease;
+      transform: scale(1.02);
+      background:
+        radial-gradient(circle at 50% 38%, rgba(255,122,26,0.08), transparent 46%),
+        linear-gradient(180deg, rgba(0,0,0,0.10), rgba(0,0,0,0.42));
+    }
+
+    .basquete-slide.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
+    .basquete-slide img {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      right: 16px;
+      width: calc(100% - 32px);
+      height: calc(100% - 148px);
+      min-height: 0;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      padding: 8px;
+      border-radius: 18px;
+      background: rgba(0,0,0,0.28);
+      filter: saturate(1.06) contrast(1.03);
+      z-index: 1;
+    }
+
+    .basquete-slide::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.12) 52%, rgba(0,0,0,0.86) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .basquete-slide-caption {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 36px;
+      z-index: 2;
+      padding: 13px 15px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(0,0,0,0.76), rgba(20, 9, 2, 0.58));
+      border: 1px solid rgba(255, 122, 26, 0.26);
+      backdrop-filter: blur(10px);
+    }
+
+    .basquete-slide-caption strong {
+      display: block;
+      font-size: 1.04rem;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .basquete-slide-caption span {
+      display: block;
+      color: var(--text-muted);
+      font-size: 0.84rem;
+      line-height: 1.35;
+    }
+
+    .basquete-carousel .carousel-btn {
+      position: absolute;
+      top: 50%;
+      z-index: 4;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 122, 26, 0.35);
+      background: rgba(0,0,0,0.48);
+      color: #fff;
+      font-size: 2rem;
+      line-height: 1;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transform: translateY(-50%);
+      transition: 0.25s ease;
+      backdrop-filter: blur(8px);
+      padding-bottom: 4px;
+    }
+
+    .basquete-carousel .carousel-btn:hover {
+      background: rgba(255, 122, 26, 0.88);
+      color: #160902;
+      transform: translateY(-50%) scale(1.06);
+    }
+
+    .basquete-prev {
+      left: 14px;
+    }
+
+    .basquete-next {
+      right: 14px;
+    }
+
+    .basquete-dots {
+      position: absolute;
+      left: 50%;
+      bottom: 12px;
+      z-index: 5;
+      display: flex;
+      gap: 8px;
+      transform: translateX(-50%);
+    }
+
+    .basquete-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.45);
+      background: rgba(255,255,255,0.25);
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .basquete-dot.active {
+      width: 26px;
+      background: #ff7a1a;
+      border-color: #ff7a1a;
+      box-shadow: 0 0 12px rgba(255, 122, 26, 0.75);
+    }
+
+    .basquete-mini-shot {
+      padding: 0;
+      overflow: hidden;
+      min-height: 230px;
+      background:
+        radial-gradient(circle at center, rgba(255,122,26,0.08), transparent 52%),
+        rgba(0,0,0,0.35);
+      border-color: rgba(255, 122, 26, 0.24);
+    }
+
+    .basquete-mini-shot img {
+      width: 100%;
+      height: 100%;
+      min-height: 230px;
+      object-fit: contain;
+      object-position: center;
+      padding: 10px;
+      display: block;
+      border-radius: 18px;
+      background: rgba(0,0,0,0.22);
+    }
+
+    .basquete-programs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin: 18px 0 22px;
+    }
+
+    .basquete-program-card {
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      transition: 0.25s ease;
+    }
+
+    .basquete-program-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.09);
+    }
+
+    .basquete-program-card .program-label {
+      display: inline-flex;
+      margin-bottom: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+      color: #ffe2c7;
+      border: 1px solid rgba(255, 122, 26, 0.32);
+      background: rgba(255, 122, 26, 0.10);
+    }
+
+    .basquete-program-card h4 {
+      font-size: 1.08rem;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .basquete-program-card p {
+      font-size: 0.9rem;
+      line-height: 1.55;
+      margin-bottom: 12px;
+      color: var(--text-muted);
+    }
+
+    .basquete-program-card ul {
+      list-style: none;
+      display: grid;
+      gap: 7px;
+    }
+
+    .basquete-program-card li {
+      font-size: 0.86rem;
+      color: #e8eefc;
+      line-height: 1.35;
+    }
+
+    .basquete-program-card li::before {
+      content: "✓";
+      color: #ff7a1a;
+      font-weight: 900;
+      margin-right: 7px;
+    }
+
+    .basquete-jogo-card {
+      border-color: rgba(255, 122, 26, 0.24);
+    }
+
+    .basquete-torneio-card {
+      border-color: rgba(255, 209, 102, 0.22);
+    }
+
+    @media (max-width: 760px) {
+      .basquete-programs {
+        grid-template-columns: 1fr;
+      }
+
+      .basquete-carousel,
+      .basquete-carousel-box {
+        min-height: 340px;
+        height: 340px;
+      }
+
+      .basquete-slide img {
+        top: 12px;
+        left: 12px;
+        right: 12px;
+        width: calc(100% - 24px);
+        height: calc(100% - 132px);
+        padding: 6px;
+      }
+
+      .basquete-slide-caption {
+        left: 12px;
+        right: 12px;
+        bottom: 32px;
+        padding: 10px 12px;
+      }
+
+      .basquete-slide-caption strong {
+        font-size: 0.96rem;
+      }
+
+      .basquete-slide-caption span {
+        font-size: 0.78rem;
+      }
+
+      .basquete-carousel .carousel-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1.7rem;
+      }
+    }
+
+
+    /* =========================
+       BLOCO XADREZ COM CARROSSEL
+    ========================= */
+	.module-block.module-xad {
+	  background:
+	    linear-gradient(rgba(8, 5, 18, 0.78), rgba(4, 6, 15, 0.92)),
+	    url('/img/xadrez/rainhaerei.png');
+	  background-size: cover;
+	  background-position: center;
+	  background-repeat: no-repeat;
+	  border-color: rgba(139, 92, 246, 0.32);
+	  box-shadow:
+	    0 22px 70px rgba(0,0,0,0.34),
+	    0 0 55px rgba(139,92,246,0.12);
+	}
+
+    .module-block.module-xad::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 16%, rgba(139,92,246,0.18), transparent 28%),
+        radial-gradient(circle at 82% 72%, rgba(255,209,102,0.12), transparent 26%),
+        linear-gradient(90deg, rgba(0,0,0,0.24), rgba(0,0,0,0.10));
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .module-block.module-xad .module-bg,
+    .module-block.module-xad .module-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .xadrez-content {
+      align-items: stretch;
+    }
+
+    .xadrez-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .xadrez-gallery {
+      display: grid;
+      gap: 16px;
+    }
+
+    .xadrez-carousel-box {
+      min-height: 430px;
+      height: 430px;
+      background: rgba(0,0,0,0.36);
+      border-color: rgba(139, 92, 246, 0.28);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.30);
+    }
+
+    .xadrez-carousel {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 430px;
+      overflow: hidden;
+      border-radius: 24px;
+      border: 1px solid rgba(139, 92, 246, 0.30);
+      background:
+        radial-gradient(circle at center, rgba(139,92,246,0.11), transparent 48%),
+        #050716;
+      box-shadow: 0 22px 55px rgba(139, 92, 246, 0.14);
+    }
+
+    .xadrez-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.55s ease, visibility 0.55s ease, transform 0.55s ease;
+      transform: scale(1.02);
+      background:
+        radial-gradient(circle at 50% 38%, rgba(255,209,102,0.08), transparent 44%),
+        linear-gradient(180deg, rgba(0,0,0,0.10), rgba(0,0,0,0.44));
+    }
+
+    .xadrez-slide.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
+    .xadrez-slide img {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      right: 16px;
+      width: calc(100% - 32px);
+      height: calc(100% - 148px);
+      min-height: 0;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      padding: 8px;
+      border-radius: 18px;
+      background: rgba(0,0,0,0.30);
+      filter: saturate(1.04) contrast(1.04);
+      z-index: 1;
+    }
+
+    .xadrez-slide::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.12) 52%, rgba(0,0,0,0.88) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .xadrez-slide-caption {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 36px;
+      z-index: 2;
+      padding: 13px 15px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(0,0,0,0.78), rgba(19, 12, 35, 0.62));
+      border: 1px solid rgba(139, 92, 246, 0.32);
+      backdrop-filter: blur(10px);
+    }
+
+    .xadrez-slide-caption strong {
+      display: block;
+      font-size: 1.04rem;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .xadrez-slide-caption span {
+      display: block;
+      color: var(--text-muted);
+      font-size: 0.84rem;
+      line-height: 1.35;
+    }
+
+    .xadrez-carousel .carousel-btn {
+      position: absolute;
+      top: 50%;
+      z-index: 4;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid rgba(139, 92, 246, 0.42);
+      background: rgba(0,0,0,0.50);
+      color: #fff;
+      font-size: 2rem;
+      line-height: 1;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transform: translateY(-50%);
+      transition: 0.25s ease;
+      backdrop-filter: blur(8px);
+      padding-bottom: 4px;
+    }
+
+    .xadrez-carousel .carousel-btn:hover {
+      background: rgba(139, 92, 246, 0.90);
+      color: #fff;
+      transform: translateY(-50%) scale(1.06);
+    }
+
+    .xadrez-prev {
+      left: 14px;
+    }
+
+    .xadrez-next {
+      right: 14px;
+    }
+
+    .xadrez-dots {
+      position: absolute;
+      left: 50%;
+      bottom: 12px;
+      z-index: 5;
+      display: flex;
+      gap: 8px;
+      transform: translateX(-50%);
+    }
+
+    .xadrez-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.45);
+      background: rgba(255,255,255,0.25);
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .xadrez-dot.active {
+      width: 26px;
+      background: #8b5cf6;
+      border-color: #8b5cf6;
+      box-shadow: 0 0 12px rgba(139, 92, 246, 0.78);
+    }
+
+    .xadrez-mini-shot {
+      padding: 0;
+      overflow: hidden;
+      min-height: 230px;
+      background:
+        radial-gradient(circle at center, rgba(139,92,246,0.09), transparent 52%),
+        rgba(0,0,0,0.35);
+      border-color: rgba(139, 92, 246, 0.26);
+    }
+
+    .xadrez-mini-shot img {
+      width: 100%;
+      height: 100%;
+      min-height: 230px;
+      object-fit: contain;
+      object-position: center;
+      padding: 10px;
+      display: block;
+      border-radius: 18px;
+      background: rgba(0,0,0,0.24);
+    }
+
+    .xadrez-programs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin: 18px 0 22px;
+    }
+
+    .xadrez-program-card {
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      transition: 0.25s ease;
+    }
+
+    .xadrez-program-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.09);
+    }
+
+    .xadrez-program-card .program-label {
+      display: inline-flex;
+      margin-bottom: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+      color: #ede4ff;
+      border: 1px solid rgba(139, 92, 246, 0.36);
+      background: rgba(139, 92, 246, 0.12);
+    }
+
+    .xadrez-program-card h4 {
+      font-size: 1.08rem;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .xadrez-program-card p {
+      font-size: 0.9rem;
+      line-height: 1.55;
+      margin-bottom: 12px;
+      color: var(--text-muted);
+    }
+
+    .xadrez-program-card ul {
+      list-style: none;
+      display: grid;
+      gap: 7px;
+    }
+
+    .xadrez-program-card li {
+      font-size: 0.86rem;
+      color: #e8eefc;
+      line-height: 1.35;
+    }
+
+    .xadrez-program-card li::before {
+      content: "✓";
+      color: #ffd166;
+      font-weight: 900;
+      margin-right: 7px;
+    }
+
+    .xadrez-partidas-card {
+      border-color: rgba(139, 92, 246, 0.25);
+    }
+
+    .xadrez-torneio-card {
+      border-color: rgba(255, 209, 102, 0.24);
+    }
+
+    @media (max-width: 760px) {
+      .xadrez-programs {
+        grid-template-columns: 1fr;
+      }
+
+      .xadrez-carousel,
+      .xadrez-carousel-box {
+        min-height: 340px;
+        height: 340px;
+      }
+
+      .xadrez-slide img {
+        top: 12px;
+        left: 12px;
+        right: 12px;
+        width: calc(100% - 24px);
+        height: calc(100% - 132px);
+        padding: 6px;
+      }
+
+      .xadrez-slide-caption {
+        left: 12px;
+        right: 12px;
+        bottom: 32px;
+        padding: 10px 12px;
+      }
+
+      .xadrez-slide-caption strong {
+        font-size: 0.96rem;
+      }
+
+      .xadrez-slide-caption span {
+        font-size: 0.78rem;
+      }
+
+      .xadrez-carousel .carousel-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1.7rem;
+      }
+    }
+
+    /* =========================
+       INTERCLASSE APP - IMAGENS ENCAIXADAS NO BLOCO
+    ========================= */
+    .interclasse-box {
+      border-radius: 30px;
+      border: 1px solid rgba(0,212,255,0.24);
+      background:
+        linear-gradient(90deg, rgba(3, 8, 20, 0.94) 0%, rgba(3, 8, 20, 0.82) 46%, rgba(3, 8, 20, 0.88) 100%),
+        url('/img/interclasse/fundoTela.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      padding: 36px;
+      backdrop-filter: blur(12px);
+      box-shadow:
+        0 18px 60px rgba(0,0,0,0.32),
+        0 0 55px rgba(0,212,255,0.10);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .interclasse-box::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 12% 12%, rgba(0,212,255,0.18), transparent 24%),
+        radial-gradient(circle at 88% 78%, rgba(25,229,140,0.14), transparent 26%),
+        linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.34));
+      pointer-events: none;
+    }
+
+    .interclasse-grid {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 28px;
+      align-items: stretch;
+      position: relative;
+      z-index: 1;
+    }
+
+    .interclasse-grid h3 {
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      line-height: 1.05;
+      letter-spacing: -1px;
+      margin-bottom: 14px;
+    }
+
+    .interclasse-grid p {
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 18px;
+    }
+
+    .interclasse-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 22px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(0,0,0,0.50), rgba(5,13,30,0.28));
+      border: 1px solid rgba(255,255,255,0.10);
+      backdrop-filter: blur(8px);
+    }
+
+    .interclasse-visual-panel {
+      display: grid;
+      gap: 16px;
+      align-self: stretch;
+    }
+
+    .interclasse-media-grid {
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 16px;
+      height: 520px;
+      min-height: 520px;
+      align-items: stretch;
+    }
+
+    .interclasse-main-photo,
+    .interclasse-side-photo {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.13);
+      background:
+        radial-gradient(circle at center, rgba(0,212,255,0.08), transparent 54%),
+        rgba(0,0,0,0.36);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.24);
+    }
+
+    .interclasse-main-photo {
+      height: 100%;
+      min-height: 520px;
+      padding: 12px;
+    }
+
+    .interclasse-side-stack {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 16px;
+      min-height: 0;
+    }
+
+    .interclasse-side-photo {
+      min-height: 0;
+      padding: 10px;
+    }
+
+    .interclasse-main-photo img,
+    .interclasse-side-photo img {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+      object-position: center;
+      border-radius: 18px;
+      background: rgba(0,0,0,0.22);
+      filter: saturate(1.05) contrast(1.04);
+    }
+
+    .interclasse-main-photo::after,
+    .interclasse-side-photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.00) 0%, rgba(0,0,0,0.10) 56%, rgba(0,0,0,0.58) 100%);
+    }
+
+    .interclasse-photo-overlay {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      z-index: 3;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(0,0,0,0.76), rgba(8,18,34,0.54));
+      border: 1px solid rgba(255,255,255,0.13);
+      backdrop-filter: blur(10px);
+    }
+
+    .interclasse-photo-overlay strong {
+      display: block;
+      margin-bottom: 0;
+      font-size: 0.98rem;
+      color: #fff;
+      line-height: 1.25;
+    }
+
+    .interclasse-photo-overlay span {
+      display: block;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.45;
+    }
+
+    .interclasse-tag {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      z-index: 4;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,209,102,0.16);
+      color: #fff2c4;
+      border: 1px solid rgba(255,209,102,0.26);
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      backdrop-filter: blur(8px);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .feature-box {
+      padding: 18px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(0,0,0,0.52), rgba(5,13,30,0.36));
+      border: 1px solid rgba(255,255,255,0.14);
+      backdrop-filter: blur(8px);
+    }
+
+    .feature-box strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .feature-box span {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    /* =========================
+       FAIXAS DE PROPAGANDAS ENTRE BLOCOS
+    ========================= */
+    .ad-strip-section {
+      padding: 16px 0 !important;
+      position: relative;
+    }
+
+    .ad-strip-box {
+      position: relative;
+      width: min(100%, 760px);
+      margin: 0 auto;
+      padding: 7px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background:
+        radial-gradient(circle at 12% 50%, rgba(0,212,255,0.10), transparent 28%),
+        radial-gradient(circle at 88% 50%, rgba(25,229,140,0.10), transparent 28%),
+        linear-gradient(135deg, rgba(255,255,255,0.055), rgba(255,255,255,0.025));
+      backdrop-filter: blur(14px);
+      box-shadow:
+        0 12px 34px rgba(0,0,0,0.25),
+        inset 0 0 0 1px rgba(255,255,255,0.03);
+      overflow: hidden;
+    }
+
+    .ads-carousel,
+    .ads-window,
+    .ads-track,
+    .ads-slide,
+    .ad-flip-card {
+      position: relative;
+      z-index: 1;
+    }
+
+    .ads-window {
+      overflow: hidden;
+      border-radius: 15px;
+    }
+
+    .ads-track {
+      display: flex;
+      transition: transform 0.58s ease;
+      will-change: transform;
+    }
+
+    .ads-slide {
+      min-width: 100%;
+      padding: 0;
+    }
+
+    .ad-flip-card {
+      height: 112px;
+      border-radius: 15px;
+      perspective: 1300px;
+      cursor: pointer;
+      outline: none;
+
+      /* Fallback: cada propaganda pode sobrescrever esses valores inline */
+      --ad-bg: #f8fafc;
+      --ad-bg-soft: #eef4ff;
+      --ad-text: #111827;
+      --ad-muted: #475569;
+      --ad-border: rgba(255,255,255,0.26);
+    }
+
+    .ad-flip-card:focus-visible {
+      box-shadow: 0 0 0 3px rgba(0,212,255,0.50);
+    }
+
+    .ad-flip-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.72s ease;
+      transform-style: preserve-3d;
+      border-radius: inherit;
+    }
+
+    .ad-flip-card:hover .ad-flip-inner,
+    .ad-flip-card.flipped .ad-flip-inner {
+      transform: rotateY(180deg);
+    }
+
+    .ad-face {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: inherit;
+      border: 1px solid var(--ad-border);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .ad-front {
+      padding: 8px 14px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.28), transparent 34%),
+        linear-gradient(135deg, var(--ad-bg), var(--ad-bg-soft));
+    }
+
+    .ad-logo-frame {
+      width: min(72%, 520px);
+      height: 66px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.28);
+      border: 1px solid rgba(255,255,255,0.22);
+      box-shadow:
+        0 8px 20px rgba(0,0,0,0.10),
+        inset 0 0 0 1px rgba(255,255,255,0.10);
+      overflow: hidden;
+    }
+
+    .ad-logo-frame img {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      object-position: center;
+      border-radius: 10px;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.16));
+    }
+
+    .ad-flip-card.has-side-media .ad-front {
+      padding: 7px 12px;
+    }
+
+    .ad-front-layout {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 0.9fr minmax(150px, 1.45fr) 0.9fr;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ad-front-layout .ad-logo-frame,
+    .ad-side-frame {
+      width: 100%;
+      height: 78px;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.24);
+      box-shadow:
+        0 8px 20px rgba(0,0,0,0.10),
+        inset 0 0 0 1px rgba(255,255,255,0.10);
+    }
+
+    .ad-front-layout .ad-logo-frame {
+      padding: 5px 12px;
+    }
+
+    .ad-side-frame {
+      padding: 0;
+    }
+
+    .ad-side-frame img,
+    .ad-front-layout .ad-logo-frame img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .ad-side-frame img {
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .ad-front-layout .ad-logo-frame img {
+      object-fit: contain;
+      object-position: center;
+    }
+
+    .ad-side-empty {
+      opacity: 0;
+      pointer-events: none;
+      border-color: transparent;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .ad-flip-card.has-side-media.fit-banner .ad-logo-frame,
+    .ad-flip-card.has-side-media.fit-photo .ad-logo-frame,
+    .ad-flip-card.has-side-media.fit-complete .ad-logo-frame,
+    .ad-flip-card.has-side-media.fit-logo-wide .ad-logo-frame,
+    .ad-flip-card.has-side-media.fit-logo-square .ad-logo-frame,
+    .ad-flip-card.has-side-media.fit-logo-tall .ad-logo-frame {
+      width: 100%;
+      height: 78px;
+      padding: 5px 12px;
+      background: rgba(255,255,255,0.24);
+      border: 1px solid rgba(255,255,255,0.22);
+      box-shadow:
+        0 8px 20px rgba(0,0,0,0.10),
+        inset 0 0 0 1px rgba(255,255,255,0.10);
+    }
+
+    .ad-flip-card.has-side-media.is-clickable {
+      cursor: pointer;
+    }
+
+    .ad-flip-card.fit-logo-wide .ad-logo-frame {
+      width: min(76%, 560px);
+      height: 62px;
+    }
+
+    .ad-flip-card.fit-logo-square .ad-logo-frame {
+      width: 82px;
+      height: 70px;
+      padding: 7px;
+    }
+
+    .ad-flip-card.fit-logo-tall .ad-logo-frame {
+      width: 96px;
+      height: 72px;
+      padding: 7px;
+    }
+
+    .ad-flip-card.fit-banner .ad-front,
+    .ad-flip-card.fit-photo .ad-front {
+      padding: 5px;
+    }
+
+    .ad-flip-card.fit-banner .ad-logo-frame,
+    .ad-flip-card.fit-photo .ad-logo-frame {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .ad-flip-card.fit-banner .ad-logo-frame img,
+    .ad-flip-card.fit-photo .ad-logo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .ad-flip-card.fit-complete .ad-front {
+      padding: 6px 12px;
+    }
+
+    .ad-flip-card.fit-complete .ad-logo-frame {
+      width: min(94%, 690px);
+      height: 72px;
+      padding: 4px 10px;
+      background: rgba(255,255,255,0.18);
+    }
+
+    .ad-flip-card.fit-complete .ad-logo-frame img {
+      object-fit: contain;
+    }
+
+    .ad-back {
+      transform: rotateY(180deg);
+      flex-direction: column;
+      text-align: center;
+      padding: 12px 20px;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(255,255,255,0.20), transparent 30%),
+        radial-gradient(circle at 82% 74%, rgba(0,0,0,0.10), transparent 32%),
+        linear-gradient(135deg, var(--ad-bg), var(--ad-bg-soft));
+    }
+
+    .ad-back h4 {
+      font-size: clamp(0.9rem, 1.7vw, 1.12rem);
+      line-height: 1.16;
+      letter-spacing: -0.25px;
+      max-width: 650px;
+      margin: 0 auto 4px;
+      color: var(--ad-text);
+      text-shadow: 0 1px 10px rgba(0,0,0,0.08);
+    }
+
+    .ad-back p {
+      color: var(--ad-muted);
+      font-size: 0.72rem;
+      line-height: 1.35;
+      max-width: 560px;
+      margin: 0 auto;
+      font-weight: 800;
+    }
+
+    .ad-back-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 7px;
+    }
+
+    .ad-link-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 27px;
+      padding: 6px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--ad-border);
+      background: rgba(255,255,255,0.22);
+      color: var(--ad-text);
+      font-size: 0.72rem;
+      line-height: 1;
+      font-weight: 950;
+      letter-spacing: 0.2px;
+      box-shadow:
+        0 8px 18px rgba(0,0,0,0.12),
+        inset 0 0 0 1px rgba(255,255,255,0.09);
+      backdrop-filter: blur(8px);
+      transition: 0.25s ease;
+    }
+
+    .ad-link-btn:hover,
+    .ad-link-btn:focus-visible {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.34);
+      box-shadow:
+        0 10px 22px rgba(0,0,0,0.16),
+        0 0 0 3px rgba(255,255,255,0.13);
+    }
+
+    @media (max-width: 760px) {
+      .ad-strip-section {
+        padding: 14px 0 !important;
+      }
+
+      .ad-strip-box {
+        width: min(100%, 620px);
+        padding: 6px;
+        border-radius: 18px;
+      }
+
+      .ad-flip-card {
+        height: 124px;
+      }
+
+      .ad-front {
+        padding: 8px 12px;
+      }
+
+      .ad-logo-frame {
+        width: min(82%, 440px);
+        height: 76px;
+      }
+
+      .ad-flip-card.fit-complete .ad-logo-frame {
+        height: 86px;
+      }
+
+      .ad-back {
+        padding: 14px 16px;
+      }
+
+      .ad-back h4 {
+        font-size: 0.96rem;
+      }
+
+      .ad-back p {
+        font-size: 0.72rem;
+      }
+
+      .ad-back-actions {
+        margin-top: 7px;
+      }
+
+      .ad-link-btn {
+        min-height: 28px;
+        padding: 6px 12px;
+        font-size: 0.68rem;
+      }
+
+      .ad-front-layout {
+        grid-template-columns: 0.78fr 1.25fr 0.78fr;
+        gap: 6px;
+      }
+
+      .ad-front-layout .ad-logo-frame,
+      .ad-side-frame,
+      .ad-flip-card.has-side-media.fit-banner .ad-logo-frame,
+      .ad-flip-card.has-side-media.fit-photo .ad-logo-frame,
+      .ad-flip-card.has-side-media.fit-complete .ad-logo-frame,
+      .ad-flip-card.has-side-media.fit-logo-wide .ad-logo-frame,
+      .ad-flip-card.has-side-media.fit-logo-square .ad-logo-frame,
+      .ad-flip-card.has-side-media.fit-logo-tall .ad-logo-frame {
+        height: 88px;
+        border-radius: 13px;
+      }
+
+      .ad-front-layout .ad-logo-frame {
+        padding: 5px 8px;
+      }
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+    .footer {
+      padding: 42px 0;
+      border-top: 1px solid var(--border-soft);
+      background: rgba(0,0,0,0.20);
+      margin-top: 40px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .footer p {
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .footer-links a:hover {
+      color: var(--azul);
+    }
+
+    /* =========================
+       RESPONSIVO
+    ========================= */
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .module-content,
+      .interclasse-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .interclasse-media-grid {
+        grid-template-columns: 1fr;
+        height: auto;
+        min-height: 0;
+      }
+
+      .interclasse-main-photo {
+        min-height: 520px;
+      }
+
+      .interclasse-side-stack {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: none;
+      }
+
+      .interclasse-side-photo {
+        min-height: 260px;
+      }
+
+      .mini-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .nav-menu,
+      .nav-actions {
+        display: none;
+      }
+
+      .mobile-toggle {
+        display: inline-flex;
+      }
+
+      .topbar.open .nav-menu {
+        position: absolute;
+        top: 76px;
+        left: 16px;
+        right: 16px;
+        display: grid;
+        gap: 6px;
+        padding: 16px;
+        border-radius: 20px;
+        background: rgba(8,12,28,0.98);
+        border: 1px solid var(--border-soft);
+      }
+
+      .topbar.open .nav-actions {
+        position: absolute;
+        top: 388px;
+        left: 16px;
+        right: 16px;
+        display: grid;
+        gap: 10px;
+        padding: 0 16px 16px;
+      }
+
+      .dropdown {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        display: none;
+        margin-top: 4px;
+      }
+
+      .nav-menu li:hover .dropdown {
+        display: block;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .hero {
+        padding-top: 120px;
+      }
+
+      .hero h1 {
+        letter-spacing: -1.5px;
+      }
+
+      .hero-stats,
+      .hero-sports-grid,
+      .mini-cards-grid,
+      .feature-grid,
+      .gallery-row,
+      .interclasse-side-stack {
+        grid-template-columns: 1fr;
+      }
+
+      .interclasse-main-photo {
+        min-height: 430px;
+      }
+
+      .interclasse-side-photo {
+        min-height: 240px;
+      }
+
+      .interclasse-photo-overlay {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        padding: 10px 12px;
+      }
+
+      .module-content,
+      .interclasse-box {
+        padding: 22px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+	
+    /* =========================
+       MODAL DE SOLUÇÕES (JANELA)
+    ========================= */
+    .modal-solucoes-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 15, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      padding: 20px;
+    }
+
+    .modal-solucoes-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-solucoes-box {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(8, 12, 28, 0.98));
+      border: 1px solid var(--border-soft);
+      border-radius: 28px;
+      width: 100%;
+      max-width: 550px;
+      padding: 40px;
+      position: relative;
+      transform: scale(0.95) translateY(20px);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+
+    .modal-solucoes-overlay.active .modal-solucoes-box {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-fechar {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .modal-fechar:hover {
+      background: var(--azul);
+      color: #000;
+      border-color: var(--azul);
+      transform: rotate(90deg);
+    }
+
+    .modal-icon {
+      font-size: 3.5rem;
+      margin-bottom: 15px;
+      display: inline-block;
+      filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.3));
+    }
+
+    .modal-title {
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 15px;
+      color: #fff;
+    }
+
+    .modal-desc {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .modal-features {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .modal-features li {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 14px 18px;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      color: #dce7ff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .modal-features li i {
+      color: var(--verde);
+      font-size: 1.1rem;
+    }
     
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
-    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        /* --- CORE STYLES (HUB IDENTIDADE) --- */
-        :root {
-            --racha-color: #00f3ff;   /* Ciano Neon para Racha */
-            --torneio-color: #bc13fe; /* Roxo Neon para Torneio */
-            --dark: #050505;      
-            --panel: #0f1215;     
-            --glass: rgba(255, 255, 255, 0.05);
-            --text-main: #ffffff;
-        }
+    /* =========================
+       CENTRAL DE SOLUÇÕES - GUIA INTERATIVO
+    ========================= */
+    .solutions-section {
+      padding-top: 78px;
+    }
 
-        * { box-sizing: border-box; outline: none; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; }
-        
-        /* --- FUNDO MODERNO E DINÂMICO --- */
-        body {
-            background: var(--dark);
-            position: relative;
-            min-height: 100vh;
-            color: var(--text-main);
-            overflow-x: hidden;
-        }
+    .solution-lab {
+      position: relative;
+      margin: 0 auto 26px;
+      padding: 24px;
+      border-radius: 30px;
+      border: 1px solid rgba(255,255,255,0.13);
+      background:
+        radial-gradient(circle at 12% 18%, rgba(25,229,140,0.13), transparent 28%),
+        radial-gradient(circle at 88% 20%, rgba(0,212,255,0.14), transparent 28%),
+        linear-gradient(135deg, rgba(255,255,255,0.075), rgba(255,255,255,0.035));
+      box-shadow: 0 24px 70px rgba(0,0,0,0.30);
+      backdrop-filter: blur(14px);
+      overflow: hidden;
+    }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 30% 40%, rgba(0, 243, 255, 0.03) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 70%, rgba(188, 19, 254, 0.03) 0%, transparent 50%),
-                        linear-gradient(135deg, #050505 0%, #0a0c10 100%);
-            z-index: -3;
-            pointer-events: none;
-        }
+    .solution-lab::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.055) 25%, transparent 25%) -18px 0/36px 36px,
+        linear-gradient(225deg, rgba(255,255,255,0.035) 25%, transparent 25%) -18px 0/36px 36px;
+      opacity: 0.18;
+      pointer-events: none;
+    }
 
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                repeating-linear-gradient(90deg, 
-                    rgba(255, 255, 255, 0.01) 0px, 
-                    rgba(255, 255, 255, 0.01) 2px, 
-                    transparent 2px, 
-                    transparent 30px),
-                repeating-linear-gradient(180deg, 
-                    rgba(255, 255, 255, 0.01) 0px, 
-                    rgba(255, 255, 255, 0.01) 2px, 
-                    transparent 2px, 
-                    transparent 30px);
-            background-size: 60px 60px;
-            z-index: -2;
-            pointer-events: none;
-        }
+    .solution-lab-header,
+    .solution-lab-grid {
+      position: relative;
+      z-index: 1;
+    }
 
-        /* Camada de partículas */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            overflow: hidden;
-        }
+    .solution-lab-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
 
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            animation: float 15s infinite linear;
-            box-shadow: 0 0 10px currentColor;
-        }
+    .solution-lab-header h3 {
+      font-size: clamp(1.55rem, 3vw, 2.25rem);
+      line-height: 1.05;
+      letter-spacing: -1px;
+      margin: 10px 0 8px;
+    }
 
-        .particle:nth-child(3n) { background: var(--racha-color); box-shadow: 0 0 8px var(--racha-color); }
-        .particle:nth-child(5n) { background: var(--torneio-color); box-shadow: 0 0 8px var(--torneio-color); }
+    .solution-lab-header p {
+      max-width: 720px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      font-size: 0.98rem;
+    }
 
-        @keyframes float {
-            0% { transform: translateY(100vh) scale(1); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-10vh) scale(0.5); opacity: 0; }
-        }
+    .solution-pill,
+    .solution-lab-badge,
+    .solution-result-kicker {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 950;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+      border: 1px solid rgba(0,212,255,0.28);
+      background: rgba(0,212,255,0.10);
+      color: #c7f6ff;
+    }
 
-        /* Overlay de grade tecnológica */
-        .tech-grid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 243, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(188, 19, 254, 0.02) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -1;
-            pointer-events: none;
-        }
+    .solution-lab-badge {
+      color: #d7ffe9;
+      border-color: rgba(25,229,140,0.30);
+      background: rgba(25,229,140,0.10);
+      white-space: nowrap;
+    }
 
-        /* --- NAVBAR --- */
-        nav {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 5%; position: fixed; top: 0; width: 100%; z-index: 1000;
-            background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: 2px; }
-        .logo span { color: var(--racha-color); }
+    .solution-lab-grid {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 18px;
+      align-items: stretch;
+    }
 
-        /* --- HERO SECTION --- */
-        .hero {
-            min-height: 50vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
-            text-align: center; padding: 120px 20px 40px;
-            background: radial-gradient(circle at top, #1a2a3a 0%, var(--dark) 70%);
-        }
-        .hero h1 { font-size: 4rem; line-height: 0.9; margin-bottom: 15px; text-transform: uppercase; font-weight: 800; }
-        .hero p { font-size: 1.2rem; color: #aaa; max-width: 600px; line-height: 1.5; margin-bottom: 20px; }
+    .solution-options {
+      display: grid;
+      gap: 10px;
+    }
 
-        /* --- THE APPS SHOWCASE --- */
-        .hub-container {
-            display: flex; justify-content: center; gap: 40px; padding: 40px 20px 80px; flex-wrap: wrap;
-            position: relative; z-index: 2;
-        }
+    .solution-choice {
+      width: 100%;
+      text-align: left;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 6px 12px;
+      align-items: center;
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.11);
+      background: rgba(255,255,255,0.055);
+      color: var(--text-main);
+      cursor: pointer;
+      transition: 0.25s ease;
+      font-family: inherit;
+    }
 
-        .app-card {
-            background: rgba(20, 20, 20, 0.6); 
-            border: 1px solid var(--glass);
-            border-radius: 20px; width: 400px; backdrop-filter: blur(10px); 
-            transition: 0.4s; position: relative; overflow: hidden;
-            display: flex; flex-direction: column;
-        }
+    .solution-choice span {
+      grid-row: span 2;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.10);
+      font-size: 1.35rem;
+    }
 
-        /* Variação RACHA */
-        .card-racha { border-top: 4px solid var(--racha-color); }
-        .card-racha:hover { transform: translateY(-10px); box-shadow: 0 10px 40px rgba(0, 243, 255, 0.15); border-color: rgba(0, 243, 255, 0.3); }
-        .card-racha .app-title { color: var(--racha-color); }
-        .card-racha .btn-app { background: var(--racha-color); color: #000; box-shadow: 0 0 15px rgba(0, 243, 255, 0.3); border: 1px solid var(--racha-color); }
-        .card-racha .btn-app:hover { box-shadow: 0 0 25px rgba(0, 243, 255, 0.6); transform: scale(1.02); }
-        .card-racha .btn-site { background: transparent; color: var(--racha-color); border: 1px solid var(--racha-color); }
-        .card-racha .btn-site:hover { background: rgba(0, 243, 255, 0.1); transform: scale(1.02); }
+    .solution-choice strong {
+      font-size: 0.97rem;
+      line-height: 1.15;
+    }
 
-        /* Variação TORNEIO */
-        .card-torneio { border-top: 4px solid var(--torneio-color); }
-        .card-torneio:hover { transform: translateY(-10px); box-shadow: 0 10px 40px rgba(188, 19, 254, 0.15); border-color: rgba(188, 19, 254, 0.3); }
-        .card-torneio .app-title { color: var(--torneio-color); }
-        .card-torneio .btn-app { background: var(--torneio-color); color: #fff; box-shadow: 0 0 15px rgba(188, 19, 254, 0.3); border: 1px solid var(--torneio-color); }
-        .card-torneio .btn-app:hover { box-shadow: 0 0 25px rgba(188, 19, 254, 0.6); transform: scale(1.02); }
-        .card-torneio .btn-site { background: transparent; color: var(--torneio-color); border: 1px solid var(--torneio-color); }
-        .card-torneio .btn-site:hover { background: rgba(188, 19, 254, 0.1); transform: scale(1.02); }
+    .solution-choice small {
+      color: var(--text-muted);
+      line-height: 1.35;
+      font-weight: 700;
+    }
 
-        /* Conteúdo do Card */
-        .app-header { padding: 40px 30px 20px; text-align: center; border-bottom: 1px solid var(--glass); }
-        .app-icon { font-size: 3.5rem; margin-bottom: 15px; }
-        .app-title { font-size: 2.5rem; font-weight: 800; text-transform: uppercase; line-height: 1; margin-bottom: 10px; }
-        .app-desc { color: #ccc; font-size: 1.1rem; }
+    .solution-choice:hover,
+    .solution-choice.active {
+      transform: translateY(-2px);
+      border-color: rgba(0,212,255,0.34);
+      background: linear-gradient(135deg, rgba(0,212,255,0.13), rgba(25,229,140,0.08));
+      box-shadow: 0 14px 32px rgba(0,0,0,0.22);
+    }
 
-        .app-features { padding: 30px; flex-grow: 1; }
-        .app-features ul { list-style: none; }
-        .app-features li { margin-bottom: 15px; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; color: #ddd; }
-        .app-features li i { font-size: 1.2rem; }
-        .card-racha li i { color: var(--racha-color); }
-        .card-torneio li i { color: var(--torneio-color); }
+    .solution-result-card {
+      min-height: 100%;
+      padding: 24px;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.13);
+      background:
+        radial-gradient(circle at 92% 12%, rgba(139,92,246,0.16), transparent 30%),
+        linear-gradient(135deg, rgba(0,0,0,0.36), rgba(255,255,255,0.055));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
 
-        .app-footer { padding: 20px 30px 40px; display: flex; flex-direction: column; gap: 15px; }
-        
-        .btn-action {
-            display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
-            padding: 16px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
-            border-radius: 8px; transition: 0.3s; font-size: 1rem;
-        }
+    .solution-result-card h3 {
+      font-size: clamp(1.45rem, 3vw, 2.25rem);
+      line-height: 1.06;
+      letter-spacing: -1px;
+      margin: 14px 0 12px;
+    }
 
-        /* --- PERSONALIZATION SECTION (ABA CRIATIVA) --- */
-        .personaliza-section {
-            position: relative;
-            min-height: 500px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 40px;
-            padding: 80px 5%; /* Ajustado para abraçar as duas colunas */
-            background: linear-gradient(to right, rgba(5, 5, 5, 0.95) 40%, rgba(5, 5, 5, 0.6)),
-                        url('https://images.unsplash.com/photo-1550684253-1136b2a5b314?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            overflow: hidden;
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
-            z-index: 2; 
-        }
+    .solution-result-card p {
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
 
-        .personaliza-content {
-            flex: 1 1 500px;
-            max-width: 600px;
-            z-index: 2;
-        }
+    .solution-result-list {
+      list-style: none;
+      display: grid;
+      gap: 9px;
+      margin-bottom: 22px;
+    }
 
-        .personaliza-content h2 { font-size: 3.5rem; text-transform: uppercase; font-weight: 800; margin-bottom: 10px; line-height: 0.9; color: #fff; }
-        .personaliza-tagline { font-size: 1.4rem; color: var(--racha-color); font-weight: 700; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 0 10px rgba(0, 243, 255, 0.3); }
-        .personaliza-description { color: #ccc; font-size: 1.1rem; line-height: 1.6; margin-bottom: 35px; border-left: 4px solid var(--torneio-color); padding-left: 20px; }
-        
-        .personaliza-list { list-style: none; }
-        .personaliza-list li { margin-bottom: 20px; font-size: 1.2rem; display: flex; align-items: center; gap: 15px; color: #ddd; font-weight: 600; }
-        .personaliza-list li i { font-size: 1.5rem; color: var(--torneio-color); text-shadow: 0 0 10px var(--torneio-color); }
+    .solution-result-list li {
+      color: #e8eefc;
+      line-height: 1.45;
+      font-size: 0.94rem;
+      font-weight: 750;
+    }
 
-        /* Coluna da Imagem (Lado Direito) */
-        .personaliza-visual {
-            flex: 1 1 400px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
+    .solution-result-list li::before {
+      content: "✓";
+      color: var(--verde);
+      font-weight: 950;
+      margin-right: 9px;
+    }
 
-        /* O Efeito do Card 3D */
-        .custom-card-mockup {
-            position: relative;
-            width: 100%;
-            max-width: 350px;
-            border-radius: 20px;
-            border: 2px solid var(--torneio-color);
-            /* Sombra roxa brilhante pra combinar com o Torneio */
-            box-shadow: 0 0 50px rgba(188, 19, 254, 0.4), inset 0 0 20px rgba(0,0,0,0.5);
-            /* Efeito 3D inclinado para a esquerda */
-            transform: perspective(1000px) rotateY(-15deg) rotateX(5deg);
-            transition: transform 0.5s ease;
-            overflow: hidden;
-            background: #000;
-        }
+    .solution-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: auto;
+    }
 
-        .custom-card-mockup:hover {
-            transform: perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.05);
-        }
+    .solucoes-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      margin-top: 22px;
+    }
 
-        .custom-card-mockup img {
-            width: 100%;
-            height: 400px; /* Altura fixa pra ficar formato de card/celular */
-            object-fit: cover;
-            display: block;
-            opacity: 0.85;
-            transition: 0.3s;
-        }
-        
-        .custom-card-mockup:hover img {
-            opacity: 1;
-            transform: scale(1.05);
-        }
+    @media (max-width: 1080px) {
+      .solution-lab-grid {
+        grid-template-columns: 1fr;
+      }
 
-        /* O "selinho" de faça você mesmo */
-        .mockup-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(5, 5, 5, 0.8);
-            border: 1px dashed var(--torneio-color);
-            color: var(--text-main);
-            padding: 8px 15px;
-            border-radius: 8px;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            backdrop-filter: blur(5px);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .mockup-badge i { color: var(--torneio-color); font-size: 1.2rem; }
+      .solucoes-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
 
-        .mockup-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 30px 20px 20px;
-            background: linear-gradient(to top, rgba(0,0,0,0.95) 20%, transparent);
-            text-align: center;
-        }
+    @media (max-width: 760px) {
+      .solution-lab {
+        padding: 18px;
+        border-radius: 24px;
+      }
 
-        .mockup-overlay h4 { color: #fff; margin: 0; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; }
-        .mockup-overlay p { color: var(--racha-color); margin: 5px 0 0; font-size: 0.9rem; font-weight: 600; }
+      .solution-lab-header {
+        display: grid;
+      }
 
-        /* --- CLOUD BANNER (100% NUVEM) --- */
-        .cloud-banner {
-            background: linear-gradient(135deg, rgba(10, 15, 20, 0.95), rgba(5, 5, 5, 1));
-            border-bottom: 1px solid rgba(0, 243, 255, 0.15);
-            padding: 70px 20px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            z-index: 2;
-        }
+      .solution-lab-badge {
+        justify-self: start;
+      }
 
-        .cloud-banner::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 400px;
-            height: 400px;
-            background: var(--racha-color);
-            filter: blur(200px);
-            opacity: 0.15;
-            z-index: 0;
-            pointer-events: none;
-        }
+      .solution-choice {
+        grid-template-columns: auto 1fr;
+        padding: 12px;
+      }
 
-        .cloud-content {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-            max-width: 1100px;
-            z-index: 1;
-        }
+      .solution-result-card {
+        padding: 20px;
+      }
 
-        .cloud-icon i {
-            font-size: 7rem;
-            color: var(--racha-color);
-            filter: drop-shadow(0 0 20px rgba(0, 243, 255, 0.4));
-        }
+      .solution-actions {
+        display: grid;
+      }
 
-        .cloud-text h2 {
-            font-size: 3rem;
-            text-transform: uppercase;
-            font-weight: 800;
-            margin-bottom: 15px;
-            line-height: 1;
-        }
+      .solucoes-cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
 
-        .cloud-text .highlight { color: var(--racha-color); }
+    /* Indicador visual de clique nos cards */
+    .mini-card { cursor: pointer; }
+    .mini-card-link {
+        display: inline-block; margin-top: 15px; color: var(--azul); font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; transition: 0.2s;
+    }
+    .mini-card:hover .mini-card-link { transform: translateX(5px); }
 
-        .cloud-text p {
-            font-size: 1.2rem;
-            color: #bbb;
-            margin-bottom: 25px;
-            max-width: 600px;
-            line-height: 1.5;
-        }
-
-        .cloud-benefits {
-            display: flex;
-            gap: 15px;
-            list-style: none;
-            flex-wrap: wrap;
-        }
-
-        .cloud-benefits li {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 10px 20px;
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            font-weight: 700;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        .cloud-benefits li i { color: var(--racha-color); font-size: 1.2rem; }
-
-        /* --- ADS / SPONSORS SECTION --- */
-        .ads-section {
-            padding: 80px 20px; text-align: center;
-            background: linear-gradient(180deg, #080a0e 0%, #0b0f14 100%);
-            border-bottom: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden; z-index: 2;
-        }
-
-        .ads-title {
-            font-size: 2rem; font-weight: 800; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 10px;
-            position: relative; z-index: 1; background: linear-gradient(135deg, #fff 0%, #aaa 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-
-        .ads-subtitle { font-size: 1.1rem; color: #888; margin-bottom: 50px; position: relative; z-index: 1; }
-
-        .ad-banner-container {
-            max-width: 1100px; margin: 0 auto; display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 2;
-        }
-
-        .ad-card {
-            width: 260px; height: 200px; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column;
-            cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative;
-            background: #ffffff; box-shadow: 0 15px 30px -10px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .ad-active:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px -5px rgba(0,243,255,0.3), 0 0 0 2px rgba(0,243,255,0.2);
-            border-color: var(--racha-color);
-        }
-
-        .ad-img-wrapper { width: 100%; height: 140px; display: flex; align-items: center; justify-content: center; padding: 15px; background: #ffffff; transition: 0.3s; }
-        .ad-image { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1)); transition: 0.3s; }
-        .ad-active:hover .ad-image { transform: scale(1.05); }
-
-        .ad-caption {
-            width: 100%; background: #f8fafc; color: #0f172a; font-size: 0.85rem; font-weight: 700; text-align: center;
-            padding: 12px 5px; text-transform: uppercase; letter-spacing: 1.5px; border-top: 1px solid rgba(0,0,0,0.05); transition: 0.3s; line-height: 1.3;
-        }
-        .ad-active:hover .ad-caption { background: var(--racha-color); color: #000; }
-
-        .ad-empty {
-            background: rgba(10, 15, 20, 0.8); backdrop-filter: blur(5px); border: 2px dashed rgba(0, 243, 255, 0.3);
-            box-shadow: 0 0 30px rgba(0,243,255,0.1); justify-content: center; align-items: center; transition: 0.4s;
-        }
-        .ad-empty:hover { border-color: var(--racha-color); background: rgba(0, 243, 255, 0.05); transform: scale(1.02); box-shadow: 0 0 50px rgba(0,243,255,0.3); }
-
-        .ad-empty-content { display: flex; flex-direction: column; align-items: center; gap: 15px; color: var(--racha-color); font-weight: 700; text-transform: uppercase; font-size: 1rem; letter-spacing: 2px; }
-        .ad-empty-content i { font-size: 3rem; color: var(--racha-color); filter: drop-shadow(0 0 10px currentColor); }
-        .ad-empty-content span { background: rgba(0,243,255,0.1); padding: 8px 16px; border-radius: 40px; border: 1px solid rgba(0,243,255,0.3); }
-        .ad-empty:hover .ad-empty-content span { background: var(--racha-color); color: #000; border-color: var(--racha-color); }
-
-        /* --- FOOTER --- */
-        footer { 
-            padding: 60px 20px 40px; text-align: center; background: var(--dark); color: #666; font-size: 0.9rem; 
-            border-top: 1px solid rgba(255,255,255,0.02); position: relative; z-index: 2;
-        }
-
-        footer .social-icons { display: flex; justify-content: center; gap: 30px; font-size: 2rem; margin-bottom: 30px; }
-        footer .social-icons i { cursor: pointer; color: #aaa; transition: 0.3s; }
-        footer .social-icons i:hover { transform: translateY(-3px); }
-
-        /* Mobile adjustments */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.8rem; }
-            .app-card { width: 100%; max-width: 400px; }
-            .ad-card { width: 220px; height: 180px; }
-            .ad-img-wrapper { height: 120px; }
-            
-            .personaliza-section {
-                /* No celular a imagem fica embaixo e o texto em cima */
-                background: linear-gradient(to bottom, rgba(5, 5, 5, 0.98) 50%, rgba(5, 5, 5, 0.5)),
-                        url('https://images.unsplash.com/photo-1550684253-1136b2a5b314?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
-                padding: 60px 5%;
-                text-align: center;
-            }
-            .personaliza-description {
-                border-left: none;
-                border-top: 4px solid var(--torneio-color);
-                padding-left: 0;
-                padding-top: 20px;
-                text-align: justify;
-            }
-            .personaliza-list { text-align: left; }
-            
-            .custom-card-mockup { transform: perspective(1000px) rotateY(0deg) rotateX(0deg); }
-
-            .cloud-content { flex-direction: column; text-align: center; gap: 20px; }
-            .cloud-benefits { justify-content: center; }
-            .cloud-text h2 { font-size: 2.2rem; }
-            .cloud-icon i { font-size: 5rem; }
-        }
-    </style>
+  </style>
 </head>
 <body>
+<header class="topbar" id="topbar">
+<div class="container nav">
+	<a class="brand" href="#inicio" aria-label="DigiSúmula - início">
+	  <img class="brand-logo" src="/img/logo-topbar.png" alt="Símbolo DigiSúmula">
 
-    <div class="particles" id="particles"></div>
-    <div class="tech-grid"></div>
+	  <span class="brand-text">
+	    <span class="brand-title">Digi<strong>Súmula</strong></span>
+	    <span class="brand-subtitle">Gestão esportiva digital</span>
+	  </span>
+	</a>
+<ul class="nav-menu">
+<li><a class="nav-link" href="#inicio">Início</a></li>
+<li>
+<a class="nav-link" href="#modalidades">Modalidades ▾</a>
+<div class="dropdown">
+<a href="#modulo-futebol">⚽ Futebol</a>
+<a href="#modulo-volei">🏐 Vôlei</a>
+<a href="#modulo-basquete">🏀 Basquete</a>
+<a href="#modulo-xadrez">♟️ Xadrez</a>
+</div>
+</li>
+<li>
+<a class="nav-link" href="#solucoes">Soluções ▾</a>
+<div class="dropdown">
+<a href="#solucoes" onclick="selecionarSolucao('organizar-jogo')">🧭 Guia de Soluções</a>
+<a href="#solucoes" onclick="abrirModalSolucao('racha')">🎲 Racha Inteligente</a>
+<a href="#solucoes" onclick="abrirModalSolucao('torneios')">🏆 Torneios</a>
+<a href="#solucoes" onclick="abrirModalSolucao('sumula')">📋 Súmula Digital</a>
+<a href="#solucoes" onclick="abrirModalSolucao('rankings')">📊 Rankings e Métricas</a>
+<a href="#interclasse">🏫 Interclasse</a>
+</div>
+</li>
+<li><a class="nav-link" href="#interclasse">Interclasse</a></li>
+</ul>
+<div class="nav-actions">
+<a class="btn btn-outline" href="#modalidades">Escolher esporte</a>
+<a class="btn btn-primary" href="#contato">Seja parceiro</a>
+</div>
+<button class="mobile-toggle" id="mobileToggle">☰</button>
+</div>
+</header>
 
-    <nav>
-        <div class="logo">FUT SUMULA <span>PRO</span></div>
-        <a href="#contato" style="color: #fff; font-weight: 600;">Seja um Parceiro</a>
-    </nav>
 
-    <section class="hero">
-        <h1>O Ecossistema Definitivo<br>do Futebol Amador</h1>
-        <p>Da pelada de fim de semana ao maior campeonato da sua cidade. Escolha sua arena e leve sua organização para o nível profissional.</p>
-    </section>
 
-    <section class="hub-container">
-        
-        <div class="app-card card-racha">
-            <div class="app-header">
-                <i class="bi bi-lightning-charge-fill app-icon" style="color: var(--racha-color);"></i>
-                <h2 class="app-title">Racha</h2>
-                <p class="app-desc">Para peladas, rachas e amistosos rápidos.</p>
-            </div>
-            <div class="app-features">
-                <ul>
-                    <li><i class="bi bi-check-circle-fill"></i> Sorteio de times equilibrados pela IA</li>
-                    <li><i class="bi bi-check-circle-fill"></i> Súmula rápida de gols e notas</li>
-                    <li><i class="bi bi-check-circle-fill"></i> Controle financeiro (PIX) do racha</li>
-                    <li><i class="bi bi-check-circle-fill"></i> Geração de Card do "Craque do Jogo"</li>
-                </ul>
-            </div>
-            <div class="app-footer">
-				<a href="Pracha.html" class="btn-action btn-site">
-				    <i class="bi bi-globe"></i> Conhecer o Site
-				</a>
-				<a href="https://fut-sumula-racha.onrender.com/" class="btn-action btn-app">
-				    <i class="bi bi-phone"></i> Acessar App
-				</a>
-            </div>
+<main class="hero" id="inicio">
+  <div class="container hero-grid" style="grid-template-columns: 1fr; text-align: center; max-width: 900px; padding-top: 40px;">
+    
+    <div style="margin: 0 auto; display: flex; flex-direction: column; align-items: center;">
+      <div class="eyebrow" style="background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.1); color: var(--text-muted); font-weight: 600; text-transform: none; letter-spacing: 0;">
+        <span style="background: linear-gradient(90deg, var(--verde), var(--azul)); color: #000; padding: 2px 8px; border-radius: 999px; margin-right: 8px; font-weight: 900; font-size: 0.7rem; text-transform: uppercase;">Novo</span>
+        Gestão esportiva digital
+      </div>
+
+      <h1 style="font-size: clamp(3rem, 7vw, 5.5rem); letter-spacing: -2px; margin-bottom: 24px; font-weight: 900; line-height: 1;">
+        Organize jogos, torneios e <br>
+        <span class="gradient-text" style="background: linear-gradient(to right, #fff, #a8b3cf); -webkit-background-clip: text; color: transparent;">súmulas em um só lugar.</span>
+      </h1>
+
+      <p style="font-size: 1.25rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 40px; line-height: 1.6;">
+        A plataforma digital para escolas, torneios e competições. Gerencie <strong>futebol, vôlei, basquete e xadrez</strong> com súmulas digitais, rankings, equipes e resultados em tempo real.
+      </p>
+
+      <div class="hero-actions" style="justify-content: center; gap: 16px; margin-bottom: 60px;">
+        <a class="btn btn-primary" href="#modalidades" style="padding: 14px 32px; font-size: 1.05rem; box-shadow: 0 0 40px rgba(25, 229, 140, 0.3);">
+          Explorar a DigiSúmula
+        </a>
+        <a class="btn btn-outline" href="#solucoes" style="padding: 14px 32px; font-size: 1.05rem; border-color: rgba(255,255,255,0.15);">
+          Ver Funcionalidades
+        </a>
+      </div>
+
+      <div style="display: flex; gap: 30px; justify-content: center; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px;">
+        <div style="display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.9rem;">
+          <span style="color: var(--verde);">✓</span> 4 Módulos
         </div>
-
-        <div class="app-card card-torneio">
-            <div class="app-header">
-                <i class="bi bi-trophy-fill app-icon" style="color: var(--torneio-color);"></i>
-                <h2 class="app-title">Torneio</h2>
-                <p class="app-desc">Para ligas, copas e grandes campeonatos.</p>
-            </div>
-            <div class="app-features">
-                <ul>
-                    <li><i class="bi bi-check-circle-fill"></i> Tabela de classificação automática</li>
-                    <li><i class="bi bi-check-circle-fill"></i> Chaveamento de Fases (Mata-Mata)</li>
-                    <li><i class="bi bi-check-circle-fill"></i> Gerador IA de Mídia (Cards Estilo TV)</li>
-                    <li><i class="bi bi-check-circle-fill"></i> Controle avançado de cartões e suspensões</li>
-                </ul>
-            </div>
-            <div class="app-footer">
-				<a href="Ptorneio.html" class="btn-action btn-site">
-				    <i class="bi bi-globe"></i> Conhecer o Site
-				</a>				
-				<a href="https://fut-sumula-torneio.onrender.com/login.html" class="btn-action btn-app">
-				    <i class="bi bi-phone"></i> Acessar App
-				</a>
-            </div>
+        <div style="display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.9rem;">
+          <span style="color: var(--verde);">✓</span> 100% Online
         </div>
-
-    </section>
-
-    <section class="product-showcase" style="margin: 0 auto 80px auto; max-width: 1100px; padding: 0 20px; position: relative; z-index: 2;">
-        <div style="background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; border-top: 4px solid #00f2fe; padding: 40px; display: flex; flex-wrap: wrap; gap: 40px; align-items: center; box-shadow: 0 15px 35px rgba(0,0,0,0.5);">
-            
-            <div class="product-preview" style="flex: 1; min-width: 300px; position: relative;">
-                <div style="background: linear-gradient(135deg, #00f2fe, #b200ff); width: 100%; height: 250px; border-radius: 15px; box-shadow: 0 0 30px rgba(0, 242, 254, 0.3); display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; position: relative;">
-                    <div style="position: absolute; top:0; left:0; width:100%; height:100%; background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 20px 20px; opacity: 0.5;"></div>
-                    
-                    <i class="bi bi-mortarboard-fill" style="font-size: 4rem; color: #fff; margin-bottom: 10px; z-index: 1;"></i>
-                    <h1 style="font-family: 'Rajdhani', sans-serif; color: #fff; font-size: 2rem; font-weight: 800; text-align: center; text-transform: uppercase; line-height: 1; z-index: 1;">
-                        Interclasse<br><span style="color: #b200ff; background: #fff; padding: 2px 10px; font-size: 1.2rem; border-radius: 5px;">PRO EDITION</span>
-                    </h1>
-                </div>
-                <div style="position: absolute; top: -15px; right: -15px; background: #ff00de; color: #fff; padding: 5px 15px; border-radius: 30px; font-family: 'Rajdhani', sans-serif; font-size: 0.9rem; font-weight: 800; box-shadow: 0 0 15px #ff00de; text-transform: uppercase; letter-spacing: 1px;">LANÇAMENTO</div>
-            </div>
-
-			<div class="product-info" style="flex: 1.5; min-width: 300px;">
-			                <h2 style="font-family: 'Rajdhani', sans-serif; color: #00f2fe; text-transform: uppercase; font-size: 2.5rem; font-weight: 800; line-height: 1; margin-bottom: 10px;">🏆 Interclasse App</h2>
-			                
-			                <div style="display: inline-block; background: rgba(178, 0, 255, 0.2); border: 1px solid #b200ff; color: #fff; padding: 4px 12px; border-radius: 5px; font-size: 0.85rem; font-weight: 700; margin-bottom: 15px; letter-spacing: 1px; text-transform: uppercase;">
-			                    ⏳ O fim das planilhas e do trabalho manual!
-			                </div>
-
-			                <p style="font-size: 1.1rem; color: #ccc; line-height: 1.6; margin-bottom: 25px;">
-			                    A solução definitiva para <strong>escolas e professores de Educação Física</strong>. Diga adeus às horas perdidas recolhendo nomes turma por turma! Envie um link de auto-inscrição para os alunos e deixe nossa Inteligência Artificial cruzar os dados, montando <strong>tabelas, chaves e o calendário completo em apenas um clique</strong>.
-			                </p>
-			                
-			                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 30px;">
-			                    <div style="color: #fff; font-size: 1rem; font-weight: 600; display: flex; align-items: center;"><i class="bi bi-link-45deg" style="color: #00f2fe; margin-right: 8px; font-size: 1.3rem;"></i> Auto-Inscrição via Link</div>
-			                    <div style="color: #fff; font-size: 1rem; font-weight: 600; display: flex; align-items: center;"><i class="bi bi-magic" style="color: #00f2fe; margin-right: 8px; font-size: 1.1rem;"></i> Calendário Inteligente em 1 Clique</div>
-			                    <div style="color: #fff; font-size: 1rem; font-weight: 600; display: flex; align-items: center;"><i class="bi bi-shield-check" style="color: #00f2fe; margin-right: 8px; font-size: 1.2rem;"></i> Zero Conflito de Horários e Quadras</div>
-			                    <div style="color: #fff; font-size: 1rem; font-weight: 600; display: flex; align-items: center;"><i class="bi bi-printer-fill" style="color: #00f2fe; margin-right: 8px; font-size: 1.2rem;"></i> Tabelas em PDF Prontas p/ Mural</div>
-			                    <div style="color: #fff; font-size: 1rem; font-weight: 600; display: flex; align-items: center;"><i class="bi bi-clipboard-data-fill" style="color: #00f2fe; margin-right: 8px; font-size: 1.2rem;"></i> Súmulas SaaS e Artilharia Online</div>
-			                    <div style="color: #fff; font-size: 1rem; font-weight: 600; display: flex; align-items: center;"><i class="bi bi-star-fill" style="color: #00f2fe; margin-right: 8px; font-size: 1.2rem;"></i> Hall da Fama em Tempo Real</div>
-			                </div>
-
-			                <a href="https://wa.me/5588996312358?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20InterclasseApp%20e%20combinar%20acesso%20e%20usabilidade." target="_blank" style="text-decoration: none;">
-			                    <button style="background: #00f2fe; color: #000; border: none; padding: 15px 30px; border-radius: 8px; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s; width: 100%; box-shadow: 0 0 15px rgba(0, 242, 254, 0.3); display: flex; justify-content: center; align-items: center; gap: 10px;">
-			                        <i class="bi bi-whatsapp" style="font-size: 1.3rem;"></i> Fale com um de nossos atendentes para combinar acesso e usabilidade
-			                    </button>
-			                </a>
-			            </div>
+        <div style="display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.9rem;">
+          <span style="color: var(--verde);">✓</span> Sem Downloads
         </div>
-    </section>
-    <section class="personaliza-section">
-        
-        <div class="personaliza-content">
-            <h2>Personalize seu <span style="color: var(--torneio-color);">Torneio</span></h2>
-            <p class="personaliza-tagline">O sistema é digital, mas a cara é do seu racha!</p>
-            
-            <p class="personaliza-description">
-                Chega de campeonatos genéricos. Aqui a tecnologia se adapta à sua realidade. Coloque o escudo do time da rua, as cores da sua quebrada e os apelidos que só a galera conhece. Profissionalismo na gestão, identidade de várzea na alma.
+      </div>
+
+    </div>
+  </div>
+</main>
+<section id="modalidades">
+<div class="container">
+<div class="section-header">
+<span class="section-kicker">Modalidades</span>
+<h2 class="section-title">Módulos esportivos integrados e prontos para crescer</h2>
+<p class="section-subtitle">
+          Cada modalidade possui uma área própria, com organização visual, recursos específicos e estrutura preparada para apresentar o sistema de forma profissional.
+        </p>
+</div>
+<div class="mini-cards-grid">
+<article class="mini-card">
+<span class="icon">⚽</span>
+<h3>Futebol</h3>
+<p>Peladas, rachas, ligas e campeonatos completos com classificação e artilharia.</p>
+</article>
+<article class="mini-card">
+<span class="icon">🏐</span>
+<h3>Vôlei</h3>
+<p>Torneios por sets, equipes, grupos e mata-mata com uma organização clara.</p>
+</article>
+<article class="mini-card">
+<span class="icon">🏀</span>
+<h3>Basquete</h3>
+<p>Gestão por pontuação, quartos, faltas e estatísticas esportivas.</p>
+</article>
+<article class="mini-card">
+<span class="icon">♟️</span>
+<h3>Xadrez</h3>
+<p>Rankings, rodadas e histórico de confrontos com visual elegante e moderno.</p>
+</article>
+</div>
+</div>
+</section>
+
+<section class="ad-strip-section" aria-label="Faixa de parceiros">
+  <div class="container">
+    <div class="ad-strip-box">
+      <div class="ads-carousel" data-autoplay="true">
+        <div class="ads-window">
+          <div class="ads-track"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="solucoes" class="solutions-section">
+<div class="container">
+<div class="section-header">
+<span class="section-kicker">Central de Soluções</span>
+<h2 class="section-title">Escolha a necessidade e descubra o melhor caminho</h2>
+<p class="section-subtitle">
+          Em vez de ser apenas uma lista de recursos, esta área funciona como um guia rápido: o visitante informa o que precisa resolver e a DigiSúmula indica qual solução faz mais sentido.
+        </p>
+</div>
+
+<div class="solution-lab" aria-label="Guia interativo de soluções da DigiSúmula">
+  <div class="solution-lab-header">
+    <div>
+      <span class="solution-pill">Assistente do Hub</span>
+      <h3>O que você quer organizar?</h3>
+      <p>Selecione um cenário para ver uma recomendação direta, com recursos principais e próximo passo.</p>
+    </div>
+    <div class="solution-lab-badge">Interativo</div>
+  </div>
+
+  <div class="solution-lab-grid">
+    <div class="solution-options" role="tablist" aria-label="Necessidades do usuário">
+      <button class="solution-choice active" type="button" data-solution="organizar-jogo" onclick="selecionarSolucao('organizar-jogo')">
+        <span>⚡</span>
+        <strong>Organizar jogo rápido</strong>
+        <small>Pelada, racha, amistoso ou jogo avulso</small>
+      </button>
+
+      <button class="solution-choice" type="button" data-solution="criar-torneio" onclick="selecionarSolucao('criar-torneio')">
+        <span>🏆</span>
+        <strong>Criar campeonato</strong>
+        <small>Grupos, mata-mata, tabela e classificação</small>
+      </button>
+
+      <button class="solution-choice" type="button" data-solution="registrar-partida" onclick="selecionarSolucao('registrar-partida')">
+        <span>📋</span>
+        <strong>Registrar partida</strong>
+        <small>Súmula, gols, pontos, cartões e ocorrências</small>
+      </button>
+
+      <button class="solution-choice" type="button" data-solution="divulgar-evento" onclick="selecionarSolucao('divulgar-evento')">
+        <span>🎨</span>
+        <strong>Divulgar resultados</strong>
+        <small>Cards, rankings, destaques e comunicação visual</small>
+      </button>
+
+      <button class="solution-choice" type="button" data-solution="gestao-escolar" onclick="selecionarSolucao('gestao-escolar')">
+        <span>🏫</span>
+        <strong>Organizar interclasse</strong>
+        <small>Turmas, modalidades, calendário e mural escolar</small>
+      </button>
+    </div>
+
+    <article class="solution-result-card" id="solutionResultCard">
+      <span class="solution-result-kicker" id="solutionResultKicker">Recomendação</span>
+      <h3 id="solutionResultTitle">Use o DigiSúmula Racha</h3>
+      <p id="solutionResultText">
+        Para jogos rápidos, o melhor caminho é usar o módulo de Racha: ele resolve sorteio de times,
+        controle de jogadores, registro da partida e organização prática do evento.
+      </p>
+      <ul class="solution-result-list" id="solutionResultList">
+        <li>Sorteio de times equilibrados</li>
+        <li>Controle rápido dos participantes</li>
+        <li>Registro de gols, notas e destaques</li>
+      </ul>
+      <div class="solution-actions">
+        <button class="btn btn-primary" type="button" id="solutionPrimaryAction" onclick="abrirModalSolucao('racha')">Ver detalhes</button>
+        <a class="btn btn-outline" id="solutionSecondaryAction" href="#modulo-futebol">Ir para o módulo</a>
+      </div>
+    </article>
+  </div>
+</div>
+
+<div class="solucoes-cards-grid">
+  <article class="mini-card" onclick="abrirModalSolucao('racha')">
+    <span class="icon">🎲</span>
+    <h3>Racha Inteligente</h3>
+    <p>Jogos rápidos, amistosos e eventos esportivos leves com gestão simplificada.</p>
+    <span class="mini-card-link">Saiba mais →</span>
+  </article>
+
+  <article class="mini-card" onclick="abrirModalSolucao('torneios')">
+    <span class="icon">🏆</span>
+    <h3>Torneios</h3>
+    <p>Fase de grupos, mata-mata, classificação automática e controle por modalidade.</p>
+    <span class="mini-card-link">Saiba mais →</span>
+  </article>
+
+  <article class="mini-card" onclick="abrirModalSolucao('sumula')">
+    <span class="icon">📋</span>
+    <h3>Súmula Digital</h3>
+    <p>Registre partidas, jogadores, equipes, placares e estatísticas com praticidade.</p>
+    <span class="mini-card-link">Saiba mais →</span>
+  </article>
+
+  <article class="mini-card" onclick="abrirModalSolucao('rankings')">
+    <span class="icon">📊</span>
+    <h3>Rankings e Métricas</h3>
+    <p>Transforme resultados em classificação, artilharia, MVPs e histórico esportivo.</p>
+    <span class="mini-card-link">Saiba mais →</span>
+  </article>
+
+  <article class="mini-card" onclick="abrirModalSolucao('cards')">
+    <span class="icon">🎨</span>
+    <h3>Cards e Divulgação</h3>
+    <p>Crie identidade visual esportiva com artes de resultados, rankings e destaques.</p>
+    <span class="mini-card-link">Saiba mais →</span>
+  </article>
+</div>
+</div>
+</section>
+
+<section class="ad-strip-section" aria-label="Faixa de parceiros">
+  <div class="container">
+    <div class="ad-strip-box">
+      <div class="ads-carousel" data-autoplay="true">
+        <div class="ads-window">
+          <div class="ads-track"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="module-section" id="modulo-futebol">
+<div class="container">
+<div class="module-block module-fut">
+<div class="module-bg"></div>
+<div class="module-content futebol-content">
+<div class="module-text futebol-text">
+<div class="section-kicker">⚽ Módulo Futebol</div>
+<h3>Futebol: Racha + Torneio</h3>
+<p>
+              O futebol fica dividido em duas frentes dentro do mesmo ambiente:
+              <strong>Racha</strong>, para peladas, amistosos e jogos rápidos, e
+              <strong>Torneio</strong>, para ligas, copas e campeonatos completos.
+              Assim a DigiSúmula apresenta claramente os dois fluxos sem misturar as funções.
             </p>
-            
-            <ul class="personaliza-list">
-                <li><i class="bi bi-shield-shaded"></i> Upload do Escudo e Logo do seu Time</li>
-                <li><i class="bi bi-palette-fill"></i> Cores Personalizadas nas Tabelas e Súmulas</li>
-                <li><i class="bi bi-ticket-perforated-fill"></i> Cards de Jogadores com Identidade Visual Própria</li>
-            </ul>
 
-            <a href="Ptorneio.html" class="btn-action btn-site" style="width: fit-content; margin-top: 30px; border-color: var(--torneio-color); color: var(--torneio-color); padding: 15px 30px;">
-                <i class="bi bi-pencil-square"></i> Ver Opções de Personalização
-            </a>
+<div class="module-badges">
+<span class="badge">Racha Inteligente</span>
+<span class="badge">Torneios e Copas</span>
+<span class="badge">Súmula Digital</span>
+<span class="badge">Cards e Ranking</span>
+</div>
+
+<div class="futebol-programs">
+<article class="futebol-program-card futebol-racha-card">
+<div class="program-label">Programa 01</div>
+<h4>⚡ DigiSúmula Racha</h4>
+<p>
+                  Para peladas, amistosos e jogos rápidos. Ideal para sortear times,
+                  registrar gols, controlar pagamentos e gerar destaques do jogo.
+                </p>
+<ul>
+<li>Sorteio de times equilibrados</li>
+<li>Súmula rápida de gols e notas</li>
+<li>Controle financeiro do racha</li>
+<li>Card do craque da partida</li>
+</ul>
+<div class="program-actions">
+<a class="btn btn-outline btn-mini" href="Pracha.html">Conhecer Racha</a>
+<a class="btn btn-primary btn-mini" href="https://fut-sumula-racha.onrender.com/" target="_blank">Acessar App</a>
+</div>
+</article>
+
+<article class="futebol-program-card futebol-torneio-card">
+<div class="program-label">Programa 02</div>
+<h4>🏆 DigiSúmula Torneio</h4>
+<p>
+                  Para ligas, copas e campeonatos organizedos. Ideal para tabela,
+                  classificação, mata-mata, cartões, suspensões e mídia profissional.
+                </p>
+<ul>
+<li>Classificação automática</li>
+<li>Fase de grupos e mata-mata</li>
+<li>Controle de cartões e suspensões</li>
+<li>Cards de confronto e resultado</li>
+</ul>
+<div class="program-actions">
+<a class="btn btn-outline btn-mini" href="Ptorneio.html">Conhecer Torneio</a>
+<a class="btn btn-primary btn-mini" href="https://fut-sumula-torneio.onrender.com/login.html" target="_blank">Acessar App</a>
+</div>
+</article>
+</div>
+</div>
+
+<div class="module-gallery futebol-gallery">
+  <div class="gallery-main futebol-carousel-box">
+    <div class="futebol-carousel" id="futebolCarousel">
+
+      <div class="futebol-slide active">
+        <img alt="Tela 1 do DigiSúmula Futebol" src="/img/futebol/tela1.png" />
+        <div class="futebol-slide-caption">
+          <strong>DigiSúmula Racha</strong>
+          <span>Controle visual para rachas, peladas, jogadores e partidas rápidas.</span>
+        </div>
+      </div>
+
+      <div class="futebol-slide">
+        <img alt="Tela 2 do DigiSúmula Futebol" src="/img/futebol/tela2.png" />
+        <div class="futebol-slide-caption">
+          <strong>Rachas e amistosos</strong>
+          <span>Organização prática para jogos rápidos, equipes e registros da partida.</span>
+        </div>
+      </div>
+
+      <div class="futebol-slide">
+        <img alt="Tela 3 do DigiSúmula Futebol" src="/img/futebol/tela3.png" />
+        <div class="futebol-slide-caption">
+          <strong>Gestão de jogadores</strong>
+          <span>Área preparada para apresentar atletas, equipes e informações do jogo.</span>
+        </div>
+      </div>
+
+      <div class="futebol-slide">
+        <img alt="Tela 4 do DigiSúmula Futebol" src="/img/futebol/tela4.png" />
+        <div class="futebol-slide-caption">
+          <strong>Partidas organizadas</strong>
+          <span>Visual pensado para exibir confrontos, placares e detalhes esportivos.</span>
+        </div>
+      </div>
+
+      <div class="futebol-slide">
+        <img alt="Tela 5 do DigiSúmula Futebol" src="/img/futebol/tela5.png" />
+        <div class="futebol-slide-caption">
+          <strong>Torneios e campeonatos</strong>
+          <span>Tela de classificação, mata-mata, rodada ou cards profissionais.</span>
+        </div>
+      </div>
+
+      <div class="futebol-slide">
+        <img alt="Tela 6 do DigiSúmula Futebol" src="/img/futebol/tela6.png" />
+        <div class="futebol-slide-caption">
+          <strong>Classificação</strong>
+          <span>Acompanhe pontuação, desempenho e evolução das equipes no torneio.</span>
+        </div>
+      </div>
+
+      <div class="futebol-slide">
+        <img alt="Tela 7 do DigiSúmula Futebol" src="/img/futebol/tela7.png" />
+        <div class="futebol-slide-caption">
+          <strong>Súmula digital</strong>
+          <span>Registro de dados da partida com visual limpo e profissional.</span>
+        </div>
+      </div>
+
+      <div class="futebol-slide">
+        <img alt="Tela 8 do DigiSúmula Futebol" src="/img/futebol/tela8.png" />
+        <div class="futebol-slide-caption">
+          <strong>Cards e divulgação</strong>
+          <span>Apresentação ideal para resultados, destaques e mídia esportiva.</span>
+        </div>
+      </div>
+
+      <div class="futebol-slide">
+        <img alt="Tela 9 do DigiSúmula Futebol" src="/img/futebol/tela9.png" />
+        <div class="futebol-slide-caption">
+          <strong>DigiSúmula Torneio</strong>
+          <span>campeonatos, copas, ligas e competições completas.</span>
+        </div>
+      </div>
+
+      <div class="futebol-slide">
+        <img alt="Tela 10 do DigiSúmula Futebol" src="/img/futebol/tela10.png" />
+        <div class="futebol-slide-caption">
+          <strong>Apresentação do sistema</strong>
+          <span>Imagem final para reforçar o visual moderno e esportivo do projeto.</span>
+        </div>
+      </div>
+
+      <button class="carousel-btn carousel-prev" type="button" aria-label="Imagem anterior">‹</button>
+      <button class="carousel-btn carousel-next" type="button" aria-label="Próxima imagem">›</button>
+
+      <div class="carousel-dots" aria-label="Indicadores do carrossel">
+        <button class="carousel-dot active" type="button" data-slide="0" aria-label="Ir para imagem 1"></button>
+        <button class="carousel-dot" type="button" data-slide="1" aria-label="Ir para imagem 2"></button>
+        <button class="carousel-dot" type="button" data-slide="2" aria-label="Ir para imagem 3"></button>
+        <button class="carousel-dot" type="button" data-slide="3" aria-label="Ir para imagem 4"></button>
+        <button class="carousel-dot" type="button" data-slide="4" aria-label="Ir para imagem 5"></button>
+        <button class="carousel-dot" type="button" data-slide="5" aria-label="Ir para imagem 6"></button>
+        <button class="carousel-dot" type="button" data-slide="6" aria-label="Ir para imagem 7"></button>
+        <button class="carousel-dot" type="button" data-slide="7" aria-label="Ir para imagem 8"></button>
+        <button class="carousel-dot" type="button" data-slide="8" aria-label="Ir para imagem 9"></button>
+        <button class="carousel-dot" type="button" data-slide="9" aria-label="Ir para imagem 10"></button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="gallery-row">
+    <div class="gallery-item">
+      <div class="system-shot futebol-mini-shot">
+        <img src="/img/futebol/bg3.png" alt="Tela do DigiSúmula Racha">
+      </div>
+    </div>
+
+    <div class="gallery-item">
+      <div class="system-shot futebol-mini-shot">
+        <img src="/img/futebol/jogador.png" alt="Tela do DigiSúmula Torneio">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+
+<section class="ad-strip-section" aria-label="Faixa de parceiros">
+  <div class="container">
+    <div class="ad-strip-box">
+      <div class="ads-carousel" data-autoplay="true">
+        <div class="ads-window">
+          <div class="ads-track"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="module-section" id="modulo-volei">
+  <div class="container">
+    <div class="module-block module-vol">
+      <div class="module-bg"></div>
+
+      <div class="module-content volei-content">
+
+        <div class="module-gallery volei-gallery">
+          <div class="gallery-main volei-carousel-box">
+            <div class="volei-carousel" id="voleiCarousel">
+
+              <div class="volei-slide active">
+                <img alt="Apresentação do DigiSúmula Vôlei" src="/img/volei/apresentacao.png" />
+                <div class="volei-slide-caption">
+                  <strong>DigiSúmula Vôlei</strong>
+                  <span>Ambiente moderno para organizar jogos, equipes, sets e competições de vôlei.</span>
+                </div>
+              </div>
+
+              <div class="volei-slide">
+                <img alt="Quadra de vôlei" src="/img/volei/vlei1.png" />
+                <div class="volei-slide-caption">
+                  <strong>Cadastro de jogadores</strong>
+                  <span>Coloque a foto, nome e posição na quadra dos jogadores</span>
+                </div>
+              </div>
+
+              <div class="volei-slide">
+                <img alt="Jogadores jogando vôlei" src="/img/volei/vlei3.png" />
+                <div class="volei-slide-caption">
+                  <strong>Monte os clubes</strong>
+                  <span>Crie ou faça upload de escudos de clubes, disputas em quadra e equipes em ação.</span>
+                </div>
+              </div>
+
+              <div class="volei-slide">
+                <img alt="Ataque no vôlei" src="/img/volei/vlei6.png" />
+                <div class="volei-slide-caption">
+                  <strong>Organize os torneios</strong>
+                  <span>Faça as competições de acordo com a quantidade de times, no formato que desejar.</span>
+                </div>
+              </div>
+
+              <div class="volei-slide">
+                <img alt="Bloqueio no vôlei" src="/img/volei/vlei8.png" />
+                <div class="volei-slide-caption">
+                  <strong>Histórico salvo</strong>
+                  <span>Use o histórico dos torneios para premiar jogadores ou penalizá-los.</span>
+                </div>
+              </div>
+
+              <div class="volei-slide">
+                <img alt="Manchete no vôlei" src="/img/volei/vlei9.png" />
+                <div class="volei-slide-caption">
+                  <strong>Súmula digital</strong>
+                  <span>A grande praticidade para toda a organização do torneio é a súmula digital, muito simples e fácil de usar.</span>
+                </div>
+              </div>
+             
+              <button class="carousel-btn volei-prev" type="button" aria-label="Imagem anterior">‹</button>
+              <button class="carousel-btn volei-next" type="button" aria-label="Próxima imagem">›</button>
+
+              <div class="volei-dots" aria-label="Indicadores do carrossel de vôlei">
+                <button class="volei-dot active" type="button" data-slide="0" aria-label="Ir para imagem 1"></button>
+                <button class="volei-dot" type="button" data-slide="1" aria-label="Ir para imagem 2"></button>
+                <button class="volei-dot" type="button" data-slide="2" aria-label="Ir para imagem 3"></button>
+                <button class="volei-dot" type="button" data-slide="3" aria-label="Ir para imagem 4"></button>
+                <button class="volei-dot" type="button" data-slide="4" aria-label="Ir para imagem 5"></button>
+                <button class="volei-dot" type="button" data-slide="5" aria-label="Ir para imagem 6"></button>
+                <button class="volei-dot" type="button" data-slide="6" aria-label="Ir para imagem 7"></button>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="gallery-row">
+            <div class="gallery-item">
+              <div class="system-shot volei-mini-shot">
+                <img src="/img/volei/ataque.png" alt="Ataque no módulo de vôlei">
+              </div>
+            </div>
+
+            <div class="gallery-item">
+              <div class="system-shot volei-mini-shot">
+                <img src="/img/volei/bloqueio.png" alt="Bloqueio no módulo de vôlei">
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="personaliza-visual">
-            <div class="custom-card-mockup">
-                <div class="mockup-badge">
-                    <i class="bi bi-image"></i> Sua Logo Aqui
-                </div>
-                <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=800&auto=format&fit=crop" alt="Jogador Amador em Destaque">
-                <div class="mockup-overlay">
-                    <h4>Seu Time F.C</h4>
-                    <p>O Craque da Rodada</p>
-                </div>
-            </div>
+        <div class="module-text volei-text">
+          <div class="section-kicker">🏐 Módulo Vôlei</div>
+          <h3>DigiSúmula Vôlei</h3>
+
+          <p>
+            O módulo de vôlei ganha uma apresentação própria dentro da DigiSúmula,
+            com imagens de quadra, jogadas, ataque, bloqueio, manchete e cadastro
+            de times. A proposta é mostrar que o sistema também pode atender
+            competições escolares, interclasses e torneios organizados.
+          </p>
+
+          <div class="module-badges">
+            <span class="badge">Sets</span>
+            <span class="badge">Equipes</span>
+            <span class="badge">Quadra</span>
+            <span class="badge">Classificação</span>
+          </div>
+
+          <div class="volei-programs">
+            <article class="volei-program-card volei-jogo-card">
+              <div class="program-label">Ambiente 01</div>
+              <h4>🏐 Jogos e Sets</h4>
+              <p>
+                Para controlar partidas, pontuação por set, equipes em quadra
+                e resultados de forma simples e visual.
+              </p>
+              <ul>
+                <li>Controle de partidas</li>
+                <li>Registro de sets</li>
+                <li>Equipes em quadra</li>
+                <li>Resultados organizados</li>
+              </ul>
+            </article>
+
+            <article class="volei-program-card volei-torneio-card">
+              <div class="program-label">Ambiente 02</div>
+              <h4>🏆 Torneios de Vôlei</h4>
+              <p>
+                Para interclasses, campeonatos escolares e competições com
+                grupos, fases, rodadas e classificação.
+              </p>
+              <ul>
+                <li>Cadastro de times</li>
+                <li>Fase de grupos</li>
+                <li>Mata-mata</li>
+                <li>Classificação geral</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="module-actions">
+            <a class="btn btn-primary" href="#">Acessar vôlei</a>
+            <a class="btn btn-outline" href="#">Ver apresentação</a>
+          </div>
         </div>
-        
-    </section>
 
-    <section class="cloud-banner">
-        <div class="cloud-content">
-            <div class="cloud-icon">
-                <i class="bi bi-cloud-check-fill"></i>
-            </div>
-            <div class="cloud-text">
-                <h2>100% NA <span class="highlight">NUVEM</span></h2>
-                <p>Esqueça a falta de memória no celular. Não precisa baixar nada! O Fut-Súmula roda direto no seu navegador com a fluidez de um aplicativo.</p>
-                <ul class="cloud-benefits">
-                    <li><i class="bi bi-phone-fill"></i> Economiza Espaço</li>
-                    <li><i class="bi bi-cloud-arrow-down-fill"></i> Zero Downloads</li>
-                    <li><i class="bi bi-lightning-charge-fill"></i> Acesso Imediato</li>
-                </ul>
-            </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="ad-strip-section" aria-label="Faixa de parceiros">
+  <div class="container">
+    <div class="ad-strip-box">
+      <div class="ads-carousel" data-autoplay="true">
+        <div class="ads-window">
+          <div class="ads-track"></div>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section class="ads-section">
-	    <h3 class="ads-title">Patrocinadores Oficiais</h3>
-	    <p class="ads-subtitle">Marcas que vestem a camisa do futebol amador e da inovação</p>
-	    
-	    <div class="ad-banner-container">
-	        <div class="ad-card ad-active" onclick="window.open('https://instagram.com/teacherjaianemelo', '_blank')">
-	            <div class="ad-img-wrapper">
-	                <img src="/img/logo_abi_kids.png" alt="ABI Kids - Inglês para Crianças" class="ad-image">
-	            </div>
-	            <div class="ad-caption">ABI Kids • Inglês para Crianças</div>
-	        </div>
+<section class="module-section" id="modulo-basquete">
+  <div class="container">
+    <div class="module-block module-bas">
+      <div class="module-bg"></div>
 
-			<div class="ad-card ad-active" onclick="window.open('https://instagram.com/jamillealves18', '_blank')">
-	            <div class="ad-img-wrapper">
-	                <img src="/img/PropagandaJamilla.jpeg" alt="JH Saúde e Estética" class="ad-image">
-	            </div>
-	            <div class="ad-caption">JH Saúde e Estética • Agende sua consulta</div>
-	        </div>
-			
-			<div class="ad-card ad-active" onclick="window.open('https://instagram.com/StudioVibeFitness', '_blank')">
-	            <div class="ad-img-wrapper">
-	                <img src="/img/vibeFitnes.jpeg" alt="Vibe Fitness Academia Feminina" class="ad-image">
-	            </div>
-	            <div class="ad-caption">Vibe Fitness • Academia Feminina</div>
-	        </div>
-			
-            <div class="ad-card ad-active" onclick="window.location.href='https://wa.me/5588999386379?text=olá! vim pela página futsumula%20'">
-                <div class="ad-img-wrapper">
-                    <img src="/img/lulupinho.jpeg" alt="Lulu Pinho Artes" class="ad-image">
+      <div class="module-content basquete-content">
+
+        <div class="module-text basquete-text">
+          <div class="section-kicker">🏀 Módulo Basquete</div>
+          <h3>DigiSúmula Basquete</h3>
+
+          <p>
+            O módulo de basquete ganha uma apresentação própria dentro da DigiSúmula,
+            com imagens de quadra, pontuação, equipes, estatísticas, faltas,
+            quartos de jogo e torneios. A proposta é mostrar que o sistema também
+            pode atender competições escolares, interclasses e campeonatos organizados.
+          </p>
+
+          <div class="module-badges">
+            <span class="badge">Pontuação</span>
+            <span class="badge">Quartos</span>
+            <span class="badge">Faltas</span>
+            <span class="badge">Estatísticas</span>
+          </div>
+
+          <div class="basquete-programs">
+            <article class="basquete-program-card basquete-jogo-card">
+              <div class="program-label">Ambiente 01</div>
+              <h4>🏀 Jogos e Pontuação</h4>
+              <p>
+                Para controlar partidas, placares, pontuação por quarto,
+                faltas, equipes em quadra e resultados de forma simples e visual.
+              </p>
+              <ul>
+                <li>Controle de partidas</li>
+                <li>Pontuação por quarto</li>
+                <li>Registro de faltas</li>
+                <li>Resultados organizados</li>
+              </ul>
+            </article>
+
+            <article class="basquete-program-card basquete-torneio-card">
+              <div class="program-label">Ambiente 02</div>
+              <h4>🏆 Torneios de Basquete</h4>
+              <p>
+                Para interclasses, campeonatos escolares e competições com
+                grupos, rodadas, classificação, fases eliminatórias e rankings.
+              </p>
+              <ul>
+                <li>Cadastro de times</li>
+                <li>Fase de grupos</li>
+                <li>Mata-mata</li>
+                <li>Classificação geral</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="module-actions">
+            <a class="btn btn-primary" href="#">Acessar basquete</a>
+            <a class="btn btn-outline" href="#">Ver apresentação</a>
+          </div>
+        </div>
+
+        <div class="module-gallery basquete-gallery">
+          <div class="gallery-main basquete-carousel-box">
+            <div class="basquete-carousel" id="basqueteCarousel">
+
+              <div class="basquete-slide active">
+                <img alt="Apresentação do DigiSúmula Basquete" src="/img/basquete/basq5.png" />
+                <div class="basquete-slide-caption">
+                  <strong>DigiSúmula Basquete</strong>
+                  <span>Ambiente moderno para organizar jogos, equipes, pontuação, faltas e torneios de basquete.</span>
                 </div>
-                <div class="ad-caption">Lulu Pinho Artes • Estampas e Impressões</div>
+              </div>
+
+              <div class="basquete-slide">
+                <img alt="Quadra de basquete" src="/img/basquete/basqtime.png" />
+                <div class="basquete-slide-caption">
+                  <strong>Cadastro de equipes</strong>
+                  <span>Cadastre clubes, escudos, atletas, categorias e organize tudo por competição.</span>
+                </div>
+              </div>
+
+              <div class="basquete-slide">
+                <img alt="Pontuação no basquete" src="/img/basquete/basqtabela.png" />
+                <div class="basquete-slide-caption">
+                  <strong>Controle de pontuação</strong>
+                  <span>Registre o placar, acompanhe os quartos de jogo e mantenha o resultado sempre atualizado.</span>
+                </div>
+              </div>
+
+              <div class="basquete-slide">
+                <img alt="Faltas no basquete" src="/img/basquete/basqplay.png" />
+                <div class="basquete-slide-caption">
+                  <strong>Faltas e ocorrências</strong>
+                  <span>Controle faltas, observações da partida e informações importantes da súmula.</span>
+                </div>
+              </div>
+
+              <div class="basquete-slide">
+                <img alt="Torneio de basquete" src="/img/basquete/basqtorneio.png" />
+                <div class="basquete-slide-caption">
+                  <strong>Torneios de Basquete</strong>
+                  <span>Monte grupos, rodadas, fases eliminatórias e acompanhe a classificação geral.</span>
+                </div>
+              </div>
+
+              <div class="basquete-slide">
+                <img alt="Ranking do basquete" src="/img/basquete/basqhistorico.png" />
+                <div class="basquete-slide-caption">
+                  <strong>Ranking e estatísticas</strong>
+                  <span>Organize desempenho, resultados, histórico das partidas e destaques da competição.</span>
+                </div>
+              </div>
+
+              <button class="carousel-btn basquete-prev" type="button" aria-label="Imagem anterior">‹</button>
+              <button class="carousel-btn basquete-next" type="button" aria-label="Próxima imagem">›</button>
+
+              <div class="basquete-dots" aria-label="Indicadores do carrossel de basquete">
+                <button class="basquete-dot active" type="button" data-slide="0" aria-label="Ir para imagem 1"></button>
+                <button class="basquete-dot" type="button" data-slide="1" aria-label="Ir para imagem 2"></button>
+                <button class="basquete-dot" type="button" data-slide="2" aria-label="Ir para imagem 3"></button>
+                <button class="basquete-dot" type="button" data-slide="3" aria-label="Ir para imagem 4"></button>
+                <button class="basquete-dot" type="button" data-slide="4" aria-label="Ir para imagem 5"></button>
+                <button class="basquete-dot" type="button" data-slide="5" aria-label="Ir para imagem 6"></button>
+              </div>
+
             </div>
-				           			
-			<div class="ad-card ad-empty" onclick="window.location.href='https://wa.me/5588996312358?text=Quero%20anunciar%20no%20Hub'">
-	            <div class="ad-empty-content">
-	                <i class="bi bi-megaphone"></i>
-	                <span>Seja Patrocinador</span>
-	                <small style="font-size:0.7rem; color:#aaa; text-transform:none;">clique e garanta seu espaço</small>
-	            </div>
-	        </div>
-	    </div>
-	</section>
+          </div>
 
-	<footer id="contato">
-	        <div class="social-icons">
-	            <i class="bi bi-instagram" onclick="window.open('https://instagram.com/fut_sumula_pro', '_blank')" onmouseover="this.style.color='#bc13fe'" onmouseout="this.style.color='#aaa'" title="@fut_sumula_pro"></i>
-	            
-	            <i class="bi bi-tiktok" onclick="window.open('https://www.tiktok.com/@fut_sumula_pro', '_blank')" onmouseover="this.style.color='#00f3ff'" onmouseout="this.style.color='#aaa'" title="Fut Súmula no TikTok"></i>
-	            
-	            <i class="bi bi-whatsapp" onclick="window.open('https://wa.me/5588996312358', '_blank')" onmouseover="this.style.color='#25D366'" onmouseout="this.style.color='#aaa'" title="Fale no WhatsApp"></i>
-	            
-	            <i class="bi bi-envelope-fill" onclick="window.location.href='mailto:fut_sumula_pro@hotmail.com'" onmouseover="this.style.color='#ea4335'" onmouseout="this.style.color='#aaa'" title="Envie um E-mail"></i>
-	        </div>
-	        
-	        Desenvolvido pela HIGTECH SOLUÇÕES &copy; 2026<br>
-	        Tecnologia e Paixão pelo Futebol.
-	    </footer>
+          <div class="gallery-row">
+            <div class="gallery-item">
+              <div class="system-shot basquete-mini-shot">
+                <img src="/img/basquete/basq1.png" alt="Pontuação no módulo de basquete">
+              </div>
+            </div>
 
-    <script>
-        (function() {
-            const particlesContainer = document.getElementById('particles');
-            const numberOfParticles = 40; 
-            
-            for (let i = 0; i < numberOfParticles; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                
-                const size = Math.random() * 3 + 1;
-                particle.style.width = size + 'px';
-                particle.style.height = size + 'px';
-                
-                particlesContainer.appendChild(particle);
+            <div class="gallery-item">
+              <div class="system-shot basquete-mini-shot">
+                <img src="/img/basquete/basq6.png" alt="Ranking no módulo de basquete">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="ad-strip-section" aria-label="Faixa de parceiros">
+  <div class="container">
+    <div class="ad-strip-box">
+      <div class="ads-carousel" data-autoplay="true">
+        <div class="ads-window">
+          <div class="ads-track"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="module-section" id="modulo-xadrez">
+  <div class="container">
+    <div class="module-block module-xad">
+      <div class="module-bg"></div>
+
+      <div class="module-content xadrez-content">
+
+        <div class="module-gallery xadrez-gallery">
+          <div class="gallery-main xadrez-carousel-box">
+            <div class="xadrez-carousel" id="xadrezCarousel">
+
+              <div class="xadrez-slide active">
+                <img alt="Apresentação do DigiSúmula Xadrez" src="/img/xadrez/pensando.png" />
+                <div class="xadrez-slide-caption">
+                  <strong>DigiSúmula Xadrez</strong>
+                  <span>Ambiente estratégico para organizar jogadores, rodadas, confrontos e rankings.</span>
+                </div>
+              </div>
+
+              <div class="xadrez-slide">
+                <img alt="Cadastro de jogadores no xadrez" src="/img/xadrez/chessenxadrista.png" />
+                <div class="xadrez-slide-caption">
+                  <strong>Cadastro de jogadores</strong>
+                  <span>Organize participantes, categorias, turmas, equipes e informações dos enxadristas.</span>
+                </div>
+              </div>
+
+              <div class="xadrez-slide">
+                <img alt="Rodadas do torneio de xadrez" src="/img/xadrez/chessplay.png" />
+                <div class="xadrez-slide-caption">
+                  <strong>Rodadas e confrontos</strong>
+                  <span>Monte as partidas, acompanhe as rodadas e registre os confrontos de forma clara.</span>
+                </div>
+              </div>
+
+              <div class="xadrez-slide">
+                <img alt="Resultados das partidas de xadrez" src="/img/xadrez/chesshistorico.png" />
+                <div class="xadrez-slide-caption">
+                  <strong>Resultados das partidas</strong>
+                  <span>Registre vitórias, empates, derrotas, pontuação e histórico de cada jogador.</span>
+                </div>
+              </div>
+
+              <div class="xadrez-slide">
+                <img alt="Ranking do torneio de xadrez" src="/img/xadrez/chesstorneio.png" />
+                <div class="xadrez-slide-caption">
+                  <strong>Ranking e classificação</strong>
+                  <span>Acompanhe a classificação geral, desempenho dos jogadores e evolução do torneio.</span>
+                </div>
+              </div>
+
+              <div class="xadrez-slide">
+                <img alt="Histórico do torneio de xadrez" src="/img/xadrez/chesstabela.png" />
+                <div class="xadrez-slide-caption">
+                  <strong>Histórico salvo</strong>
+                  <span>Guarde dados dos torneios para consulta, premiação e organização de novas edições.</span>
+                </div>
+              </div>
+
+              <button class="carousel-btn xadrez-prev" type="button" aria-label="Imagem anterior">‹</button>
+              <button class="carousel-btn xadrez-next" type="button" aria-label="Próxima imagem">›</button>
+
+              <div class="xadrez-dots" aria-label="Indicadores do carrossel de xadrez">
+                <button class="xadrez-dot active" type="button" data-slide="0" aria-label="Ir para imagem 1"></button>
+                <button class="xadrez-dot" type="button" data-slide="1" aria-label="Ir para imagem 2"></button>
+                <button class="xadrez-dot" type="button" data-slide="2" aria-label="Ir para imagem 3"></button>
+                <button class="xadrez-dot" type="button" data-slide="3" aria-label="Ir para imagem 4"></button>
+                <button class="xadrez-dot" type="button" data-slide="4" aria-label="Ir para imagem 5"></button>
+                <button class="xadrez-dot" type="button" data-slide="5" aria-label="Ir para imagem 6"></button>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="gallery-row">
+            <div class="gallery-item">
+              <div class="system-shot xadrez-mini-shot">
+                <img src="/img/xadrez/tabantigo.png" alt="Ranking no módulo de xadrez">
+              </div>
+            </div>
+
+            <div class="gallery-item">
+              <div class="system-shot xadrez-mini-shot">
+                <img src="/img/xadrez/rainhaerei.png" alt="Rodadas no módulo de xadrez">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="module-text xadrez-text">
+          <div class="section-kicker">♟️ Módulo Xadrez</div>
+          <h3>DigiSúmula Xadrez</h3>
+
+          <p>
+            O módulo de xadrez ganha uma apresentação própria dentro da DigiSúmula,
+            com imagens de partidas, rankings, rodadas, confrontos, histórico
+            e organização de torneios. A proposta é mostrar uma solução elegante
+            para competições escolares, internas e torneios de estratégia.
+          </p>
+
+          <div class="module-badges">
+            <span class="badge">Rodadas</span>
+            <span class="badge">Rankings</span>
+            <span class="badge">Confrontos</span>
+            <span class="badge">Histórico</span>
+          </div>
+
+          <div class="xadrez-programs">
+            <article class="xadrez-program-card xadrez-partidas-card">
+              <div class="program-label">Ambiente 01</div>
+              <h4>♟️ Partidas e Rodadas</h4>
+              <p>
+                Para controlar jogadores, confrontos, rodadas, resultados e
+                pontuação de forma simples, visual e organizada.
+              </p>
+              <ul>
+                <li>Cadastro de jogadores</li>
+                <li>Controle de rodadas</li>
+                <li>Registro de resultados</li>
+                <li>Histórico por jogador</li>
+              </ul>
+            </article>
+
+            <article class="xadrez-program-card xadrez-torneio-card">
+              <div class="program-label">Ambiente 02</div>
+              <h4>🏆 Torneios de Xadrez</h4>
+              <p>
+                Para interclasses, campeonatos escolares e torneios internos
+                com classificação, rankings e acompanhamento geral.
+              </p>
+              <ul>
+                <li>Ranking automático</li>
+                <li>Classificação geral</li>
+                <li>Histórico de partidas</li>
+                <li>Premiação e destaques</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="module-actions">
+            <a class="btn btn-primary" href="#">Acessar xadrez</a>
+            <a class="btn btn-outline" href="#">Ver apresentação</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="ad-strip-section" aria-label="Faixa de parceiros">
+  <div class="container">
+    <div class="ad-strip-box">
+      <div class="ads-carousel" data-autoplay="true">
+        <div class="ads-window">
+          <div class="ads-track"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="interclasse">
+<div class="container">
+<div class="interclasse-box">
+<div class="interclasse-grid">
+<div class="interclasse-text">
+<div class="section-kicker">Interclasse Escolar</div>
+<h3>Uma área especial para escolas e competições entre turmas</h3>
+<p>
+              Esse bloco ganha uma apresentação mais viva e representativa,
+              mostrando jovens em contexto de jogos escolares e reforçando a proposta
+              da DigiSúmula Interclasse como solução completa para a realidade escolar.
+            </p>
+<div class="module-badges">
+<span class="badge">Inscrição por link</span>
+<span class="badge">Calendário</span>
+<span class="badge">Resultados</span>
+<span class="badge">PDF para mural</span>
+</div>
+<p>
+              A ideia é transmitir energia, participação estudantil, espírito esportivo
+              e organização. Assim, o visitante entende rapidamente que a DigiSúmula Interclasse
+              foi pensada para eventos escolares com várias modalidades, turmas e fases.
+            </p>
+<a class="btn btn-primary" href="#contato">Solicitar versão escolar</a>
+</div>
+
+<div class="interclasse-visual-panel">
+  <div class="interclasse-media-grid">
+    <div class="interclasse-main-photo">
+      <span class="interclasse-tag">Interclasse App</span>
+      <img src="/img/interclasse/inter1.png" alt="Jovens em situação de jogos escolares">
+     
+    </div>
+
+    <div class="interclasse-side-stack">
+      <div class="interclasse-side-photo">
+        <img src="/img/interclasse/inter2.png" alt="Alunos competindo em jogos escolares">
+        <div class="interclasse-photo-overlay">
+          <strong>Equipes e competição</strong>
+        </div>
+      </div>
+
+      <div class="interclasse-side-photo">
+        <img src="/img/interclasse/inter3.png" alt="Estudantes em competição escolar">
+        <div class="interclasse-photo-overlay">
+          <strong>Organização e participação</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feature-grid">
+    <div class="feature-box">
+      <strong>Inscrição dos alunos</strong>
+      <span>Autoinscrição por link, turma, categoria e modalidade.</span>
+    </div>
+    <div class="feature-box">
+      <strong>Calendário inteligente</strong>
+      <span>Organize dias, quadras, salas, horários e confrontos.</span>
+    </div>
+    <div class="feature-box">
+      <strong>Classificação automática</strong>
+      <span>Resultados e ranking atualizados de forma prática.</span>
+    </div>
+    <div class="feature-box">
+      <strong>Painéis visuais</strong>
+      <span>Pronto para impressão, mural escolar e divulgação digital.</span>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="ad-strip-section" aria-label="Faixa de parceiros">
+  <div class="container">
+    <div class="ad-strip-box">
+      <div class="ads-carousel" data-autoplay="true">
+        <div class="ads-window">
+          <div class="ads-track"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contato">
+<div class="container">
+<div class="section-header">
+<span class="section-kicker">Pronto para crescer</span>
+<h2 class="section-title">Um hub moderno, robusto e visualmente forte</h2>
+<p class="section-subtitle">
+          A DigiSúmula funciona como uma central esportiva profissional, com módulos bem separados, áreas preparadas para imagens e estrutura premium para apresentar todo o ecossistema.
+        </p>
+<div class="hero-actions" style="justify-content:center; margin-top: 28px;">
+<a class="btn btn-primary" href="#modalidades">Explorar módulos</a>
+<a class="btn btn-outline" href="https://wa.me/5588999999999" target="_blank">Falar no WhatsApp</a>
+</div>
+</div>
+</div>
+</section>
+<footer class="footer">
+<div class="container footer-grid">
+<div>
+<strong>DigiSúmula</strong>
+<p>
+          HIGTECH SOLUÇÕES © 2026<br/>
+          Gestão esportiva digital para escolas, torneios e competições.
+        </p>
+</div>
+<div class="footer-links">
+<a href="#inicio">Início</a>
+<a href="#modalidades">Modalidades</a>
+<a href="#interclasse">Interclasse</a>
+</div>
+</div>
+</footer>
+
+<div class="modal-solucoes-overlay" id="modalSolucoes" onclick="fecharModalFora(event)">
+  <div class="modal-solucoes-box">
+    <button class="modal-fechar" onclick="fecharModalSolucao()">✕</button>
+    <span class="modal-icon" id="modalIcon"></span>
+    <h3 class="modal-title" id="modalTitle"></h3>
+    <p class="modal-desc" id="modalDesc"></p>
+    <ul class="modal-features" id="modalFeatures">
+      </ul>
+  </div>
+</div>
+
+<script>
+  (function ativarZoomImagensFutebol() {
+    if (document.getElementById("zoomImagemOverlay")) return;
+
+    const style = document.createElement("style");
+    style.textContent = `
+      .futebol-gallery img {
+        cursor: zoom-in;
+      }
+
+      .zoom-imagem-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: rgba(0, 0, 0, 0.86);
+        backdrop-filter: blur(8px);
+      }
+
+      .zoom-imagem-overlay.active {
+        display: flex;
+      }
+
+      .zoom-imagem-box {
+        position: relative;
+        width: min(96vw, 1100px);
+        height: min(90vh, 760px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .zoom-imagem-box img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 18px;
+        box-shadow: 0 25px 80px rgba(0, 0, 0, 0.55);
+        background: rgba(0, 0, 0, 0.35);
+      }
+
+      .zoom-imagem-fechar {
+        position: absolute;
+        top: -14px;
+        right: -14px;
+        width: 42px;
+        height: 42px;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.95);
+        color: #020617;
+        font-size: 1.5rem;
+        font-weight: 900;
+        line-height: 1;
+        display: grid;
+        place-items: center;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+      }
+
+      .zoom-imagem-fechar:hover {
+        background: #19e58c;
+      }
+
+      @media (max-width: 760px) {
+        .zoom-imagem-overlay {
+          padding: 14px;
+        }
+
+        .zoom-imagem-box {
+          width: 96vw;
+          height: 86vh;
+        }
+
+        .zoom-imagem-fechar {
+          top: 6px;
+          right: 6px;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    const overlay = document.createElement("div");
+    overlay.id = "zoomImagemOverlay";
+    overlay.className = "zoom-imagem-overlay";
+    overlay.innerHTML = `
+      <div class="zoom-imagem-box">
+        <button class="zoom-imagem-fechar" type="button" aria-label="Fechar imagem ampliada">×</button>
+        <img id="zoomImagemAmpliada" src="" alt="Imagem ampliada">
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    const imagemAmpliada = document.getElementById("zoomImagemAmpliada");
+    const botaoFechar = overlay.querySelector(".zoom-imagem-fechar");
+
+    function abrirZoom(img) {
+      imagemAmpliada.src = img.currentSrc || img.src;
+      imagemAmpliada.alt = img.alt || "Imagem ampliada";
+      overlay.classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+
+    function fecharZoom() {
+      overlay.classList.remove("active");
+      imagemAmpliada.src = "";
+      document.body.style.overflow = "";
+    }
+
+    document.addEventListener("click", function(event) {
+      const img = event.target.closest(".futebol-gallery img");
+
+      if (img) {
+        abrirZoom(img);
+        return;
+      }
+
+      if (event.target === overlay || event.target === botaoFechar) {
+        fecharZoom();
+      }
+    });
+
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Escape" && overlay.classList.contains("active")) {
+        fecharZoom();
+      }
+    });
+  })();
+</script>
+
+<script>
+    const topbar = document.getElementById("topbar");
+    const mobileToggle = document.getElementById("mobileToggle");
+
+    mobileToggle.addEventListener("click", () => {
+      topbar.classList.toggle("open");
+      mobileToggle.textContent = topbar.classList.contains("open") ? "✕" : "☰";
+    });
+
+    document.querySelectorAll(".nav-link, .dropdown a, .btn").forEach(item => {
+      item.addEventListener("click", () => {
+        topbar.classList.remove("open");
+        mobileToggle.textContent = "☰";
+      });
+    });
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 18) {
+        topbar.style.background = "rgba(5, 8, 22, 0.94)";
+      } else {
+        topbar.style.background = "rgba(5, 8, 22, 0.82)";
+      }
+    });
+  
+
+    (function iniciarCarrosselFutebol() {
+      const carousel = document.getElementById("futebolCarousel");
+      if (!carousel) return;
+
+      const slides = Array.from(carousel.querySelectorAll(".futebol-slide"));
+      const dots = Array.from(carousel.querySelectorAll(".carousel-dot"));
+      const prevBtn = carousel.querySelector(".carousel-prev");
+      const nextBtn = carousel.querySelector(".carousel-next");
+
+      if (!slides.length) return;
+
+      let currentSlide = 0;
+      let autoPlay = null;
+
+      function showSlide(index) {
+        currentSlide = (index + slides.length) % slides.length;
+
+        slides.forEach((slide, slideIndex) => {
+          slide.classList.toggle("active", slideIndex === currentSlide);
+        });
+
+        dots.forEach((dot, dotIndex) => {
+          dot.classList.toggle("active", dotIndex === currentSlide);
+        });
+      }
+
+      function nextSlide() {
+        showSlide(currentSlide + 1);
+      }
+
+      function prevSlide() {
+        showSlide(currentSlide - 1);
+      }
+
+      function startAutoPlay() {
+        stopAutoPlay();
+        autoPlay = setInterval(nextSlide, 5500);
+      }
+
+      function stopAutoPlay() {
+        if (autoPlay) clearInterval(autoPlay);
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener("click", () => {
+          nextSlide();
+          startAutoPlay();
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener("click", () => {
+          prevSlide();
+          startAutoPlay();
+        });
+      }
+
+      dots.forEach((dot) => {
+        dot.addEventListener("click", () => {
+          const slideIndex = Number(dot.dataset.slide || 0);
+          showSlide(slideIndex);
+          startAutoPlay();
+        });
+      });
+
+      carousel.addEventListener("mouseenter", stopAutoPlay);
+      carousel.addEventListener("mouseleave", startAutoPlay);
+
+      showSlide(0);
+      startAutoPlay();
+    })();
+
+
+	//carrossel VOLEI -------- ///
+	  (function iniciarCarrosselVolei() {
+	    const carousel = document.getElementById("voleiCarousel");
+	    if (!carousel) return;
+
+	    const slides = Array.from(carousel.querySelectorAll(".volei-slide"));
+	    const dots = Array.from(carousel.querySelectorAll(".volei-dot"));
+	    const prevBtn = carousel.querySelector(".volei-prev");
+	    const nextBtn = carousel.querySelector(".volei-next");
+
+	    if (!slides.length) return;
+
+	    let currentSlide = 0;
+	    let autoPlay = null;
+
+	    function showSlide(index) {
+	      currentSlide = (index + slides.length) % slides.length;
+
+	      slides.forEach((slide, slideIndex) => {
+	        slide.classList.toggle("active", slideIndex === currentSlide);
+	      });
+
+	      dots.forEach((dot, dotIndex) => {
+	        dot.classList.toggle("active", dotIndex === currentSlide);
+	      });
+	    }
+
+	    function nextSlide() {
+	      showSlide(currentSlide + 1);
+	    }
+
+	    function prevSlide() {
+	      showSlide(currentSlide - 1);
+	    }
+
+	    function startAutoPlay() {
+	      stopAutoPlay();
+	      autoPlay = setInterval(nextSlide, 5500);
+	    }
+
+	    function stopAutoPlay() {
+	      if (autoPlay) clearInterval(autoPlay);
+	    }
+
+	    if (nextBtn) {
+	      nextBtn.addEventListener("click", () => {
+	        nextSlide();
+	        startAutoPlay();
+	      });
+	    }
+
+	    if (prevBtn) {
+	      prevBtn.addEventListener("click", () => {
+	        prevSlide();
+	        startAutoPlay();
+	      });
+	    }
+
+	    dots.forEach((dot) => {
+	      dot.addEventListener("click", () => {
+	        const slideIndex = Number(dot.dataset.slide || 0);
+	        showSlide(slideIndex);
+	        startAutoPlay();
+	      });
+	    });
+
+	    carousel.addEventListener("mouseenter", stopAutoPlay);
+	    carousel.addEventListener("mouseleave", startAutoPlay);
+
+	    showSlide(0);
+	    startAutoPlay();
+	  })();
+	
+	
+  
+
+    // carrossel BASQUETE -------- ///
+    (function iniciarCarrosselBasquete() {
+      const carousel = document.getElementById("basqueteCarousel");
+      if (!carousel) return;
+
+      const slides = Array.from(carousel.querySelectorAll(".basquete-slide"));
+      const dots = Array.from(carousel.querySelectorAll(".basquete-dot"));
+      const prevBtn = carousel.querySelector(".basquete-prev");
+      const nextBtn = carousel.querySelector(".basquete-next");
+
+      if (!slides.length) return;
+
+      let currentSlide = 0;
+      let autoPlay = null;
+
+      function showSlide(index) {
+        currentSlide = (index + slides.length) % slides.length;
+
+        slides.forEach((slide, slideIndex) => {
+          slide.classList.toggle("active", slideIndex === currentSlide);
+        });
+
+        dots.forEach((dot, dotIndex) => {
+          dot.classList.toggle("active", dotIndex === currentSlide);
+        });
+      }
+
+      function nextSlide() {
+        showSlide(currentSlide + 1);
+      }
+
+      function prevSlide() {
+        showSlide(currentSlide - 1);
+      }
+
+      function startAutoPlay() {
+        stopAutoPlay();
+        autoPlay = setInterval(nextSlide, 5500);
+      }
+
+      function stopAutoPlay() {
+        if (autoPlay) clearInterval(autoPlay);
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener("click", () => {
+          nextSlide();
+          startAutoPlay();
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener("click", () => {
+          prevSlide();
+          startAutoPlay();
+        });
+      }
+
+      dots.forEach((dot) => {
+        dot.addEventListener("click", () => {
+          const slideIndex = Number(dot.dataset.slide || 0);
+          showSlide(slideIndex);
+          startAutoPlay();
+        });
+      });
+
+      carousel.addEventListener("mouseenter", stopAutoPlay);
+      carousel.addEventListener("mouseleave", startAutoPlay);
+
+      showSlide(0);
+      startAutoPlay();
+    })();
+
+
+    // carrossel XADREZ -------- ///
+    (function iniciarCarrosselXadrez() {
+      const carousel = document.getElementById("xadrezCarousel");
+      if (!carousel) return;
+
+      const slides = Array.from(carousel.querySelectorAll(".xadrez-slide"));
+      const dots = Array.from(carousel.querySelectorAll(".xadrez-dot"));
+      const prevBtn = carousel.querySelector(".xadrez-prev");
+      const nextBtn = carousel.querySelector(".xadrez-next");
+
+      if (!slides.length) return;
+
+      let currentSlide = 0;
+      let autoPlay = null;
+
+      function showSlide(index) {
+        currentSlide = (index + slides.length) % slides.length;
+
+        slides.forEach((slide, slideIndex) => {
+          slide.classList.toggle("active", slideIndex === currentSlide);
+        });
+
+        dots.forEach((dot, dotIndex) => {
+          dot.classList.toggle("active", dotIndex === currentSlide);
+        });
+      }
+
+      function nextSlide() {
+        showSlide(currentSlide + 1);
+      }
+
+      function prevSlide() {
+        showSlide(currentSlide - 1);
+      }
+
+      function startAutoPlay() {
+        stopAutoPlay();
+        autoPlay = setInterval(nextSlide, 5500);
+      }
+
+      function stopAutoPlay() {
+        if (autoPlay) clearInterval(autoPlay);
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener("click", () => {
+          nextSlide();
+          startAutoPlay();
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener("click", () => {
+          prevSlide();
+          startAutoPlay();
+        });
+      }
+
+      dots.forEach((dot) => {
+        dot.addEventListener("click", () => {
+          const slideIndex = Number(dot.dataset.slide || 0);
+          showSlide(slideIndex);
+          startAutoPlay();
+        });
+      });
+
+      carousel.addEventListener("mouseenter", stopAutoPlay);
+      carousel.addEventListener("mouseleave", startAutoPlay);
+
+      showSlide(0);
+      startAutoPlay();
+    })();
+
+    // faixas de propaganda: carrega o propagandas.json, adapta logo/imagem e sincroniza as faixas
+    (function iniciarFaixasDePropaganda() {
+      const carrosseis = Array.from(document.querySelectorAll(".ads-carousel"));
+      const secoesPropaganda = Array.from(document.querySelectorAll(".ad-strip-section"));
+      const CAMINHO_JSON = "propagandas.json";
+      const DURACAO_TROCA = 5400;
+      const TEMPO_PARA_VIRAR_SLOGAN = 2100;
+
+      if (!carrosseis.length) return;
+
+      function limitar(valor) {
+        return Math.max(0, Math.min(255, Math.round(valor)));
+      }
+
+      function misturarComBrancoOuPreto(rgb, intensidade) {
+        const destino = intensidade >= 0 ? 255 : 0;
+        const peso = Math.abs(intensidade);
+
+        return {
+          r: limitar(rgb.r + (destino - rgb.r) * peso),
+          g: limitar(rgb.g + (destino - rgb.g) * peso),
+          b: limitar(rgb.b + (destino - rgb.b) * peso)
+        };
+      }
+
+      function luminancia(rgb) {
+        return (rgb.r * 0.299) + (rgb.g * 0.587) + (rgb.b * 0.114);
+      }
+
+      function cssRgb(rgb) {
+        return `rgb(${limitar(rgb.r)}, ${limitar(rgb.g)}, ${limitar(rgb.b)})`;
+      }
+
+      function aplicarCorDaImagem(card, img) {
+        if (!img || !img.naturalWidth || !img.naturalHeight) return;
+        if (card.dataset.detectarCor === "false") return;
+
+        try {
+          const canvas = document.createElement("canvas");
+          const largura = 36;
+          const altura = 18;
+          canvas.width = largura;
+          canvas.height = altura;
+
+          const ctx = canvas.getContext("2d", { willReadFrequently: true });
+          if (!ctx) return;
+
+          ctx.drawImage(img, 0, 0, largura, altura);
+
+          const imageData = ctx.getImageData(0, 0, largura, altura).data;
+          let r = 0;
+          let g = 0;
+          let b = 0;
+          let total = 0;
+
+          function capturarPixel(x, y) {
+            const index = (y * largura + x) * 4;
+            const alpha = imageData[index + 3];
+
+            if (alpha < 35) return;
+
+            r += imageData[index];
+            g += imageData[index + 1];
+            b += imageData[index + 2];
+            total += 1;
+          }
+
+          // Amostra as bordas e cantos para capturar a cor de fundo predominante da arte/logo.
+          for (let x = 0; x < largura; x += 1) {
+            capturarPixel(x, 0);
+            capturarPixel(x, altura - 1);
+          }
+
+          for (let y = 0; y < altura; y += 1) {
+            capturarPixel(0, y);
+            capturarPixel(largura - 1, y);
+          }
+
+          // Se a imagem tiver bordas transparentes, usa uma amostra geral como fallback.
+          if (total < 8) {
+            for (let y = 0; y < altura; y += 3) {
+              for (let x = 0; x < largura; x += 3) {
+                capturarPixel(x, y);
+              }
             }
-        })();
-    </script>
+          }
+
+          if (!total) return;
+
+          const base = {
+            r: r / total,
+            g: g / total,
+            b: b / total
+          };
+
+          const luz = luminancia(base);
+          const segundaCor = misturarComBrancoOuPreto(base, luz > 150 ? -0.10 : 0.18);
+          const textoClaro = luz < 145;
+
+          card.style.setProperty("--ad-bg", cssRgb(base));
+          card.style.setProperty("--ad-bg-soft", cssRgb(segundaCor));
+          card.style.setProperty("--ad-text", textoClaro ? "#ffffff" : "#111827");
+          card.style.setProperty("--ad-muted", textoClaro ? "rgba(255,255,255,0.84)" : "#475569");
+          card.style.setProperty("--ad-border", textoClaro ? "rgba(255,255,255,0.26)" : "rgba(15,23,42,0.18)");
+        } catch (error) {
+          // Se a imagem externa não permitir leitura por canvas, mantém as cores fallback do JSON.
+        }
+      }
+
+      function aplicarAdaptacaoDaImagem(card, img) {
+        if (!card || !img) return;
+
+        const tipoManual = (card.dataset.fit || "auto").trim().toLowerCase();
+        const classesDeFit = ["fit-logo-wide", "fit-logo-square", "fit-logo-tall", "fit-banner", "fit-photo", "fit-complete"];
+        card.classList.remove(...classesDeFit);
+
+        if (tipoManual === "banner") {
+          card.classList.add("fit-banner");
+          return;
+        }
+
+        if (tipoManual === "photo") {
+          card.classList.add("fit-photo");
+          return;
+        }
+
+        if (tipoManual === "complete") {
+          card.classList.add("fit-complete");
+          return;
+        }
+
+        if (!img.naturalWidth || !img.naturalHeight) {
+          card.classList.add("fit-logo-wide");
+          return;
+        }
+
+        const proporcao = img.naturalWidth / img.naturalHeight;
+
+        if (tipoManual === "logo") {
+          if (proporcao >= 1.35) {
+            card.classList.add("fit-logo-wide");
+          } else if (proporcao <= 0.78) {
+            card.classList.add("fit-logo-tall");
+          } else {
+            card.classList.add("fit-logo-square");
+          }
+          return;
+        }
+
+        // data-fit="auto": tenta decidir sozinho pelo formato da imagem.
+        if (proporcao >= 3.1) {
+          card.classList.add("fit-banner");
+        } else if (proporcao >= 1.35) {
+          card.classList.add("fit-logo-wide");
+        } else if (proporcao <= 0.78) {
+          card.classList.add("fit-logo-tall");
+        } else {
+          card.classList.add("fit-logo-square");
+        }
+      }
+
+      function prepararCardDePropaganda(card) {
+        const img = card.querySelector(".ad-main-img") || card.querySelector(".ad-front img");
+        if (!img) return;
+
+        function preparar() {
+          aplicarAdaptacaoDaImagem(card, img);
+          aplicarCorDaImagem(card, img);
+        }
+
+        if (img.complete && img.naturalWidth) {
+          preparar();
+        } else {
+          img.addEventListener("load", preparar, { once: true });
+          img.addEventListener("error", () => aplicarAdaptacaoDaImagem(card, img), { once: true });
+        }
+      }
+
+      function valorTexto(valor, fallback = "") {
+        return typeof valor === "string" && valor.trim() ? valor.trim() : fallback;
+      }
+
+      function normalizarListaPropagandas(dados) {
+        const lista = Array.isArray(dados) ? dados : Array.isArray(dados.propagandas) ? dados.propagandas : [];
+
+        return lista.filter((item) => {
+          if (!item || item.ativo === false) return false;
+          return Boolean(valorTexto(item.imagem) || valorTexto(item.logo));
+        });
+      }
+
+      async function carregarPropagandasDoJson() {
+        const url = new URL(CAMINHO_JSON, window.location.href);
+
+        // Evita cache durante desenvolvimento: qualquer alteração no JSON é buscada novamente.
+        url.searchParams.set("_", String(Date.now()));
+
+        const resposta = await fetch(url.toString(), {
+          cache: "no-store",
+          headers: {
+            "Accept": "application/json"
+          }
+        });
+
+        if (!resposta.ok) {
+          throw new Error(`Não foi possível carregar ${CAMINHO_JSON}. Status: ${resposta.status}`);
+        }
+
+        return normalizarListaPropagandas(await resposta.json());
+      }
+
+      function aplicarCoresFallback(card, propaganda) {
+        card.style.setProperty("--ad-bg", valorTexto(propaganda.corFundo, "#f8fafc"));
+        card.style.setProperty("--ad-bg-soft", valorTexto(propaganda.corFundoSuave, "#eef4ff"));
+        card.style.setProperty("--ad-text", valorTexto(propaganda.corTexto, "#111827"));
+        card.style.setProperty("--ad-muted", valorTexto(propaganda.corTextoSuave, "#475569"));
+        card.style.setProperty("--ad-border", valorTexto(propaganda.corBorda, "rgba(255,255,255,0.26)"));
+      }
+
+      function criarSlidePropaganda(propaganda) {
+        const article = document.createElement("article");
+        article.className = "ads-slide";
+
+        const card = document.createElement("div");
+        card.className = "ad-flip-card";
+        card.dataset.fit = valorTexto(propaganda.tipoImagem || propaganda.dataFit, "auto");
+        card.dataset.detectarCor = propaganda.detectarCorImagem === false ? "false" : "true";
+        card.tabIndex = 0;
+        card.setAttribute("role", "button");
+        card.setAttribute("aria-label", `Propaganda ${valorTexto(propaganda.nome, "do parceiro")}`);
+        aplicarCoresFallback(card, propaganda);
+
+        const link = valorTexto(propaganda.link);
+        const linkReal = Boolean(link && link !== "#");
+        if (linkReal) {
+          card.dataset.link = link;
+          card.classList.add("is-clickable");
+          card.setAttribute("title", `Abrir ${valorTexto(propaganda.nome, "parceiro")}`);
+        }
+
+        const imagemPrincipal = valorTexto(propaganda.logo, valorTexto(propaganda.imagem));
+        const imagemEsquerda = valorTexto(propaganda.imagemEsquerda);
+        const imagemDireita = valorTexto(propaganda.imagemDireita);
+        const temLaterais = Boolean(imagemEsquerda || imagemDireita);
+
+        if (temLaterais) {
+          card.classList.add("has-side-media");
+        }
+
+        const inner = document.createElement("div");
+        inner.className = "ad-flip-inner";
+
+        const front = document.createElement("div");
+        front.className = "ad-face ad-front";
+
+        function criarImagem(src, alt, classe) {
+          const img = document.createElement("img");
+          img.src = src;
+          img.alt = alt;
+          img.loading = "lazy";
+          if (classe) img.className = classe;
+          return img;
+        }
+
+        function criarFrameLateral(src, lado) {
+          const frameLateral = document.createElement("div");
+          frameLateral.className = `ad-side-frame ad-side-${lado}`;
+
+          if (src) {
+            frameLateral.appendChild(
+              criarImagem(src, `${valorTexto(propaganda.nome, "Propaganda")} - imagem ${lado}`, "ad-side-img")
+            );
+          } else {
+            frameLateral.classList.add("ad-side-empty");
+          }
+
+          return frameLateral;
+        }
+
+        const frame = document.createElement("div");
+        frame.className = "ad-logo-frame";
+
+        const img = criarImagem(
+          imagemPrincipal,
+          valorTexto(propaganda.alt, valorTexto(propaganda.nome, "Propaganda")),
+          "ad-main-img"
+        );
+
+        frame.appendChild(img);
+
+        if (temLaterais) {
+          const layout = document.createElement("div");
+          layout.className = "ad-front-layout";
+          layout.appendChild(criarFrameLateral(imagemEsquerda, "esquerda"));
+          layout.appendChild(frame);
+          layout.appendChild(criarFrameLateral(imagemDireita, "direita"));
+          front.appendChild(layout);
+        } else {
+          front.appendChild(frame);
+        }
+
+        const back = document.createElement("div");
+        back.className = "ad-face ad-back";
+
+        const slogan = document.createElement("h4");
+        slogan.textContent = valorTexto(propaganda.slogan, valorTexto(propaganda.nome, "Parceiro"));
+        back.appendChild(slogan);
+
+        const descricao = valorTexto(propaganda.descricao);
+        if (descricao) {
+          const p = document.createElement("p");
+          p.textContent = descricao;
+          back.appendChild(p);
+        }
+
+        inner.appendChild(front);
+        inner.appendChild(back);
+        card.appendChild(inner);
+        article.appendChild(card);
+
+        return article;
+      }
+
+      function esconderFaixasVazias() {
+        secoesPropaganda.forEach((section) => {
+          section.style.display = "none";
+        });
+      }
+
+      function abrirLinkDoCard(card) {
+        const link = valorTexto(card.dataset.link);
+        if (!link || link === "#") return false;
+        window.open(link, "_blank", "noopener");
+        return true;
+      }
+
+      function prepararInteracaoDosCards(cards) {
+        cards.forEach((card) => {
+          card.addEventListener("click", () => {
+            if (abrirLinkDoCard(card)) return;
+            card.classList.toggle("flipped");
+          });
+
+          card.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              if (abrirLinkDoCard(card)) return;
+              card.classList.toggle("flipped");
+            }
+          });
+        });
+      }
+
+      function iniciarCarrosseisSincronizados(propagandas) {
+        if (!propagandas.length) {
+          esconderFaixasVazias();
+          return;
+        }
+
+        const estados = [];
+
+        carrosseis.forEach((carousel, indiceFaixa) => {
+          const track = carousel.querySelector(".ads-track");
+          if (!track) return;
+
+          track.innerHTML = "";
+
+          propagandas.forEach((propaganda) => {
+            track.appendChild(criarSlidePropaganda(propaganda));
+          });
+
+          const slides = Array.from(track.querySelectorAll(".ads-slide"));
+          const cards = Array.from(track.querySelectorAll(".ad-flip-card"));
+
+          cards.forEach(prepararCardDePropaganda);
+          prepararInteracaoDosCards(cards);
+
+          estados.push({
+            carousel,
+            track,
+            slides,
+            cards,
+
+            // Fórmula de sincronização:
+            // faixa 1 começa no parceiro 0, faixa 2 no parceiro 1, faixa 3 no parceiro 2...
+            // Quando chega ao final, volta ao início.
+            deslocamento: indiceFaixa % propagandas.length
+          });
+        });
+
+        if (!estados.length) return;
+
+        let propagandaGlobal = 0;
+        let autoPlayGlobal = null;
+        let flipTimerGlobal = null;
+
+        function limparFlipGlobal() {
+          if (flipTimerGlobal) clearTimeout(flipTimerGlobal);
+
+          estados.forEach((estado) => {
+            estado.cards.forEach((card) => card.classList.remove("flipped"));
+          });
+        }
+
+        function agendarFlipDosSlogans() {
+          if (flipTimerGlobal) clearTimeout(flipTimerGlobal);
+
+          flipTimerGlobal = setTimeout(() => {
+            estados.forEach((estado) => {
+              const indiceAtivo = (propagandaGlobal + estado.deslocamento) % propagandas.length;
+              const cardAtivo = estado.slides[indiceAtivo]?.querySelector(".ad-flip-card");
+              if (cardAtivo) cardAtivo.classList.add("flipped");
+            });
+          }, TEMPO_PARA_VIRAR_SLOGAN);
+        }
+
+        function atualizarTodasAsFaixas() {
+          estados.forEach((estado) => {
+            const indiceAtivo = (propagandaGlobal + estado.deslocamento) % propagandas.length;
+            estado.track.style.transform = `translateX(-${indiceAtivo * 100}%)`;
+
+            estado.slides.forEach((slide, slideIndex) => {
+              slide.setAttribute("aria-hidden", slideIndex === indiceAtivo ? "false" : "true");
+            });
+          });
+
+          limparFlipGlobal();
+          agendarFlipDosSlogans();
+        }
+
+        function proximaRodada() {
+          propagandaGlobal = (propagandaGlobal + 1) % propagandas.length;
+          atualizarTodasAsFaixas();
+        }
+
+        function iniciarAutoPlayGlobal() {
+          pararAutoPlayGlobal();
+          autoPlayGlobal = setInterval(proximaRodada, DURACAO_TROCA);
+          agendarFlipDosSlogans();
+        }
+
+        function pararAutoPlayGlobal() {
+          if (autoPlayGlobal) clearInterval(autoPlayGlobal);
+          if (flipTimerGlobal) clearTimeout(flipTimerGlobal);
+        }
+
+        estados.forEach((estado) => {
+          estado.carousel.addEventListener("mouseenter", pararAutoPlayGlobal);
+          estado.carousel.addEventListener("mouseleave", iniciarAutoPlayGlobal);
+        });
+
+        atualizarTodasAsFaixas();
+        iniciarAutoPlayGlobal();
+      }
+
+      carregarPropagandasDoJson()
+        .then(iniciarCarrosseisSincronizados)
+        .catch((error) => {
+          console.error(error);
+          esconderFaixasVazias();
+        });
+    })();
+</script>
+<script>
+  /* ==========================================
+     LÓGICA DO MODAL DE SOLUÇÕES (DETALHAMENTO)
+  ========================================== */
+  const solucoesData = {
+    'racha': {
+      icon: '🎲',
+      title: 'Racha Inteligente',
+      desc: 'Adeus dor de cabeça na hora de bater uma bola. O sistema organiza tudo para que você e seus amigos foquem apenas em jogar.',
+      features: [
+        '<i class="bi bi-check-circle-fill"></i> Sorteio de times equilibrado por nível técnico (Estrelas)',
+        '<i class="bi bi-check-circle-fill"></i> Controle financeiro e status de pagamento integrado',
+        '<i class="bi bi-check-circle-fill"></i> Gestão de "Fila de Espera" e "Rei da Mesa"',
+        '<i class="bi bi-check-circle-fill"></i> Geração imediata do card de Craque da Partida'
+      ]
+    },
+    'torneios': {
+      icon: '🏆',
+      title: 'Gestão de Torneios',
+      desc: 'Leve sua competição para o nível de Champions League. Automação completa de regras e chaves para torneios longos ou curtos.',
+      features: [
+        '<i class="bi bi-check-circle-fill"></i> Tabela de classificação calculada em tempo real',
+        '<i class="bi bi-check-circle-fill"></i> Chaveamento automático de Fases e Mata-Mata',
+        '<i class="bi bi-check-circle-fill"></i> Controle rigoroso de cartões amarelos, vermelhos e suspensões',
+        '<i class="bi bi-check-circle-fill"></i> Rankings gerais de artilharia, MVP e defesas'
+      ]
+    },
+    'sumula': {
+      icon: '📋',
+      title: 'Súmula Digital',
+      desc: 'O juiz ou mesário não precisa mais de papel. A súmula é otimizada para ser preenchida em segundos, direto do celular na beira da quadra.',
+      features: [
+        '<i class="bi bi-check-circle-fill"></i> Registro instantâneo de gols, pontos, assistências e faltas',
+        '<i class="bi bi-check-circle-fill"></i> Cronômetro dinâmico embutido na tela da partida',
+        '<i class="bi bi-check-circle-fill"></i> Painel de controle de substituições e ocorrências',
+        '<i class="bi bi-check-circle-fill"></i> Exportação oficial da súmula em arquivo PDF'
+      ]
+    },
+    'cards': {
+      icon: '🎨',
+      title: 'Cards e Divulgação',
+      desc: 'Transforme o ego dos jogadores em marketing orgânico para o seu evento. A plataforma ajuda a construir artes modernas e prontas para divulgação.',
+      features: [
+        '<i class="bi bi-check-circle-fill"></i> Cards personalizados com foto real do jogador e escudo do time',
+        '<i class="bi bi-check-circle-fill"></i> Artes de placar final (Matchday) automáticas',
+        '<i class="bi bi-check-circle-fill"></i> Formatos já otimizados para Stories e Feed do Instagram',
+        '<i class="bi bi-check-circle-fill"></i> Engajamento garantido nos grupos de WhatsApp'
+      ]
+    },
+    'rankings': {
+      icon: '📊',
+      title: 'Rankings e Métricas',
+      desc: 'Transforme cada partida em informação útil. A área de rankings deixa o torneio mais competitivo e valoriza jogadores, equipes e modalidades.',
+      features: [
+        '<i class="bi bi-check-circle-fill"></i> Classificação por pontos, vitórias, saldo e desempenho',
+        '<i class="bi bi-check-circle-fill"></i> Rankings de artilharia, MVP, defesas, pontuação e destaques',
+        '<i class="bi bi-check-circle-fill"></i> Histórico por equipe, jogador, turma ou modalidade',
+        '<i class="bi bi-check-circle-fill"></i> Dados prontos para cards, mural, Instagram e relatório final'
+      ]
+    },
+    'diagnostico': {
+      icon: '🧭',
+      title: 'Guia de Soluções',
+      desc: 'A Central de Soluções funciona como uma vitrine inteligente: o visitante escolhe o problema e a DigiSúmula mostra o caminho ideal dentro do ecossistema.',
+      features: [
+        '<i class="bi bi-check-circle-fill"></i> Recomenda o módulo certo para cada tipo de evento',
+        '<i class="bi bi-check-circle-fill"></i> Explica a diferença entre racha, torneio, súmula e divulgação',
+        '<i class="bi bi-check-circle-fill"></i> Evita que o visitante precise entender tudo de uma vez',
+        '<i class="bi bi-check-circle-fill"></i> Transforma o item Soluções em uma função real da página'
+      ]
+    }
+  };
+
+  const recomendacoesSolucoes = {
+    'organizar-jogo': {
+      kicker: 'Recomendação para jogo rápido',
+      title: 'Use o DigiSúmula Racha',
+      text: 'Para peladas, amistosos e jogos avulsos, o melhor caminho é o módulo de Racha: ele resolve sorteio de times, controle de jogadores, pagamentos e registro rápido da partida.',
+      items: [
+        'Sorteio de times equilibrados',
+        'Controle rápido dos participantes',
+        'Registro de gols, notas e destaques'
+      ],
+      modal: 'racha',
+      destino: '#modulo-futebol'
+    },
+    'criar-torneio': {
+      kicker: 'Recomendação para campeonato',
+      title: 'Use o DigiSúmula Torneio',
+      text: 'Para ligas, copas, interclasses competitivos e campeonatos com várias fases, o ideal é trabalhar com torneio estruturado, classificação automática e mata-mata.',
+      items: [
+        'Tabela e classificação automáticas',
+        'Fase de grupos, rodadas e mata-mata',
+        'Controle de cartões, suspensões e rankings'
+      ],
+      modal: 'torneios',
+      destino: '#modulo-futebol'
+    },
+    'registrar-partida': {
+      kicker: 'Recomendação para registro oficial',
+      title: 'Use a Súmula Digital',
+      text: 'Quando a prioridade é registrar a partida com segurança, a súmula digital centraliza placar, jogadores, gols, pontos, cartões, faltas e ocorrências.',
+      items: [
+        'Registro em tempo real pelo celular',
+        'Dados organizados por partida e modalidade',
+        'Base pronta para relatórios, rankings e histórico'
+      ],
+      modal: 'sumula',
+      destino: '#solucoes'
+    },
+    'divulgar-evento': {
+      kicker: 'Recomendação para comunicação visual',
+      title: 'Use Cards, Divulgação e Rankings',
+      text: 'Para dar aparência profissional ao evento, combine cards visuais com rankings e métricas. Isso aumenta engajamento e valoriza atletas, equipes e patrocinadores.',
+      items: [
+        'Cards de resultado, confronto e destaque',
+        'Rankings de artilharia, MVP e classificação',
+        'Conteúdo pronto para Instagram, WhatsApp e mural'
+      ],
+      modal: 'cards',
+      destino: '#solucoes'
+    },
+    'gestao-escolar': {
+      kicker: 'Recomendação para escola',
+      title: 'Use o Interclasse Escolar',
+      text: 'Para escolas, a solução ideal é organizar turmas, modalidades, calendário, resultados e painéis visuais em uma área específica para competição escolar.',
+      items: [
+        'Organização por turma, modalidade e categoria',
+        'Calendário de jogos e resultados',
+        'Painéis prontos para mural escolar e divulgação'
+      ],
+      modal: 'diagnostico',
+      destino: '#interclasse'
+    }
+  };
+
+  function selecionarSolucao(id) {
+    const data = recomendacoesSolucoes[id];
+    if (!data) return;
+
+    document.querySelectorAll('.solution-choice').forEach((botao) => {
+      botao.classList.toggle('active', botao.dataset.solution === id);
+    });
+
+    const kicker = document.getElementById('solutionResultKicker');
+    const title = document.getElementById('solutionResultTitle');
+    const text = document.getElementById('solutionResultText');
+    const list = document.getElementById('solutionResultList');
+    const primary = document.getElementById('solutionPrimaryAction');
+    const secondary = document.getElementById('solutionSecondaryAction');
+
+    if (kicker) kicker.textContent = data.kicker;
+    if (title) title.textContent = data.title;
+    if (text) text.textContent = data.text;
+
+    if (list) {
+      list.innerHTML = '';
+      data.items.forEach((item) => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        list.appendChild(li);
+      });
+    }
+
+    if (primary) {
+      primary.onclick = () => abrirModalSolucao(data.modal);
+    }
+
+    if (secondary) {
+      secondary.href = data.destino;
+    }
+  }
+
+  function abrirModalSolucao(id) {
+    const data = solucoesData[id];
+    if(!data) return;
+
+    document.getElementById('modalIcon').textContent = data.icon;
+    document.getElementById('modalTitle').textContent = data.title;
+    document.getElementById('modalDesc').textContent = data.desc;
+    
+    const featuresList = document.getElementById('modalFeatures');
+    featuresList.innerHTML = '';
+    data.features.forEach(feature => {
+      featuresList.innerHTML += `<li>${feature}</li>`;
+    });
+
+    document.getElementById('modalSolucoes').classList.add('active');
+    document.body.style.overflow = "hidden"; // Trava o scroll do fundo
+  }
+
+  function fecharModalSolucao() {
+    document.getElementById('modalSolucoes').classList.remove('active');
+    document.body.style.overflow = ""; // Libera o scroll
+  }
+
+  function fecharModalFora(event) {
+    if (event.target.id === 'modalSolucoes') {
+      fecharModalSolucao();
+    }
+  }
+  
+  // Fecha o modal se o usuário apertar a tecla ESC
+  document.addEventListener("keydown", function(event) {
+      if (event.key === "Escape") {
+        fecharModalSolucao();
+      }
+  });
+</script>
+
 </body>
 </html>
