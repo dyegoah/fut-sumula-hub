@@ -4632,7 +4632,9 @@
     (function iniciarFaixasDePropaganda() {
       const carrosseis = Array.from(document.querySelectorAll(".ads-carousel"));
       const secoesPropaganda = Array.from(document.querySelectorAll(".ad-strip-section"));
-      const CAMINHO_JSON = "propagandas.json";
+      // Mantém as faixas de propaganda funcionando mesmo depois de renomear index3.html para index.html.
+      // Primeiro tenta carregar o JSON pela raiz do site. Se não encontrar, tenta o caminho relativo antigo.
+      const CAMINHOS_JSON = ["/propagandas.json", "propagandas.json"];
       const DURACAO_TROCA = 5400;
       const TEMPO_PARA_VIRAR_SLOGAN = 2100;
 
@@ -4820,23 +4822,39 @@
       }
 
       async function carregarPropagandasDoJson() {
-        const url = new URL(CAMINHO_JSON, window.location.href);
+        let ultimoErro = null;
 
-        // Evita cache durante desenvolvimento: qualquer alteração no JSON é buscada novamente.
-        url.searchParams.set("_", String(Date.now()));
+        for (const caminhoJson of CAMINHOS_JSON) {
+          try {
+            const url = new URL(caminhoJson, window.location.href);
 
-        const resposta = await fetch(url.toString(), {
-          cache: "no-store",
-          headers: {
-            "Accept": "application/json"
+            // Evita cache durante desenvolvimento: qualquer alteração no JSON é buscada novamente.
+            url.searchParams.set("_", String(Date.now()));
+
+            const resposta = await fetch(url.toString(), {
+              cache: "no-store",
+              headers: {
+                "Accept": "application/json"
+              }
+            });
+
+            if (!resposta.ok) {
+              throw new Error(`Não foi possível carregar ${caminhoJson}. Status: ${resposta.status}`);
+            }
+
+            const propagandas = normalizarListaPropagandas(await resposta.json());
+
+            if (!propagandas.length) {
+              throw new Error(`O arquivo ${caminhoJson} foi carregado, mas não possui propagandas ativas.`);
+            }
+
+            return propagandas;
+          } catch (error) {
+            ultimoErro = error;
           }
-        });
-
-        if (!resposta.ok) {
-          throw new Error(`Não foi possível carregar ${CAMINHO_JSON}. Status: ${resposta.status}`);
         }
 
-        return normalizarListaPropagandas(await resposta.json());
+        throw ultimoErro || new Error("Não foi possível carregar as propagandas.");
       }
 
       function aplicarCoresFallback(card, propaganda) {
