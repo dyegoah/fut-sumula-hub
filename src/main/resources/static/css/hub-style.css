@@ -413,7 +413,7 @@ footer { text-align: center; padding: 40px; color: #444; font-size: 0.8rem; marg
 	  overflow: hidden;
 	  background:
 	    linear-gradient(135deg, rgba(3, 8, 14, 0.82), rgba(3, 8, 14, 0.92)),
-	    url('/img/futebol/jogador.png');
+	    url('/img/futebol/jogador.webp');
 	  background-size: cover;
 	  background-position: center;
 	  background-repeat: no-repeat;
