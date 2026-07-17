@@ -2662,15 +2662,7 @@
         border: 1px solid var(--border-soft);
       }
 
-      .topbar.open .nav-actions {
-        position: absolute;
-        top: 388px;
-        left: 16px;
-        right: 16px;
-        display: grid;
-        gap: 10px;
-        padding: 0 16px 16px;
-      }
+     
 
       .dropdown {
         position: static;
@@ -3246,7 +3238,7 @@
 <span class="section-kicker">Central de Soluções</span>
 <h2 class="section-title">Escolha a necessidade e descubra o melhor caminho</h2>
 <p class="section-subtitle">
-          Em vez de ser apenas uma lista de recursos, esta área funciona como um guia rápido: o visitante informa o que precisa resolver e a DigiSúmula indica qual solução faz mais sentido.
+          esta área funciona como um guia rápido: informe o que precisa resolver e a DigiSúmula indica qual solução faz mais sentido.
         </p>
 </div>
 
@@ -3533,13 +3525,13 @@
   <div class="gallery-row">
     <div class="gallery-item">
       <div class="system-shot futebol-mini-shot">
-        <img src="/img/futebol/bg3.png" alt="Tela do DigiSúmula Racha">
+        <img src="/img/futebol/FutFeminino.webp" alt="Tela do DigiSúmula Racha">
       </div>
     </div>
 
     <div class="gallery-item">
       <div class="system-shot futebol-mini-shot">
-        <img src="/img/futebol/jogador.webp" alt="Tela do DigiSúmula Torneio">
+        <img src="/img/futebol/fut1webp.webp" alt="Tela do DigiSúmula Torneio">
       </div>
     </div>
   </div>
@@ -4327,12 +4319,25 @@
       mobileToggle.textContent = topbar.classList.contains("open") ? "✕" : "☰";
     });
 
-    document.querySelectorAll(".nav-link, .dropdown a, .btn").forEach(item => {
-      item.addEventListener("click", () => {
-        topbar.classList.remove("open");
-        mobileToggle.textContent = "☰";
-      });
-    });
+	document.querySelectorAll(".nav-link, .dropdown a, .btn").forEach(item => {
+	      item.addEventListener("click", (e) => {
+	        // Verifica se clicou em um link que tem submenu (Modalidades ou Soluções) no celular
+	        const submenu = item.nextElementSibling;
+	        if (submenu && submenu.classList.contains("dropdown") && window.innerWidth <= 1080) {
+	            e.preventDefault(); // Impede de pular a página imediatamente
+	            // Alterna a gaveta entre aberta/fechada
+	            submenu.style.display = submenu.style.display === "block" ? "none" : "block";
+	            return; // Interrompe aqui para não fechar o menu principal
+	        }
+
+	        // Comportamento normal: se clicou em um link final, fecha tudo
+	        topbar.classList.remove("open");
+	        mobileToggle.textContent = "☰";
+	        
+	        // Reseta o estilo dos submenus para quando abrir de novo
+	        document.querySelectorAll(".dropdown").forEach(drop => drop.style.display = "");
+	      });
+	    });
 
     window.addEventListener("scroll", () => {
       if (window.scrollY > 18) {
