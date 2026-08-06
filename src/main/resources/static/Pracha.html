@@ -211,13 +211,13 @@
 </head>
 <body>
 
-    <a href="https://futsumula-hub.onrender.com/" class="btn-voltar-hub">
+    <a href="index.html" class="btn-voltar-hub">
         <i class="bi bi-grid-fill"></i> Voltar ao Hub
     </a>
 
     <nav>
         <div class="logo"><i class="bi bi-trophy-fill"></i> FUT-SÚMULA-PRO <span>RACHA</span></div>
-        <a href="https://fut-sumula-racha.onrender.com/" class="nav-btn"><i class="bi bi-person-fill"></i> Área do Cliente</a>
+        <a href="#" onclick="falarNoWhatsApp('Racha'); return false;" class="nav-btn"><i class="bi bi-whatsapp"></i> Solicitar Acesso</a>
     </nav>
 
     <section class="hero">
@@ -227,7 +227,7 @@
             <p class="subtitle">A ferramenta definitiva para quem organiza <strong>Rachas, Amistosos e Peladas</strong>.<br>Sorteio justo, financeiro automático e estatísticas de lenda.</p>
             
             <div class="hero-buttons">
-                <a href="https://fut-sumula-racha.onrender.com/" class="cta-button">CRIAR RODADAS GRÁTIS</a>
+                <a href="#" onclick="falarNoWhatsApp('Racha'); return false;" class="cta-button"><i class="bi bi-whatsapp"></i> Solicitar Acesso</a>
                 <button onclick="abrirTour()" class="btn-tour"><i class="bi bi-images"></i> VER TELAS</button>
             </div>
 
@@ -296,11 +296,13 @@
     <section class="how-to">
         <h2 class="section-title">Como <span style="color:var(--primary)">Começar</span></h2>
         <div class="steps-container">
-            <div class="step-box"><div class="step-num">1</div><i class="bi bi-person-plus-fill" style="font-size: 2rem; color: #fff;"></i><h4>Crie a Conta</h4><p>Cadastre-se como organizador em menos de 1 minuto. Teste 15 dias grátis.</p></div>
+            <div class="step-box"><div class="step-num">1</div><i class="bi bi-person-plus-fill" style="font-size: 2rem; color: #fff;"></i><h4>Fale com a Equipe</h4><p>Entre em contato pelo WhatsApp e conheça nossos planos para liberar seu acesso.</p></div>
             <div class="step-box"><div class="step-num">2</div><i class="bi bi-people-fill" style="font-size: 2rem; color: #fff;"></i><h4>Monte o Elenco</h4><p>Adicione os jogadores, defina posições e dê notas (estrelas) para o nível técnico.</p></div>
             <div class="step-box"><div class="step-num">3</div><i class="bi bi-whistle" style="font-size: 2rem; color: #fff;"></i><h4>Sorteie e Jogue</h4><p>O algoritmo monta times equilibrados. Registre os gols e deixe a estatística com a gente.</p></div>
         </div>
-        <div style="margin-top: 40px;"><a href="https://fut-sumula-racha.onrender.com/" class="cta-button" style="padding: 15px 40px; font-size: 1rem;">COMEÇAR AGORA</a></div>
+        <div style="margin-top: 40px;">
+            <a href="#" onclick="falarNoWhatsApp('Racha'); return false;" class="cta-button" style="padding: 15px 40px; font-size: 1rem;"><i class="bi bi-whatsapp"></i> FALAR NO WHATSAPP</a>
+        </div>
     </section>
 
     <section class="fifa-section">
@@ -334,7 +336,7 @@
         <div style="display: flex; justify-content: center; gap: 25px; font-size: 1.5rem; margin-bottom: 30px;">
             <i class="bi bi-instagram" onclick="window.open('https://instagram.com/fut_sumula_pro', '_blank')" style="cursor: pointer; color: #fff; transition:0.3s;" onmouseover="this.style.color='#bc13fe'" onmouseout="this.style.color='#fff'" title="@fut_sumula_pro"></i>
             <i class="bi bi-tiktok" onclick="window.open('https://www.tiktok.com/@futsumula', '_blank')" style="cursor: pointer; color: #fff; transition:0.3s;" onmouseover="this.style.color='#00f3ff'" onmouseout="this.style.color='#fff'" title="Fut Súmula no TikTok"></i>
-            <i class="bi bi-whatsapp" onclick="window.open('https://wa.me/5588996312358', '_blank')" style="cursor: pointer; color: #fff; transition:0.3s;" onmouseover="this.style.color='#25D366'" onmouseout="this.style.color='#fff'" title="Fale no WhatsApp"></i>
+            <i class="bi bi-whatsapp" onclick="falarNoWhatsApp('Geral')" style="cursor: pointer; color: #fff; transition:0.3s;" onmouseover="this.style.color='#25D366'" onmouseout="this.style.color='#fff'" title="Fale no WhatsApp"></i>
             <i class="bi bi-envelope-fill" onclick="window.location.href='mailto:fut_sumula_pro@hotmail.com'" style="cursor: pointer; color: #fff; transition:0.3s;" onmouseover="this.style.color='#ea4335'" onmouseout="this.style.color='#fff'" title="Envie um E-mail"></i>
         </div>
 
@@ -367,6 +369,7 @@
             </div>
         </div>
     </div>
+    
     <script>
         let currentSlide = 0;
         const slides = document.querySelectorAll('.tour-slide');
@@ -375,6 +378,13 @@
         function fecharTour() { document.getElementById('modal-tour').style.display = 'none'; }
         function mudarSlide(direction) { let newIndex = currentSlide + direction; if (newIndex < 0) newIndex = slides.length - 1; if (newIndex >= slides.length) newIndex = 0; showSlide(newIndex); }
         function showSlide(index) { slides.forEach(s => s.classList.remove('active')); slides[index].classList.add('active'); currentSlide = index; if(countEl) countEl.innerText = `${index + 1} / ${slides.length}`; }
+
+        // SCRIPT WHATSAPP
+        function falarNoWhatsApp(modulo) {
+            const numero = "5511999999999"; // SUBSTITUA PELO SEU NÚMERO
+            const texto = encodeURIComponent(`Olá! Estava na página do módulo ${modulo} e gostaria de saber os valores e como solicitar meu acesso.`);
+            window.open(`https://wa.me/${numero}?text=${texto}`, '_blank');
+        }
     </script>
 </body>
 </html>

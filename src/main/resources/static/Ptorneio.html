@@ -148,7 +148,7 @@
 </head>
 <body>
 
-    <a href="https://futsumula-hub.onrender.com/" class="btn-voltar-hub">
+    <a href="index.html" class="btn-voltar-hub">
         <i class="bi bi-grid-fill"></i> Voltar ao Hub
     </a>
 
@@ -156,7 +156,7 @@
         <div class="logo">FUT-SÚMULA <span>TORNEIO</span></div>
         <div class="nav-links">
             <a href="index.html" class="btn-outline"><i class="bi bi-arrow-left"></i> Voltar ao Hub</a>
-            <a href="https://fut-sumula-torneio.onrender.com/login.html" class="btn-primary"><i class="bi bi-box-arrow-in-right"></i> Entrar no App</a>
+            <a href="#" onclick="falarNoWhatsApp('Torneio'); return false;" class="btn-primary"><i class="bi bi-whatsapp"></i> Solicitar Acesso</a>
         </div>
     </nav>
 
@@ -165,7 +165,7 @@
         <p>A plataforma definitiva para organizadores de campeonatos. Tabela automática, chaveamento, súmula digital e geração de cards por IA.</p>
         <div style="display: flex; gap: 20px; margin-top: 20px;">
             <a href="#recursos" class="btn-outline" style="padding: 15px 30px; font-size: 1.1rem;">Ver Funcionalidades</a>
-            <a href="https://fut-sumula-torneio.onrender.com/login.html" class="btn-primary" style="padding: 15px 30px; font-size: 1.1rem;">Criar Meu Torneio</a>
+            <a href="#" onclick="falarNoWhatsApp('Torneio'); return false;" class="btn-primary" style="padding: 15px 30px; font-size: 1.1rem;"><i class="bi bi-whatsapp"></i> Solicitar Acesso</a>
         </div>
     </section>
 
@@ -200,10 +200,11 @@
         <div class="cta-banner" style="margin: 40px auto 80px;">
             <h2>Pronto para profissionalizar sua liga?</h2>
             <p>Junte-se aos organizadores que abandonaram o papel e a caneta e estão faturando mais com campeonatos organizados.</p>
-            <a href="https://fut-sumula-torneio.onrender.com/login.html" class="btn-primary" style="padding: 18px 40px; font-size: 1.2rem;">Começar Agora <i class="bi bi-arrow-right"></i></a>
+            <a href="#" onclick="falarNoWhatsApp('Torneio'); return false;" class="btn-primary" style="padding: 18px 40px; font-size: 1.2rem;"><i class="bi bi-whatsapp"></i> Falar com a Equipe</a>
         </div>
     </section>
 
+    <!-- SEÇÃO DE PATROCINADORES OCULTADA PARA USO FUTURO
     <section class="sponsors-section">
         <div class="sponsors-header">
             <h2 class="sponsors-title">Patrocinadores <span>Oficiais</span></h2>
@@ -213,20 +214,39 @@
             <div class="sponsor-card" onclick="window.open('https://instagram.com/teacherjaianemelo', '_blank')"><div class="sponsor-img-wrapper"><img src="/img/logo_abi_kids.png" alt="ABI Kids" class="sponsor-img"></div><div class="sponsor-caption">ABI Kids • Inglês</div></div>
             <div class="sponsor-card" onclick="window.open('https://instagram.com/jamillealves18', '_blank')"><div class="sponsor-img-wrapper"><img src="/img/PropagandaJamilla.jpeg" alt="JH Saúde e Estética" class="sponsor-img"></div><div class="sponsor-caption">JH Saúde • Estética</div></div>
             <div class="sponsor-card" onclick="window.open('https://instagram.com/Studio Vibe Fitness', '_blank')"><div class="sponsor-img-wrapper"><img src="/img/vibeFitnes.jpeg" alt="Vibe Fitness" class="sponsor-img"></div><div class="sponsor-caption">Vibe Fitness • Academia</div></div>
-            <div class="sponsor-card sponsor-available" onclick="window.location.href='https://wa.me/5588996312358?text=Quero%20patrocinar%20o%20Fut-S%C3%BAmula%20Torneio'"><div class="sponsor-img-wrapper"><i class="bi bi-megaphone"></i><span>Seja Patrocinador</span></div><div class="sponsor-caption">Clique e garanta sua vaga</div></div>
+            <div class="sponsor-card sponsor-available" onclick="falarNoWhatsApp('Patrocínio')"><div class="sponsor-img-wrapper"><i class="bi bi-megaphone"></i><span>Seja Patrocinador</span></div><div class="sponsor-caption">Clique e garanta sua vaga</div></div>
         </div>
     </section>
+    -->
 
     <footer id="contato">
 		<div style="display: flex; justify-content: center; gap: 25px; font-size: 1.5rem; margin-bottom: 30px;">
             <i class="bi bi-instagram" onclick="window.open('https://instagram.com/fut_sumula_pro', '_blank')" style="cursor: pointer; color: #fff; transition:0.3s;" onmouseover="this.style.color='#bc13fe'" onmouseout="this.style.color='#fff'" title="@fut_sumula_pro"></i>
             <i class="bi bi-tiktok" onclick="window.open('https://www.tiktok.com/@futsumula', '_blank')" style="cursor: pointer; color: #fff; transition:0.3s;" onmouseover="this.style.color='#00f3ff'" onmouseout="this.style.color='#fff'" title="Fut Súmula no TikTok"></i>
-            <i class="bi bi-whatsapp" onclick="window.open('https://wa.me/5588996312358', '_blank')" style="cursor: pointer; color: #fff; transition:0.3s;" onmouseover="this.style.color='#25D366'" onmouseout="this.style.color='#fff'" title="Fale no WhatsApp"></i>
+            <i class="bi bi-whatsapp" onclick="falarNoWhatsApp('Geral')" style="cursor: pointer; color: #fff; transition:0.3s;" onmouseover="this.style.color='#25D366'" onmouseout="this.style.color='#fff'" title="Fale no WhatsApp"></i>
             <i class="bi bi-envelope-fill" onclick="window.location.href='mailto:fut_sumula_pro@hotmail.com'" style="cursor: pointer; color: #fff; transition:0.3s;" onmouseover="this.style.color='#ea4335'" onmouseout="this.style.color='#fff'" title="Envie um E-mail"></i>
         </div>
 	    Desenvolvido pela HIGTECH SOLUÇÕES &copy; 2026<br>
 	    Tecnologia e Paixão pelo Futebol.
 	</footer>
 
+    <script>
+        // SCRIPT WHATSAPP
+        function falarNoWhatsApp(modulo) {
+            const numero = "5511999999999"; // SUBSTITUA PELO SEU NÚMERO
+            let textoMsg = "Olá! Estava na página do sistema e gostaria de saber mais informações.";
+            
+            if(modulo === 'Racha') {
+                textoMsg = "Olá! Estava na página do Fut-Súmula Racha e gostaria de saber os valores e como solicitar meu acesso.";
+            } else if (modulo === 'Torneio') {
+                textoMsg = "Olá! Estava na página do Fut-Súmula Torneio e gostaria de saber os valores e como solicitar meu acesso.";
+            } else if (modulo === 'Patrocínio') {
+                textoMsg = "Olá! Vi o espaço de patrocínio no site e gostaria de ser um Patrocinador Oficial.";
+            }
+
+            const texto = encodeURIComponent(textoMsg);
+            window.open(`https://wa.me/${numero}?text=${texto}`, '_blank');
+        }
+    </script>
 </body>
 </html>
